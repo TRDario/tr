@@ -1,6 +1,10 @@
 /// @file
 /// @brief Provides `tr::angle` and related functions.
 
+/// @ingroup math
+/// @defgroup angle Angles
+/// @brief Contains `tr::angle` and related functions.
+
 #pragma once
 #include <tr/utility/default_binary_io.hpp>
 #include <tr/utility/macro.hpp>
@@ -11,43 +15,40 @@
 
 namespace tr
 {
-	/// Abstract angle datatype.
+	/// @ingroup angle
+	/// @brief Abstract angle datatype.
 	/// @tparam Rep Representation type of the angle.
 	template <std::floating_point Rep>
 	class angle
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Constructs a zero angle.
+		/// @brief Constructs a zero angle.
 		[[nodiscard]] constexpr angle() noexcept = default;
 
-		/// Constructs an angle from a numeric value in radians.
+		/// @brief Constructs an angle from a numeric value in radians.
 		/// @param rads Representation of the angle in radians.
 		[[nodiscard]] explicit constexpr angle(Rep rads) noexcept
 			: m_rads{rads}
 		{
 		}
 
-		/// @}
-		/// @name Conversion operators
-		/// @{
-
-		/// Casts the angle to an angle represented with another datatype.
-		/// @tparam TargetRep Representation type to cast to.
-		/// @return Cast angle value.
-		template <std::floating_point TargetRep>
-		[[nodiscard]] constexpr operator angle<TargetRep>() const noexcept
+		/// @brief Constructs an angle from an angle represented with a different type.
+		/// @tparam RhsRep Right-hand side angle representation type.
+		/// @param angle Angle to convert.
+		template <std::floating_point RhsRep>
+		[[nodiscard]] constexpr angle(angle<RhsRep> angle) noexcept
+			: m_rads{static_cast<Rep>(angle.rads())}
 		{
-			return angle<TargetRep>{static_cast<TargetRep>(m_rads)};
 		}
 
 		/// @}
 		/// @name Arithmetic operators
 		/// @{
 
-		/// Adds an angle to the angle.
+		/// @brief Adds an angle to the angle.
 		/// @tparam RhsRep Representation type of the right-hand side angle.
 		/// @param rhs Angle to add to the current angle value.
 		/// @return Reference to `*this`.
@@ -58,7 +59,7 @@ namespace tr
 			return *this;
 		}
 
-		/// Subtracts an angle from the angle.
+		/// @brief Subtracts an angle from the angle.
 		/// @tparam RhsRep Representation type of the right-hand side angle.
 		/// @param rhs Angle to subtract from the current angle value.
 		/// @return Reference to `*this`.
@@ -69,7 +70,7 @@ namespace tr
 			return *this;
 		}
 
-		/// Multiplies the angle by a scalar.
+		/// @brief Multiplies the angle by a scalar.
 		/// @tparam Scalar Type of the scalar.
 		/// @param rhs Factor to multiply the angle with.
 		/// @return Reference to `*this`.
@@ -80,7 +81,7 @@ namespace tr
 			return *this;
 		}
 
-		/// Divides the angle by a scalar.
+		/// @brief Divides the angle by a scalar.
 		/// @tparam Scalar Type of the scalar.
 		/// @param rhs Factor to divide the angle with.
 		/// @return Reference to `*this`.
@@ -91,7 +92,7 @@ namespace tr
 			return *this;
 		}
 
-		/// Modulos the angle by another angle.
+		/// @brief Modulos the angle by another angle.
 		/// @tparam RhsRep Representation type of the right-hand side angle.
 		/// @param rhs Factor to divide the angle with.
 		/// @return Reference to `*this`.
@@ -103,24 +104,24 @@ namespace tr
 		}
 
 		/// @}
-		/// @name Conversion
+		/// @name Unit conversion
 		/// @{
 
-		/// Converts the angle value into a numeric radian value.
+		/// @brief Converts the angle value into a numeric radian value.
 		/// @return Angle represented in radians.
 		[[nodiscard]] constexpr Rep rads() const noexcept
 		{
 			return m_rads;
 		}
 
-		/// Converts the angle value into a numeric degree value.
+		/// @brief Converts the angle value into a numeric degree value.
 		/// @return Angle represented in degrees.
 		[[nodiscard]] constexpr Rep degs() const noexcept
 		{
 			return static_cast<Rep>(m_rads * (180 / std::numbers::pi));
 		}
 
-		/// Converts the angle value into a numeric turn value.
+		/// @brief Converts the angle value into a numeric turn value.
 		/// @return Angle represented in turns.
 		[[nodiscard]] constexpr Rep turns() const noexcept
 		{
@@ -131,21 +132,21 @@ namespace tr
 		/// @name Trigonometry
 		/// @{
 
-		/// Computes the sine of the angle.
+		/// @brief Returns the sine of the angle.
 		/// @return Sine of the angle.
 		[[nodiscard]] inline Rep sin() const noexcept
 		{
 			return std::sin(m_rads);
 		}
 
-		/// Computes the cosine of the angle.
+		/// @brief Returns the cosine of the angle.
 		/// @return Cosine of the angle.
 		[[nodiscard]] inline Rep cos() const noexcept
 		{
 			return std::cos(m_rads);
 		}
 
-		/// Computes the tangent of the angle.
+		/// @brief Returns the tangent of the angle.
 		/// @return Tangent of the angle.
 		[[nodiscard]] inline Rep tan() const noexcept
 		{
@@ -158,10 +159,10 @@ namespace tr
 		Rep m_rads;
 	};
 
-	/// @name Angle operators
-	/// @{
+	//
 
-	/// Compares two angles.
+	/// @ingroup angle
+	/// @brief Compares two angles.
 	/// @tparam LhsRep, RhsRep Representation types of the angles.
 	/// @param lhs, rhs Angles to compare.
 	/// @return Ordering of the angles.
@@ -171,17 +172,19 @@ namespace tr
 		return lhs.rads() <=> rhs.rads();
 	}
 
-	/// Compares two angles for equality.
+	/// @ingroup angle
+	/// @brief Checks two angles for equality.
 	/// @tparam LhsRep, RhsRep Representation types of the angles.
 	/// @param lhs, rhs Angles to compare.
-	/// @return Whether the angles are equal.
+	/// @return `true` if the angles are equal, `false` otherwise.
 	template <std::floating_point LhsRep, std::floating_point RhsRep>
 	[[nodiscard]] constexpr bool operator==(angle<LhsRep> lhs, angle<RhsRep> rhs) noexcept
 	{
 		return lhs.rads() == rhs.rads();
 	}
 
-	/// Sums two angles.
+	/// @ingroup angle
+	/// @brief Sums two angles.
 	/// @tparam LhsRep, RhsRep Representation types of the angles.
 	/// @param lhs, rhs Angles to sum.
 	/// @return Sum of the angles.
@@ -191,7 +194,8 @@ namespace tr
 		return angle<std::common_type_t<LhsRep, RhsRep>>{lhs.rads() + rhs.rads()};
 	}
 
-	/// Inverts an angle.
+	/// @ingroup angle
+	/// @brief Inverts an angle.
 	/// @tparam Rep Representation type of the angle.
 	/// @param lhs Angle to invert.
 	/// @return Inverted angle.
@@ -201,7 +205,8 @@ namespace tr
 		return angle<Rep>{-lhs.rads()};
 	}
 
-	/// Subtracts two angles.
+	/// @ingroup angle
+	/// @brief Subtracts two angles.
 	/// @tparam LhsRep, RhsRep Representation types of the angles.
 	/// @param lhs, rhs Angles to subtract.
 	/// @return Difference of the angles.
@@ -211,7 +216,8 @@ namespace tr
 		return angle<std::common_type_t<LhsRep, RhsRep>>{lhs.rads() - rhs.rads()};
 	}
 
-	/// Multiplies an angle by a scalar.
+	/// @ingroup angle
+	/// @brief Multiplies an angle by a scalar.
 	/// @tparam Rep Representation type of the left-hand side angle.
 	/// @tparam Scalar Type of the right-hand side scalar.
 	/// @param lhs Angle to multiply.
@@ -223,7 +229,8 @@ namespace tr
 		return angle<std::common_type_t<Rep, Scalar>>{lhs.rads() * rhs};
 	}
 
-	/// Multiplies an angle by a scalar.
+	/// @ingroup angle
+	/// @brief Multiplies an angle by a scalar.
 	/// @tparam Scalar Type of the left-hand side scalar.
 	/// @tparam Rep Representation type of the right-hand side angle.
 	/// @param lhs Scalar to multiply with.
@@ -235,7 +242,8 @@ namespace tr
 		return angle<std::common_type_t<Rep, Scalar>>{lhs * rhs.rads()};
 	}
 
-	/// Divides an angle by a scalar.
+	/// @ingroup angle
+	/// @brief Divides an angle by a scalar.
 	/// @tparam Rep Representation type of the left-hand side angle.
 	/// @tparam Scalar Type of the right-hand side scalar.
 	/// @param lhs Angle to divide.
@@ -247,7 +255,8 @@ namespace tr
 		return angle<std::common_type_t<Rep, Scalar>>{lhs.rads() / rhs};
 	}
 
-	/// Divides two angles.
+	/// @ingroup angle
+	/// @brief Divides two angles.
 	/// @tparam LhsRep, RhsRep Representation types of the angles.
 	/// @param lhs, rhs Angles to divide.
 	/// @return Ratio of the angles.
@@ -257,7 +266,8 @@ namespace tr
 		return lhs.rads() / rhs.rads();
 	}
 
-	/// Modulos two angles.
+	/// @ingroup angle
+	/// @brief Modulos two angles.
 	/// @tparam LhsRep, RhsRep Representation types of the angles.
 	/// @param lhs, rhs Angles to modulo.
 	/// @return Modulo of the angles.
@@ -267,11 +277,10 @@ namespace tr
 		return angle<std::common_type_t<LhsRep, RhsRep>>{std::fmod(lhs.rads(), rhs.rads())};
 	}
 
-	/// @}
-	/// @name Angle constructors
-	/// @{
+	//
 
-	/// Constructs an angle expressed in radians.
+	/// @ingroup angle
+	/// @brief Returns an angle expressed in radians.
 	/// @tparam Scalar Scalar type.
 	/// @param th Angle in radians.
 	/// @return Equivalent angle value.
@@ -286,7 +295,8 @@ namespace tr
 		}
 	}
 
-	/// Constructs an angle expressed in degrees.
+	/// @ingroup angle
+	/// @brief Returns an angle expressed in degrees.
 	/// @tparam Scalar Scalar type.
 	/// @param th Angle in degrees.
 	/// @return Equivalent angle value.
@@ -301,7 +311,8 @@ namespace tr
 		}
 	}
 
-	/// Constructs an angle expressed in turns.
+	/// @ingroup angle
+	/// @brief Returns an angle expressed in turns.
 	/// @tparam Scalar Scalar type.
 	/// @param th Angle in turns.
 	/// @return Equivalent angle value.
@@ -316,7 +327,8 @@ namespace tr
 		}
 	}
 
-	/// Computes the principal value of the arc sine.
+	/// @ingroup angle
+	/// @brief Returns the principal value of the arc sine.
 	/// @tparam Scalar Scalar type.
 	/// @param sin Sine value.
 	/// @return Principal arc sine value.
@@ -326,7 +338,8 @@ namespace tr
 		return rads(std::asin(sin));
 	}
 
-	/// Computes the principal value of the arc cosine.
+	/// @ingroup angle
+	/// @brief Returns the principal value of the arc cosine.
 	/// @tparam Scalar Scalar type.
 	/// @param cos Cosine value.
 	/// @return Principal arc cosine value.
@@ -336,7 +349,8 @@ namespace tr
 		return rads(std::acos(cos));
 	}
 
-	/// Computes the principal value of the arc tangent.
+	/// @ingroup angle
+	/// @brief Returns the principal value of the arc tangent.
 	/// @tparam Scalar Scalar type.
 	/// @param tan Tangent value.
 	/// @return Principal arc tangent value.
@@ -346,7 +360,8 @@ namespace tr
 		return rads(std::atan(tan));
 	}
 
-	/// Computes the principal value of the arc tangent `y / x`.
+	/// @ingroup angle
+	/// @brief Returns the principal value of the arc tangent `y / x`.
 	/// @tparam Y, X Scalar types.
 	/// @param y, x Tangent ratio.
 	/// @return Principal arc tangent value.
@@ -356,7 +371,8 @@ namespace tr
 		return rads(std::atan2(y, x));
 	}
 
-	/// Computes the principal value of the arc tangent `p.y / p.x`.
+	/// @ingroup angle
+	/// @brief Returns the principal value of the arc tangent `p.y / p.x`.
 	/// @tparam Element Type of the elements of the vector.
 	/// @param p Tangent ratio stored as `p.y / p.x`.
 	/// @return Principal arc tangent value.
@@ -366,11 +382,10 @@ namespace tr
 		return atan2(p.y, p.x);
 	}
 
-	/// @}
-	/// @name Mathematical operations
-	/// @{
+	//
 
-	/// Calculates the absolute value of an angle.
+	/// @ingroup angle
+	/// @brief Returns the absolute value of an angle.
 	/// @tparam Rep Representation type of the value.
 	/// @param th Angle to get the absolute value of.
 	/// @return Absolute value of the angle.
@@ -380,7 +395,9 @@ namespace tr
 		return th.rads() >= 0 ? th : -th;
 	}
 
-	/// Linearly interpolates between two angles.
+	/// @ingroup angle
+	/// @brief Linearly interpolates between two angles.
+	/// @details This function always interpolates along the shorter rotation between the angles.
 	/// @tparam XRep, YRep Representation types of the angles.
 	/// @tparam A Type of the interpolation factor.
 	/// @param x, y Sample values.
@@ -402,17 +419,15 @@ namespace tr
 		return x + (y - x) * a;
 	}
 
-	/// @}
+	//
 
 	inline namespace literals
 	{
-		/// Namespace containing angle literals.
+		/// @ingroup angle
+		/// @name Namespace containing angle literals.
 		inline namespace angle_literals
 		{
-			/// @name Literals
-			/// @{
-
-			/// Constructs an angle represented with a float expressed in degrees.
+			/// @brief Returns an angle represented with a float expressed in degrees.
 			/// @param deg Angle expressed in degrees.
 			/// @return Angle value equivalent.
 			[[nodiscard]] consteval angle<float> operator""_degf(long double deg) noexcept
@@ -420,7 +435,7 @@ namespace tr
 				return static_cast<angle<float>>(degs(deg));
 			}
 
-			/// Constructs an angle represented with a float expressed in degrees.
+			/// @brief Returns an angle represented with a float expressed in degrees.
 			/// @param deg Angle expressed in degrees.
 			/// @return Angle value equivalent.
 			[[nodiscard]] consteval angle<float> operator""_degf(unsigned long long deg) noexcept
@@ -428,7 +443,7 @@ namespace tr
 				return static_cast<angle<float>>(degs(deg));
 			}
 
-			/// Constructs an angle represented with a double expressed in degrees.
+			/// @brief Returns an angle represented with a double expressed in degrees.
 			/// @param deg Angle expressed in degrees.
 			/// @return Angle value equivalent.
 			[[nodiscard]] consteval angle<double> operator""_deg(long double deg) noexcept
@@ -436,7 +451,7 @@ namespace tr
 				return static_cast<angle<double>>(degs(deg));
 			}
 
-			/// Constructs an angle represented with a double expressed in degrees.
+			/// @brief Returns an angle represented with a double expressed in degrees.
 			/// @param deg Angle expressed in degrees.
 			/// @return Angle value equivalent.
 			[[nodiscard]] consteval angle<double> operator""_deg(unsigned long long deg) noexcept
@@ -444,7 +459,7 @@ namespace tr
 				return degs(deg);
 			}
 
-			/// Constructs an angle represented with a long double expressed in degrees.
+			/// @brief Returns an angle represented with a long double expressed in degrees.
 			/// @param deg Angle expressed in degrees.
 			/// @return Angle value equivalent.
 			[[nodiscard]] consteval angle<long double> operator""_degl(long double deg) noexcept
@@ -452,7 +467,7 @@ namespace tr
 				return degs(deg);
 			}
 
-			/// Constructs an angle represented with a long double expressed in degrees.
+			/// @brief Returns an angle represented with a long double expressed in degrees.
 			/// @param deg Angle expressed in degrees.
 			/// @return Angle value equivalent.
 			[[nodiscard]] consteval angle<long double> operator""_degl(unsigned long long deg) noexcept
@@ -462,7 +477,7 @@ namespace tr
 
 			//
 
-			/// Constructs an angle represented with a float expressed in radians.
+			/// @brief Returns an angle represented with a float expressed in radians.
 			/// @param rad Angle expressed in radians.
 			/// @return Angle value equivalent.
 			[[nodiscard]] consteval angle<float> operator""_radf(long double rad) noexcept
@@ -470,7 +485,7 @@ namespace tr
 				return static_cast<angle<float>>(rads(rad));
 			}
 
-			/// Constructs an angle represented with a float expressed in radians.
+			/// @brief Returns an angle represented with a float expressed in radians.
 			/// @param rad Angle expressed in radians.
 			/// @return Angle value equivalent.
 			[[nodiscard]] consteval angle<float> operator""_radf(unsigned long long rad) noexcept
@@ -478,7 +493,7 @@ namespace tr
 				return static_cast<angle<float>>(rads(rad));
 			}
 
-			/// Constructs an angle represented with a double expressed in radians.
+			/// @brief Returns an angle represented with a double expressed in radians.
 			/// @param rad Angle expressed in radians.
 			/// @return Angle value equivalent.
 			[[nodiscard]] consteval angle<double> operator""_rad(long double rad) noexcept
@@ -486,7 +501,7 @@ namespace tr
 				return static_cast<angle<double>>(rads(rad));
 			}
 
-			/// Constructs an angle represented with a double expressed in radians.
+			/// @brief Returns an angle represented with a double expressed in radians.
 			/// @param rad Angle expressed in radians.
 			/// @return Angle value equivalent.
 			[[nodiscard]] consteval angle<double> operator""_rad(unsigned long long rad) noexcept
@@ -494,7 +509,7 @@ namespace tr
 				return rads(rad);
 			}
 
-			/// Constructs an angle represented with a long double expressed in radians.
+			/// @brief Returns an angle represented with a long double expressed in radians.
 			/// @param rad Angle expressed in radians.
 			/// @return Angle value equivalent.
 			[[nodiscard]] consteval angle<long double> operator""_radl(long double rad) noexcept
@@ -502,7 +517,7 @@ namespace tr
 				return rads(rad);
 			}
 
-			/// Constructs an angle represented with a long double expressed in radians.
+			/// @brief Returns an angle represented with a long double expressed in radians.
 			/// @param rad Angle expressed in radians.
 			/// @return Angle value equivalent.
 			[[nodiscard]] consteval angle<long double> operator""_radl(unsigned long long rad) noexcept
@@ -512,7 +527,7 @@ namespace tr
 
 			//
 
-			/// Constructs an angle represented with a float expressed in turns.
+			/// @brief Returns an angle represented with a float expressed in turns.
 			/// @param tr Angle expressed in turns.
 			/// @return Angle value equivalent.
 			[[nodiscard]] consteval angle<float> operator""_trf(long double tr) noexcept
@@ -520,7 +535,7 @@ namespace tr
 				return static_cast<angle<float>>(turns(tr));
 			}
 
-			/// Constructs an angle represented with a float expressed in turns.
+			/// @brief Returns an angle represented with a float expressed in turns.
 			/// @param tr Angle expressed in turns.
 			/// @return Angle value equivalent.
 			[[nodiscard]] consteval angle<float> operator""_trf(unsigned long long tr) noexcept
@@ -528,7 +543,7 @@ namespace tr
 				return static_cast<angle<float>>(turns(tr));
 			}
 
-			/// Constructs an angle represented with a double expressed in turns.
+			/// @brief Returns an angle represented with a double expressed in turns.
 			/// @param tr Angle expressed in turns.
 			/// @return Angle value equivalent.
 			[[nodiscard]] consteval angle<double> operator""_tr(long double tr) noexcept
@@ -536,7 +551,7 @@ namespace tr
 				return turns(static_cast<double>(tr));
 			}
 
-			/// Constructs an angle represented with a double expressed in turns.
+			/// @brief Returns an angle represented with a double expressed in turns.
 			/// @param tr Angle expressed in turns.
 			/// @return Angle value equivalent.
 			[[nodiscard]] consteval angle<double> operator""_tr(unsigned long long tr) noexcept
@@ -544,7 +559,7 @@ namespace tr
 				return turns(tr);
 			}
 
-			/// Constructs an angle represented with a long double expressed in turns.
+			/// @brief Returns an angle represented with a long double expressed in turns.
 			/// @param tr Angle expressed in turns.
 			/// @return Angle value equivalent.
 			[[nodiscard]] consteval angle<long double> operator""_trl(long double tr) noexcept
@@ -552,22 +567,20 @@ namespace tr
 				return turns(tr);
 			}
 
-			/// Constructs an angle represented with a long double expressed in turns.
+			/// @brief Returns an angle represented with a long double expressed in turns.
 			/// @param tr Angle expressed in turns.
 			/// @return Angle value equivalent.
 			[[nodiscard]] consteval angle<long double> operator""_trl(unsigned long long tr) noexcept
 			{
 				return turns(static_cast<long double>(tr));
 			}
-
-			/// @}
 		} // namespace angle_literals
 	} // namespace literals
 
-	/// @name Random number generation
-	/// @{
+	//
 
-	/// Generates a random angle value in the range [0tr, 1tr].
+	/// @ingroup angle
+	/// @brief Generates a random angle value in the range [0tr, 1tr].
 	/// @tparam Rep Representation type of the angle.
 	/// @param rng RNG used to generate the value.
 	/// @return Random angle value constrained to [0tr, 1tr].
@@ -577,7 +590,8 @@ namespace tr
 		return rads(generate_float(rng, Rep{0}, 2 * std::numbers::pi_v<Rep>));
 	}
 
-	/// Generates a random angle value in the range [0, `max`).
+	/// @ingroup angle
+	/// @brief Generates a random angle value in the range [0, `max`).
 	/// @tparam Rep Representation type of the angle.
 	/// @param rng RNG used to generate the value.
 	/// @param max Upper bound of the random range.
@@ -589,7 +603,8 @@ namespace tr
 		return rads(generate_float(rng, max.rads()));
 	}
 
-	/// Generates a random angle value in the range [`min`, `max`).
+	/// @ingroup angle
+	/// @brief Generates a random angle value in the range [`min`, `max`).
 	/// @tparam Rep Representation type of the angle.
 	/// @param rng RNG used to generate the value.
 	/// @param min Lower bound of the random range.
@@ -601,20 +616,21 @@ namespace tr
 	{
 		return rads(generate_float(rng, min.rads(), max.rads()));
 	}
-
-	/// @}
 } // namespace tr
 
 //
 
-/// Specialization of `std::common_type` for angles.
+/// @ingroup angle
+/// @brief Specialization of `std::common_type` for angles.
 template <typename LhsRep, typename RhsRep>
 struct std::common_type<tr::angle<LhsRep>, tr::angle<RhsRep>>
 {
+	/// Common angle type.
 	using type = tr::angle<std::common_type_t<LhsRep, RhsRep>>;
 };
 
-/// Angle formatter.
+/// @ingroup angle
+/// @brief Angle formatter.
 /// @details
 /// Angles may be output in radians, degrees, or turns, indicated by a leading `r`/`d`/`t` in the format specification.
 /// Afterwards, a floating-point format specification may be used to indicate the numeric format.
@@ -624,7 +640,7 @@ template <typename Rep, typename CharT>
 class std::formatter<tr::angle<Rep>, CharT>
 {
   public:
-	/// Parses the format specification.
+	/// @brief Parses the format specification.
 	/// @param context Parsing context.
 	/// @return Iterator to the end of the parsed specification.
 	constexpr std::basic_format_parse_context<CharT>::iterator parse(std::basic_format_parse_context<CharT>& context)
@@ -650,7 +666,7 @@ class std::formatter<tr::angle<Rep>, CharT>
 		return m_float_formatter.parse(context);
 	}
 
-	/// Formats an angle.
+	/// @brief Formats an angle.
 	/// @tparam FormatContext Formatting context type.
 	/// @param value Value to format.
 	/// @param context Formatting context.
@@ -672,30 +688,30 @@ class std::formatter<tr::angle<Rep>, CharT>
 	}
 
   private:
-	/// Units the formatted angle can be displayed in.
+	/// @brief Units the formatted angle can be displayed in.
 	enum class unit
 	{
-		/// Display the angle in radians.
+		/// @brief Display the angle in radians.
 		radians,
 
-		/// Display the angle in degrees.
+		/// @brief Display the angle in degrees.
 		degrees,
 
-		/// Display the angle in turns.
+		/// @brief Display the angle in turns.
 		turns
 	};
 
 	//
 
-	/// Floating-point formatter.
+	/// @brief Floating-point formatter.
 	std::formatter<Rep, CharT> m_float_formatter;
 
-	/// Unit to use for the formatted angle.
+	/// @brief Unit to use for the formatted angle.
 	unit m_unit;
 };
 
 //
 
-/// Enables default binary IO for rectangles.
+/// @brief Enables default binary IO for angles.
 template <typename Rep>
 inline constexpr bool tr::enable_default_binary_io<tr::angle<Rep>>{true};

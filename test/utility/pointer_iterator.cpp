@@ -6,7 +6,7 @@
 
 //
 
-/// Iterator wrapping an integer pointer.
+/// @brief Iterator wrapping an integer pointer.
 struct test_pointer_iterator : tr::pointer_iterator<test_pointer_iterator, int*>
 {
 	using pointer_iterator<test_pointer_iterator, int*>::pointer_iterator;
@@ -14,24 +14,24 @@ struct test_pointer_iterator : tr::pointer_iterator<test_pointer_iterator, int*>
 
 //
 
-/// Tests the pointer iterator's difference type.
+/// @brief Tests the pointer iterator's difference type.
 static_assert(std::same_as<test_pointer_iterator::difference_type, std::ptrdiff_t>);
 
-/// Tests the pointer iterator's value type.
+/// @brief Tests the pointer iterator's value type.
 static_assert(std::same_as<test_pointer_iterator::value_type, int>);
 
-/// Tests the pointer iterator's pointer type.
+/// @brief Tests the pointer iterator's pointer type.
 static_assert(std::same_as<test_pointer_iterator::pointer, int*>);
 
-/// Tests the pointer iterator's reference type.
+/// @brief Tests the pointer iterator's reference type.
 static_assert(std::same_as<test_pointer_iterator::reference, int&>);
 
-/// Tests that the derived iterator models a contiguous iterator.
+/// @brief Tests that the derived iterator models a contiguous iterator.
 static_assert(std::contiguous_iterator<test_pointer_iterator>);
 
 //
 
-/// Tests constructing a pointer iterator and accessing its wrapped pointer.
+/// @brief Tests constructing a pointer iterator and accessing its wrapped pointer.
 TEST(PointerIteratorTest, ConstructsAndAccessesBase)
 {
 	int values[]{1, 2, 3};
@@ -43,7 +43,7 @@ TEST(PointerIteratorTest, ConstructsAndAccessesBase)
 	EXPECT_EQ(iterator[1], 2);
 }
 
-/// Tests incrementing and decrementing a pointer iterator.
+/// @brief Tests incrementing and decrementing a pointer iterator.
 TEST(PointerIteratorTest, IncrementsAndDecrements)
 {
 	int values[]{1, 2, 3};
@@ -57,7 +57,7 @@ TEST(PointerIteratorTest, IncrementsAndDecrements)
 	EXPECT_EQ(iterator.base(), values);
 }
 
-/// Tests advancing and subtracting from a pointer iterator.
+/// @brief Tests advancing and subtracting from a pointer iterator.
 TEST(PointerIteratorTest, SupportsArithmetic)
 {
 	int values[]{1, 2, 3, 4};
@@ -72,7 +72,7 @@ TEST(PointerIteratorTest, SupportsArithmetic)
 	EXPECT_EQ(iterator.base(), values + 1);
 }
 
-/// Tests comparing pointer iterators and getting their distance.
+/// @brief Tests comparing pointer iterators and getting their distance.
 TEST(PointerIteratorTest, ComparesAndGetsDistance)
 {
 	int values[]{1, 2, 3, 4};

@@ -31,10 +31,10 @@ namespace tr::internal
 tr::graphics_context::graphics_context(window_view window)
 	: m_window{window.unwrap()}
 	, m_ptr{SDL_GL_CreateContext(m_window)}
-	, m_viewport{.tl{0, 0}, .size{window.size()}}
-	, m_scissor_box{.tl{0, 0}, .size{window.size()}}
+	, m_viewport{window.size()}
+	, m_scissor_box{window.size()}
 {
-	if (m_ptr == nullptr) {
+	if (!m_ptr) {
 		throw graphics_context_init_error{};
 	}
 	internal::current_graphics_context = m_ptr.get();

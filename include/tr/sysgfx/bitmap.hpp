@@ -41,7 +41,7 @@ namespace tr
 		/// Constant iterator type used by the bitmap.
 		using const_iterator = const_pixel_iterator;
 
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// @cond sdl_interop

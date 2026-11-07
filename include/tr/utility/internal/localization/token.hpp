@@ -9,73 +9,74 @@
 
 namespace tr::internal::localization
 {
-	/// Symbol token.
+	/// @brief Symbol token.
 	struct symbol_token
 	{
-		/// Token type enumerator equivalent of this type.
+		/// @brief Token type enumerator equivalent of this type.
 		static constexpr localization_token_type type{localization_token_type::symbol};
 
 		//
 
-		/// Number of the line the token is on.
+		/// @brief Number of the line the token is on.
 		int line;
 
-		/// Name of the symbol.
+		/// @brief Name of the symbol.
 		std::string name;
 	};
 
-	/// String token.
+	/// @brief String token.
 	struct string_token
 	{
-		/// Token type enumerator equivalent of this type.
+		/// @brief Token type enumerator equivalent of this type.
 		static constexpr localization_token_type type{localization_token_type::string};
 
 		//
 
-		/// Number of the line the token is on.
+		/// @brief Number of the line the token is on.
 		int line;
 
-		/// String value.
+		/// @brief String value.
 		std::string value;
 	};
 
-	/// Equals sign token.
+	/// @brief Equals sign token.
 	struct equals_token
 	{
-		/// Token type enumerator equivalent of this type.
+		/// @brief Token type enumerator equivalent of this type.
 		static constexpr localization_token_type type{localization_token_type::equals};
 
 		//
 
-		/// Number of the line the token is on.
+		/// @brief Number of the line the token is on.
 		int line;
 	};
 
-	/// Opening brace token.
+	/// @brief Opening brace token.
 	struct opening_brace_token
 	{
-		/// Token type enumerator equivalent of this type.
+		/// @brief Token type enumerator equivalent of this type.
 		static constexpr localization_token_type type{localization_token_type::opening_brace};
 
 		//
 
-		/// Number of the line the token is on.
+		/// @brief Number of the line the token is on.
 		int line;
 	};
 
-	/// Closing brace token.
+	/// @brief Closing brace token.
 	struct closing_brace_token
 	{
-		/// Token type enumerator equivalent of this type.
+		/// @brief Token type enumerator equivalent of this type.
 		static constexpr localization_token_type type{localization_token_type::closing_brace};
 
 		//
 
-		/// Number of the line the token is on.
+		/// @brief Number of the line the token is on.
 		int line;
 	};
 
-	/// Concept denoting a localization token.
+	/// @brief Concept checking for a localization token.
+	/// @tparam Target Type to check for being a localization token.
 	template <typename Target>
 	concept token = one_of<Target, symbol_token, string_token, equals_token, opening_brace_token, closing_brace_token>;
 } // namespace tr::internal::localization

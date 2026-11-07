@@ -72,7 +72,7 @@ namespace tr
 	{
 	  public:
 		/// @cond sdl_interop
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Wraps an SDL TrueType font.

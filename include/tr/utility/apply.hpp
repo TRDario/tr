@@ -9,18 +9,22 @@
 namespace tr
 {
 #ifdef TR_DOXYGEN
-	/// Type trait checking whether a functor of type `Target` can be applied on an object of type `TupleLike`.
+	/// @ingroup meta
+	/// @brief Type trait checking whether a functor of type `Target` can be applied on an object of type `TupleLike`.
+	/// @tparam Target Type to check for being applicable to `TupleLike`.
 	/// @tparam TupleLike Tuple-like argument type.
 	template <typename Target, typename TupleLike>
 	struct is_applicable
 	{
-		/// Holds whether a functor of type `Target` can be applied on an object of type `TupleLike`.
+		/// @brief Holds whether a functor of type `Target` can be applied on an object of type `TupleLike`.
 		static constexpr bool value;
 	};
 #else
 	namespace internal
 	{
-		/// Type trait checking whether a functor of type `Target` can be applied on an object of type `TupleLike`.
+		/// @ingroup meta
+		/// @brief Type trait checking whether a functor of type `Target` can be applied on an object of type `TupleLike`.
+		/// @tparam Target Type to check for being applicable to `TupleLike`.
 		/// @tparam TupleLike Tuple-like argument type.
 		/// @tparam IndexSequence Instance of `std::index_sequence` holding the indices of the tuple-like type.
 		/// @details This is the basal implementation for non-tuple-like second arguments.
@@ -29,7 +33,9 @@ namespace tr
 		{
 		};
 
-		/// Type trait checking whether a functor of type `Target` can be applied on an object of type `TupleLike`.
+		/// @ingroup meta
+		/// @brief Type trait checking whether a functor of type `Target` can be applied on an object of type `TupleLike`.
+		/// @tparam Target Type to check for being applicable to `TupleLike`.
 		/// @tparam TupleLike Tuple-like argument type.
 		/// @tparam Indices Indices of the tuple-like type.
 		/// @details This is the implementation for tuple-like second arguments.
@@ -41,7 +47,9 @@ namespace tr
 		};
 	} // namespace internal
 
-	/// Type trait checking whether a functor of type `Target` can be applied on an object of type `TupleLike`.
+	/// @ingroup meta
+	/// @brief Type trait checking whether a functor of type `Target` can be applied on an object of type `TupleLike`.
+	/// @tparam Target Type to check for being applicable to `TupleLike`.
 	/// @tparam TupleLike Tuple-like argument type.
 	/// @details This is the basal implementation for non-tuple-like second arguments.
 	template <typename Target, typename TupleLike>
@@ -49,7 +57,9 @@ namespace tr
 	{
 	};
 
-	/// Specialization of `is_applicable` for a tuple-like second argument.
+	/// @ingroup meta
+	/// @brief Specialization of `is_applicable` for a tuple-like second argument.
+	/// @tparam Target Type to check for being applicable to `TupleLike`.
 	/// @tparam TupleLike Tuple-like argument type.
 	/// @details This is the implementation for tuple-like second arguments.
 	template <typename Target, typename TupleLike>
@@ -60,12 +70,16 @@ namespace tr
 	};
 #endif
 
-	/// Checks whether a functor of type `Target` can be applied on an object of type `TupleLike`.
+	/// @ingroup meta
+	/// @brief Checks whether a functor of type `Target` can be applied on an object of type `TupleLike`.
+	/// @tparam Target Type to check for being applicable to `TupleLike`.
 	/// @tparam TupleLike Tuple-like argument type.
 	template <typename Target, typename TupleLike>
 	inline constexpr bool is_applicable_v{is_applicable<Target, TupleLike>::value};
 
-	/// Concept denoting a functor that can be applied on tuple-like objects of a specific type.
+	/// @ingroup meta
+	/// @brief Concept checking for a functor that can be applied on tuple-like objects of a specific type.
+	/// @tparam Target Type to check for being applicable to `TupleLike`.
 	/// @tparam TupleLike Tuple-like argument type.
 	template <typename Target, typename TupleLike>
 	concept applicable = is_applicable_v<Target, TupleLike>;
@@ -73,22 +87,24 @@ namespace tr
 	//
 
 #ifdef TR_DOXYGEN
-	/// Type trait deducing the result type of applying a callable object with a tuple of arguments.
-	/// @tparam Callable Callable object type.
+	/// @ingroup meta
+	/// @brief Type trait deducing the result type of applying a callable object with a tuple of arguments.
+	/// @tparam Callable Callable type applicable on `TupleLike`.
 	/// @tparam TupleLike Tuple-like argument type.
-	template <typename Target, typename TupleLike>
-		requires applicable<Target, TupleLike>
-	struct apply_result<Target, TupleLike>
+	template <typename Callable, typename TupleLike>
+		requires applicable<Callable, TupleLike>
+	struct apply_result<Callable, TupleLike>
 	{
-		/// Deduced result type of applying a callable object with a tuple of arguments.
+		/// @brief Deduced result type of applying a callable object with a tuple of arguments.
 		/// @hideinitializer
 		using type = void;
 	};
 #else
 	namespace internal
 	{
-		/// Type trait deducing the result type of applying a callable object with a tuple of arguments.
-		/// @tparam Callable Callable object type.
+		/// @ingroup meta
+		/// @brief Type trait deducing the result type of applying a callable object with a tuple of arguments.
+		/// @tparam Callable Callable type applicable on `TupleLike`.
 		/// @tparam TupleLike Tuple-like argument type.
 		/// @tparam IndexSequence Instance of `std::index_sequence` holding the indices of the tuple-like type.
 		/// @details This is a stub for invalid invocations of the type trait.
@@ -98,8 +114,9 @@ namespace tr
 			static_assert(false, "Arguments do not fulfill the requirement 'tr::applicable<Callable, TupleLike>'.");
 		};
 
-		/// Type trait deducing the result type of applying a callable object with a tuple of arguments.
-		/// @tparam Callable Callable object type.
+		/// @ingroup meta
+		/// @brief Type trait deducing the result type of applying a callable object with a tuple of arguments.
+		/// @tparam Callable Callable type applicable on `TupleLike`.
 		/// @tparam TupleLike Tuple-like argument type.
 		/// @tparam Indices Indices of the tuple-like type.
 		/// @details Assumes `tr::applicable<Callable, TupleLike>` holds.
@@ -110,8 +127,9 @@ namespace tr
 		};
 	} // namespace internal
 
-	/// Type trait deducing the result type of applying a callable object with a tuple of arguments.
-	/// @tparam Callable Callable object type.
+	/// @ingroup meta
+	/// @brief Type trait deducing the result type of applying a callable object with a tuple of arguments.
+	/// @tparam Callable Callable type applicable on `TupleLike`.
 	/// @tparam TupleLike Tuple-like argument type.
 	/// @details This is a stub for invalid invocations of the type trait.
 	template <typename Callable, typename TupleLike>
@@ -120,8 +138,9 @@ namespace tr
 		static_assert(false, "Arguments do not fulfill the requirement 'tr::applicable<Callable, TupleLike>'.");
 	};
 
-	/// Type trait deducing the result type of applying a callable object with a tuple of arguments.
-	/// @tparam Callable Callable object type.
+	/// @ingroup meta
+	/// @brief Type trait deducing the result type of applying a callable object with a tuple of arguments.
+	/// @tparam Callable Callable type applicable on `TupleLike`.
 	/// @tparam TupleLike Tuple-like argument type.
 	template <typename Target, typename TupleLike>
 		requires applicable<Target, TupleLike>
@@ -131,8 +150,9 @@ namespace tr
 	};
 #endif
 
-	/// Deduced result type of applying a callable object with a tuple of arguments.
-	/// @tparam Callable Function being invoked.
+	/// @ingroup meta
+	/// @brief Returns the result type of applying a callable object with a tuple of arguments.
+	/// @tparam Callable Callable type applicable on `TupleLike`.
 	/// @tparam Tuple Tuple holding the argument types.
 	template <typename Callable, typename TupleLike>
 	using apply_result_t = apply_result<Callable, TupleLike>::type;

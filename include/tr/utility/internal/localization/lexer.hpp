@@ -10,108 +10,146 @@
 
 namespace tr::internal::localization
 {
-	/// Localization file lexer.
+	/// @brief Localization file lexer.
 	class lexer
 	{
 	  public:
 		/// @name Results
 		/// @{
 
-		/// Result of `handle_char()`.
+		/// @brief Result of `handle_char()`.
 		struct handle_char_result
 			: optional_result<result_values<symbol_token, string_token, equals_token, opening_brace_token, closing_brace_token>,
 							  result_errors<unexpected_backslash, unexpected_slash, unknown_escape_sequence>>
 		{
-			/// Whether the processed character was consumed.
+			/// @brief Whether the processed character was consumed.
 			bool consumed_character;
 		};
 
-		/// Result of `handle_eof()`.
+		/// @brief Result of `handle_eof()`.
 		using handle_eof_result = optional_result<result_values<symbol_token>,
 												  result_errors<unexpected_slash, unterminated_multiline_comment, unterminated_string>>;
 
 		/// @}
 
-		/// Constructs a localization lexer.
+		/// @brief Constructs a localization lexer.
 		[[nodiscard]] lexer() noexcept = default;
 
 		//
 
-		/// Handles a character.
+		/// @brief Handles a character.
+		/// @param character Character to handle.
+		/// @par Exception safety
+		/// If an exception is thrown, `*this` is left in a valid, but unspecified state (basic exception guarantee).
 		/// @return A token if matched successfully, a lexer error if something went wrong, or nothing otherwise.
-		[[nodiscard]] handle_char_result handle_char(char chr);
+		[[nodiscard]] handle_char_result handle_char(char character);
 
-		/// Handles EOF.
+		/// @brief Handles end-of-file.
 		/// @return A token if matched successfully, a lexer error if something went wrong, or nothing otherwise.
 		[[nodiscard]] handle_eof_result handle_eof() noexcept;
 
 	  private:
-		/// Lexer states.
+		/// @brief Lexer states.
 		enum class state
 		{
-			/// The lexer is ready to match any token.
+			/// @brief The lexer is ready to match any token.
 			matching_any,
 
-			/// Recieved '/', waiting for '/' or '*' to determine the type.
+			/// @brief Recieved '/', waiting for '/' or '*' to determine the type.
 			matching_comment,
 
-			/// Consuming characters belonging to a line comment.
+			/// @brief Consuming characters belonging to a line comment.
 			matching_line_comment,
 
-			/// Consuming characters belonging to a multline comment.
+			/// @brief Consuming characters belonging to a multline comment.
 			matching_multiline_comment,
 
-			/// Recieved '*' in a multiline comment, waiting for '/' to end the comment or something else to continue.
+			/// @brief Recieved '*' in a multiline comment, waiting for '/' to end the comment or something else to continue.
 			matching_multiline_comment_asterisk,
 
-			/// Matching a symbol.
+			/// @brief Matching a symbol.
 			matching_symbol,
 
-			/// Matching a string.
+			/// @brief Matching a string.
 			matching_string,
 
-			/// Matching an escape sequence within a string.
+			/// @brief Matching an escape sequence within a string.
 			matching_string_escape_sequence,
 		};
 
 		//
 
-		/// Current lexer state.
+		/// @brief Current lexer state.
 		state m_state{state::matching_any};
 
-		/// Current line number.
+		/// @brief Current line number.
 		int m_line{1};
 
-		/// Starting line number of the token currently being matched.
+		/// @brief Starting line number of the token currently being matched.
 		int m_token_start_line;
 
-		/// Buffer used to store the characters of a symbol name or string.
+		/// @brief Buffer used to store the characters of a symbol name or string.
 		std::string m_token_buffer;
 
-		//
+		/// @name Character handling
+		/// @{
 
-		/// Branch of `handle_char()` for `state::matching_any`.
+		/// @brief Branch of `handle_char()` for `state::matching_any`.
+		/// @param character Character to handle.
+		/// @par Exception safety
+		/// If an exception is thrown, `*this` is left in a valid, but unspecified state (basic exception guarantee).
+		/// @return A token if matched successfully, a lexer error if something went wrong, or nothing otherwise.
 		[[nodiscard]] handle_char_result handle_any_char(char character);
 
-		/// Branch of `handle_char()` for `state::matching_comment`.
+		/// @brief Branch of `handle_char()` for `state::matching_comment`.
+		/// @param character Character to handle.
+		/// @par Exception safety
+		/// If an exception is thrown, `*this` is left in a valid, but unspecified state (basic exception guarantee).
+		/// @return A token if matched successfully, a lexer error if something went wrong, or nothing otherwise.
 		[[nodiscard]] handle_char_result handle_comment_type_char(char character);
 
-		/// Branch of `handle_char()` for `state::matching_line_comment`.
+		/// @brief Branch of `handle_char()` for `state::matching_line_comment`.
+		/// @param character Character to handle.
+		/// @par Exception safety
+		/// If an exception is thrown, `*this` is left in a valid, but unspecified state (basic exception guarantee).
+		/// @return A token if matched successfully, a lexer error if something went wrong, or nothing otherwise.
 		[[nodiscard]] handle_char_result handle_line_comment_char(char character);
 
-		/// Branch of `handle_char()` for `state::matching_multiline_comment`.
+		/// @brief Branch of `handle_char()` for `state::matching_multiline_comment`.
+		/// @param character Character to handle.
+		/// @par Exception safety
+		/// If an exception is thrown, `*this` is left in a valid, but unspecified state (basic exception guarantee).
+		/// @return A token if matched successfully, a lexer error if something went wrong, or nothing otherwise.
 		[[nodiscard]] handle_char_result handle_multiline_comment_char(char character);
 
-		/// Branch of `handle_char()` for `state::matching_multiline_comment_asterisk`.
+		/// @brief Branch of `handle_char()` for `state::matching_multiline_comment_asterisk`.
+		/// @param character Character to handle.
+		/// @par Exception safety
+		/// If an exception is thrown, `*this` is left in a valid, but unspecified state (basic exception guarantee).
+		/// @return A token if matched successfully, a lexer error if something went wrong, or nothing otherwise.
 		[[nodiscard]] handle_char_result handle_multiline_comment_asterisk_char(char character);
 
-		/// Branch of `handle_char()` for `state::matching_symbol`.
+		/// @brief Branch of `handle_char()` for `state::matching_symbol`.
+		/// @param character Character to handle.
+		/// @par Exception safety
+		/// If an exception is thrown, `*this` is left in a valid, but unspecified state (basic exception guarantee).
+		/// @return A token if matched successfully, a lexer error if something went wrong, or nothing otherwise.
 		[[nodiscard]] handle_char_result handle_symbol_char(char character);
 
-		/// Branch of `handle_char()` for `state::matching_string`.
+		/// @brief Branch of `handle_char()` for `state::matching_string`.
+		/// @param character Character to handle.
+		/// @par Exception safety
+		/// If an exception is thrown, `*this` is left in a valid, but unspecified state (basic exception guarantee).
+		/// @return A token if matched successfully, a lexer error if something went wrong, or nothing otherwise.
 		[[nodiscard]] handle_char_result handle_string_char(char character);
 
-		/// Branch of `handle_char()` for `state::matching_string_escape_sequence`.
+		/// @brief Branch of `handle_char()` for `state::matching_string_escape_sequence`.
+		/// @param character Character to handle.
+		/// @par Exception safety
+		/// If an exception is thrown, `*this` is left in a valid, but unspecified state (basic exception guarantee).
+		/// @return A token if matched successfully, a lexer error if something went wrong, or nothing otherwise.
 		[[nodiscard]] handle_char_result handle_string_escape_sequence_char(char character);
+
+		/// @}
 	};
 } // namespace tr::internal::localization

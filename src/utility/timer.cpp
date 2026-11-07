@@ -15,7 +15,7 @@ using namespace std::chrono_literals;
 
 bool tr::timer::active() const
 {
-	return m_active != nullptr && m_active->load(std::memory_order_acquire);
+	return m_active && m_active->load(std::memory_order_acquire);
 }
 
 //

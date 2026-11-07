@@ -20,10 +20,8 @@ namespace tr
 
 namespace tr
 {
-	/// @name Casts
-	/// @{
-
-	/// Converts a floating point number in the range [0-1] to another floating point number in the range [0-1].
+	/// @ingroup math
+	/// @brief Converts a floating point number in the range [0-1] to another floating point number in the range [0-1].
 	/// @tparam To A floating-point type.
 	/// @tparam From A floating-point type.
 	/// @param from A value in the range [0-1].
@@ -36,7 +34,8 @@ namespace tr
 		return static_cast<To>(from);
 	}
 
-	/// Converts a normalized integer value to another normalized integer value.
+	/// @ingroup math
+	/// @brief Converts a normalized integer value to another normalized integer value.
 	/// @tparam To An integer type.
 	/// @tparam From An integer type.
 	/// @param from A value mapped such that 0 is the minimum, and 1 the maximum value storable by the integer.
@@ -66,7 +65,8 @@ namespace tr
 		}
 	}
 
-	/// Converts an integer representing a normalized value to a floating-point number in the range [0-1].
+	/// @ingroup math
+	/// @brief Converts an integer representing a normalized value to a floating-point number in the range [0-1].
 	/// @tparam To A floating-point type.
 	/// @tparam From An integer type.
 	/// @param from A value mapped such that 0 is the minimum, and 1 the maximum value storable by the integer.
@@ -79,7 +79,8 @@ namespace tr
 		return static_cast<To>(static_cast<double>(norm_cast<UFrom>(from)) / static_cast<double>(std::numeric_limits<UFrom>::max()));
 	}
 
-	/// Converts a floating-point number in the range [0-1] to a normalized integer.
+	/// @ingroup math
+	/// @brief Converts a floating-point number in the range [0-1] to a normalized integer.
 	/// @tparam To An integer type.
 	/// @tparam From The value mapped such that 0 is the minimum, and 1 the maximum value storable by the integer.
 	/// @param from A value in the range [0-1].
@@ -99,6 +100,4 @@ namespace tr
 			return norm_cast<To>(static_cast<UTo>(result));
 		}
 	}
-
-	/// @}
 } // namespace tr

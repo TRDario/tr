@@ -27,13 +27,13 @@ tr::u8 tr::max_msaa() noexcept
 			SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
 			SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, max);
 			SDL_Window* window{SDL_CreateWindow("", 500, 500, SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL)};
-			if (window == nullptr) {
+			if (!window) {
 				max /= 2;
 				continue;
 			}
 			TR_DEFER(SDL_DestroyWindow(window));
 			SDL_GLContext context{SDL_GL_CreateContext(window)};
-			if (context == nullptr) {
+			if (!context) {
 				max /= 2;
 				continue;
 			}

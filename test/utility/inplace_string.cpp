@@ -9,7 +9,7 @@ using namespace std::string_view_literals;
 
 //
 
-/// Tests default-constructing an empty inplace string.
+/// @brief Tests default-constructing an empty inplace string.
 TEST(InplaceStringTest, DefaultConstructsEmpty)
 {
 	const tr::inplace_string<32> empty;
@@ -19,7 +19,7 @@ TEST(InplaceStringTest, DefaultConstructsEmpty)
 	EXPECT_EQ(empty.max_size(), 32);
 }
 
-/// Tests constructing inplace strings sized, with and without a fill character.
+/// @brief Tests constructing inplace strings sized, with and without a fill character.
 TEST(InplaceStringTest, ConstructsWithSize)
 {
 	const tr::inplace_string<32> nul(12);
@@ -33,7 +33,7 @@ TEST(InplaceStringTest, ConstructsWithSize)
 	EXPECT_TRUE(std::ranges::all_of(a, [](char c) { return c == 'a'; }));
 }
 
-/// Tests constructing inplace strings from string literals.
+/// @brief Tests constructing inplace strings from string literals.
 TEST(InplaceStringTest, ConstructsWithLiteral)
 {
 	const tr::inplace_string<32> literal{"literal"};
@@ -42,7 +42,7 @@ TEST(InplaceStringTest, ConstructsWithLiteral)
 	EXPECT_EQ(literal, "literal");
 }
 
-/// Tests constructing inplace strings from string views.
+/// @brief Tests constructing inplace strings from string views.
 TEST(InplaceStringTest, ConstructsWithStringView)
 {
 	const tr::inplace_string<32> view{"string view"sv};
@@ -56,7 +56,7 @@ TEST(InplaceStringTest, ConstructsWithStringView)
 	EXPECT_EQ(string, "string");
 }
 
-/// Tests converting an inplace string into a string view.
+/// @brief Tests converting an inplace string into a string view.
 TEST(InplaceStringTest, ConvertsToStringView)
 {
 	const tr::inplace_string<32> string{"literal"};
@@ -66,7 +66,7 @@ TEST(InplaceStringTest, ConvertsToStringView)
 	EXPECT_EQ(view, "literal");
 }
 
-/// Tests converting an inplace string into a standard string.
+/// @brief Tests converting an inplace string into a standard string.
 TEST(InplaceStringTest, ConvertsToString)
 {
 	const tr::inplace_string<32> string{"literal"};
@@ -76,7 +76,7 @@ TEST(InplaceStringTest, ConvertsToString)
 	EXPECT_EQ(view, "literal");
 }
 
-/// Tests comparing inplace strings.
+/// @brief Tests comparing inplace strings.
 TEST(InplaceStringTest, Compares)
 {
 	constexpr tr::inplace_string<4> test{"test"};
@@ -96,7 +96,7 @@ TEST(InplaceStringTest, Compares)
 	EXPECT_TRUE(test < test1);
 }
 
-/// Tests character and pointer access through an inplace string.
+/// @brief Tests character and pointer access through an inplace string.
 TEST(InplaceStringTest, ProvidesAccess)
 {
 	tr::inplace_string<32> string{"01234"};
@@ -118,7 +118,7 @@ TEST(InplaceStringTest, ProvidesAccess)
 	EXPECT_EQ(string[4], 'Z');
 }
 
-/// Tests iterating through an inplace string.
+/// @brief Tests iterating through an inplace string.
 TEST(InplaceStringTest, Iterates)
 {
 	const tr::inplace_string<32> string{"This is a test!"};
@@ -128,7 +128,7 @@ TEST(InplaceStringTest, Iterates)
 	EXPECT_EQ(std::ranges::distance(string), 15);
 }
 
-/// Tests clearing an inplace string.
+/// @brief Tests clearing an inplace string.
 TEST(InplaceStringTest, Clears)
 {
 	tr::inplace_string<32> string{"test"};
@@ -142,7 +142,7 @@ TEST(InplaceStringTest, Clears)
 	EXPECT_EQ(string.begin(), string.end());
 }
 
-/// Tests appending characters to an inplace string.
+/// @brief Tests appending characters to an inplace string.
 TEST(InplaceStringTest, AppendsCharacter)
 {
 	tr::inplace_string<32> string{"test"};
@@ -163,7 +163,7 @@ TEST(InplaceStringTest, AppendsCharacter)
 	EXPECT_EQ(string, "test!@#");
 }
 
-/// Tests appending strings to an inplace string.
+/// @brief Tests appending strings to an inplace string.
 TEST(InplaceStringTest, AppendsString)
 {
 	tr::inplace_string<32> string{"test"};
@@ -183,7 +183,7 @@ TEST(InplaceStringTest, AppendsString)
 	EXPECT_EQ(string, "test!!!@@@###");
 }
 
-/// Tests inserting into an inplace string.
+/// @brief Tests inserting into an inplace string.
 TEST(InplaceStringTest, Inserts)
 {
 	tr::inplace_string<32> string{"test"};
@@ -203,7 +203,7 @@ TEST(InplaceStringTest, Inserts)
 	EXPECT_EQ(string, "TEST!@#$test");
 }
 
-/// Tests popping back a character from an inplace string.
+/// @brief Tests popping back a character from an inplace string.
 TEST(InplaceStringTest, PopsBack)
 {
 	tr::inplace_string<32> string{"test"};
@@ -214,7 +214,7 @@ TEST(InplaceStringTest, PopsBack)
 	EXPECT_EQ(string, "tes");
 }
 
-/// Tests erasing from an inplace string.
+/// @brief Tests erasing from an inplace string.
 TEST(InplaceStringTest, Erases)
 {
 	tr::inplace_string<32> string{"test!TEST"};
@@ -229,7 +229,7 @@ TEST(InplaceStringTest, Erases)
 	EXPECT_EQ(string, "test");
 }
 
-/// Tests resizing an inplace string.
+/// @brief Tests resizing an inplace string.
 TEST(InplaceStringTest, Resizes)
 {
 	tr::inplace_string<32> string{"test"};
@@ -244,21 +244,13 @@ TEST(InplaceStringTest, Resizes)
 	EXPECT_EQ(string, "te");
 }
 
-/// Tests outputting an inplace string to a stream.
-TEST(InplaceStringTest, OutputsToStream)
-{
-	std::ostringstream stream;
-	stream << tr::inplace_string<4>{"test"};
-	EXPECT_EQ(stream.str(), "test");
-}
-
-/// Tests formatting an inplace string.
+/// @brief Tests formatting an inplace string.
 TEST(InplaceStringTest, Formats)
 {
 	EXPECT_EQ(std::format("{}", tr::inplace_string<4>{"test"}), "test");
 }
 
-/// Tests binary-writing an inplace string.
+/// @brief Tests binary-writing an inplace string.
 TEST(InplaceStringTest, WritesBinary)
 {
 	std::stringstream stream;

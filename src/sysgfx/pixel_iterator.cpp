@@ -36,7 +36,7 @@ bool tr::const_pixel_iterator::operator==(const const_pixel_iterator& rhs) const
 
 tr::const_pixel_iterator::value_type tr::const_pixel_iterator::operator*() const noexcept
 {
-	TR_ASSERT(m_bitmap_begin != nullptr, "Tried to dereference a singular pixel iterator.");
+	TR_ASSERT(m_bitmap_begin, "Tried to dereference a singular pixel iterator.");
 
 	return const_pixel_proxy{m_bitmap_begin + m_byte_offset, m_bitmap_format};
 }
@@ -48,7 +48,7 @@ tr::const_pixel_iterator& tr::const_pixel_iterator::operator++() noexcept
 
 tr::const_pixel_iterator& tr::const_pixel_iterator::operator+=(difference_type diff) noexcept
 {
-	TR_ASSERT(m_bitmap_begin != nullptr, "Tried to perform arithmetic on a singular pixel iterator.");
+	TR_ASSERT(m_bitmap_begin, "Tried to perform arithmetic on a singular pixel iterator.");
 
 	const difference_type new_pixel_offset{pixel_offset() + diff};
 	const difference_type new_pixel_y_offset{new_pixel_offset / m_bitmap_width};
@@ -77,7 +77,7 @@ tr::const_pixel_iterator::difference_type tr::operator-(const const_pixel_iterat
 
 glm::ivec2 tr::const_pixel_iterator::pos() const noexcept
 {
-	TR_ASSERT(m_bitmap_begin != nullptr, "Tried to get position of a singular pixel iterator.");
+	TR_ASSERT(m_bitmap_begin, "Tried to get position of a singular pixel iterator.");
 
 	const difference_type pixel_offset{this->pixel_offset()};
 	return glm::ivec2{pixel_offset % m_bitmap_width, pixel_offset / m_bitmap_width};
@@ -85,7 +85,7 @@ glm::ivec2 tr::const_pixel_iterator::pos() const noexcept
 
 tr::const_pixel_iterator::difference_type tr::const_pixel_iterator::pixel_offset() const noexcept
 {
-	TR_ASSERT(m_bitmap_begin != nullptr, "Tried to get pixel offset of a singular pixel iterator.");
+	TR_ASSERT(m_bitmap_begin, "Tried to get pixel offset of a singular pixel iterator.");
 
 	const difference_type current_pixel_y_offset{m_byte_offset / m_bitmap_pitch};
 	const difference_type current_pixel_x_offset{m_byte_offset % m_bitmap_pitch / pixel_bytes(m_bitmap_format)};
@@ -122,7 +122,7 @@ bool tr::pixel_iterator::operator==(const pixel_iterator& rhs) const noexcept
 
 tr::pixel_iterator::value_type tr::pixel_iterator::operator*() const noexcept
 {
-	TR_ASSERT(m_bitmap_begin != nullptr, "Tried to dereference a singular pixel iterator.");
+	TR_ASSERT(m_bitmap_begin, "Tried to dereference a singular pixel iterator.");
 
 	return pixel_proxy{m_bitmap_begin + m_byte_offset, m_bitmap_format};
 }
@@ -134,7 +134,7 @@ tr::pixel_iterator& tr::pixel_iterator::operator++() noexcept
 
 tr::pixel_iterator& tr::pixel_iterator::operator+=(difference_type diff) noexcept
 {
-	TR_ASSERT(m_bitmap_begin != nullptr, "Tried to perform arithmetic on a singular pixel iterator.");
+	TR_ASSERT(m_bitmap_begin, "Tried to perform arithmetic on a singular pixel iterator.");
 
 	const difference_type new_pixel_offset{pixel_offset() + diff};
 	const difference_type new_pixel_y_offset{new_pixel_offset / m_bitmap_width};
@@ -163,7 +163,7 @@ tr::pixel_iterator::difference_type tr::operator-(const pixel_iterator& lhs, con
 
 glm::ivec2 tr::pixel_iterator::pos() const noexcept
 {
-	TR_ASSERT(m_bitmap_begin != nullptr, "Tried to get position of a singular pixel iterator.");
+	TR_ASSERT(m_bitmap_begin, "Tried to get position of a singular pixel iterator.");
 
 	const difference_type pixel_offset{this->pixel_offset()};
 	return glm::ivec2{pixel_offset % m_bitmap_width, pixel_offset / m_bitmap_width};
@@ -171,7 +171,7 @@ glm::ivec2 tr::pixel_iterator::pos() const noexcept
 
 tr::pixel_iterator::difference_type tr::pixel_iterator::pixel_offset() const noexcept
 {
-	TR_ASSERT(m_bitmap_begin != nullptr, "Tried to get pixel offset of a singular pixel iterator.");
+	TR_ASSERT(m_bitmap_begin, "Tried to get pixel offset of a singular pixel iterator.");
 
 	const difference_type current_pixel_y_offset{m_byte_offset / m_bitmap_pitch};
 	const difference_type current_pixel_x_offset{m_byte_offset % m_bitmap_pitch / pixel_bytes(m_bitmap_format)};

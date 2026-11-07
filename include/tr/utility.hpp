@@ -19,7 +19,6 @@
 #include <tr/utility/color_hex_code.hpp>            // IWYU pragma: export
 #include <tr/utility/copy_qualifiers.hpp>           // IWYU pragma: export
 #include <tr/utility/defer.hpp>                     // IWYU pragma: export
-#include <tr/utility/draw_geometry.hpp>             // IWYU pragma: export
 #include <tr/utility/dynamic_ref_cast.hpp>          // IWYU pragma: export
 #include <tr/utility/encryption.hpp>                // IWYU pragma: export
 #include <tr/utility/enum.hpp>                      // IWYU pragma: export
@@ -34,7 +33,6 @@
 #include <tr/utility/iostream.hpp>                  // IWYU pragma: export
 #include <tr/utility/iterator_concepts.hpp>         // IWYU pragma: export
 #include <tr/utility/iterator_interface.hpp>        // IWYU pragma: export
-#include <tr/utility/line.hpp>                      // IWYU pragma: export
 #include <tr/utility/localization_map.hpp>          // IWYU pragma: export
 #include <tr/utility/localization_script.hpp>       // IWYU pragma: export
 #include <tr/utility/localization_script_error.hpp> // IWYU pragma: export
@@ -71,15 +69,49 @@
 #include <tr/utility/zstring_view.hpp>              // IWYU pragma: export
 #include <tr/utility/zstring_view_zspan.hpp>        // IWYU pragma: export
 
-/// Namespace containing all tr functionality
+/// @brief Namespace containing all tr functionality
 namespace tr
 {
-	/// Namespace containing all aliases defined by tr.
+	/// @brief Namespace containing all aliases defined by tr.
 	inline namespace aliases
 	{
 	}
-	/// Namespace containing all literals defined by tr.
+	/// @brief Namespace containing all literals defined by tr.
 	inline namespace literals
 	{
 	}
 } // namespace tr
+
+// clang-format off
+/// @defgroup utility Utility module
+/// @brief Contains functionality from the utility module.
+/// @details The utility module provides mostly helper functionality supplemental to the other modules.
+
+	/// @defgroup color Colors
+	/// @brief Contains color datatypes, casting, and hex code conversion functionality.
+	/// @ingroup utility
+
+	/// @defgroup containers Containers
+	/// @brief Contains various container types.
+	/// @ingroup utility
+
+		/// @ingroup containers
+		/// @defgroup handle Handles
+		/// @brief Contains handle management utilities.
+
+		/// @ingroup containers
+		/// @defgroup localization Localization
+		/// @brief Contains `tr::localization_map` and localization script parsing support.
+
+	/// @defgroup math Math and geometry
+	/// @brief Contains math and geometry utilities.
+	/// @ingroup utility
+
+	/// @defgroup meta Metaprogramming
+	/// @brief Contains concepts, macros, mixins, and type traits.
+	/// @ingroup utility
+
+	/// @defgroup wrappers Wrappers
+	/// @brief Contains ergonomic wrappers over existing functionality.
+	/// @ingroup utility
+// clang-format on

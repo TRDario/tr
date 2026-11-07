@@ -8,14 +8,16 @@
 
 namespace tr
 {
-	/// Wraps an enum class to allow conversion to bool, used in `TR_DEFINE_ENUM_BITMASK_OPERATORS`.
+	/// @ingroup meta
+	/// @brief Wrapper around an enumerator to allow conversion to bool.
+	/// @details This wrapper is primarily used in `TR_DEFINE_ENUM_BITMASK_OPERATORS`.
 	/// @tparam Enum Wrapped enumerator type.
 	template <typename Enum>
 		requires std::is_enum_v<Enum>
 	class enum_wrapper
 	{
 	  public:
-		/// Wraps an enumerator value.
+		/// @brief Wraps an enumerator value.
 		/// @param value Raw enumerator value.
 		[[nodiscard]] constexpr enum_wrapper(Enum value) noexcept
 			: m_value{value}
@@ -24,21 +26,21 @@ namespace tr
 
 		//
 
-		/// Converts the enumerator to a boolean.
+		/// @brief Converts the enumerator to a boolean.
 		/// @return Enumerator cast to a boolean.
 		[[nodiscard]] constexpr explicit operator bool() const noexcept
 		{
 			return m_value != Enum{0};
 		}
 
-		/// Unwraps the enumerator.
+		/// @brief Unwraps the enumerator.
 		/// @return Raw enumerator value.
 		[[nodiscard]] constexpr operator Enum() const noexcept
 		{
 			return m_value;
 		}
 
-		/// Unwraps the enumerator.
+		/// @brief Unwraps the enumerator.
 		/// @return Raw enumerator value.
 		[[nodiscard]] constexpr Enum unwrap() const noexcept
 		{
@@ -46,12 +48,13 @@ namespace tr
 		}
 
 	  private:
-		/// Base enumerator value.
+		/// @brief Base enumerator value.
 		Enum m_value;
 	};
 } // namespace tr
 
-/// Defines bitmask operators (&, |, ^, ~) for enum class types.
+/// @ingroup meta
+/// @brief Defines bitmask operators (&, |, ^, ~) for enum class types.
 /// @param type Enumerator class type.
 /// @hideinitializer
 #define TR_DEFINE_ENUM_BITMASK_OPERATORS(type)                                                                                             \
@@ -84,7 +87,9 @@ namespace tr
 		return lhs = (lhs ^ rhs);                                                                                                          \
 	}
 
-/// Defines bitmask operators (&, |, ^, ~) for private enum class types of classes.
+/// @ingroup meta
+/// @brief Defines bitmask operators (&, |, ^, ~) for private enum class types of classes.
+/// @details This macro must be invoked in the body of the class containing the enum class.
 /// @param type Private enumerator class type.
 /// @hideinitializer
 #define TR_DEFINE_PRIVATE_ENUM_BITMASK_OPERATORS(type)                                                                                     \

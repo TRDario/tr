@@ -7,11 +7,13 @@
 //
 
 tr::atlas_packer::atlas_packer()
-	: m_skyline{{0, 0}}
+	: m_skyline{glm::u16vec2{0, 0}}
 {
 }
 
-void tr::atlas_packer::clear()
+//
+
+void tr::atlas_packer::clear() noexcept
 {
 	m_skyline.clear();
 	m_skyline.push_back({});
@@ -37,7 +39,7 @@ std::optional<glm::u16vec2> tr::atlas_packer::try_insert(glm::u16vec2 size, glm:
 
 		const u16 x_max = p.x + size.x;
 		std::vector<glm::u16vec2>::iterator end_it;
-		for (end_it = std::next(begin_it); end_it < m_skyline.end(); ++end_it) {
+		for (end_it = std::ranges::next(begin_it); end_it < m_skyline.end(); ++end_it) {
 			if (x_max <= end_it->x) {
 				break;
 			}
@@ -59,12 +61,18 @@ std::optional<glm::u16vec2> tr::atlas_packer::try_insert(glm::u16vec2 size, glm:
 		return std::nullopt;
 	}
 
-	const glm::u16vec2 tl{best.x, best.y + size.y};
-	const glm::u16vec2 br{best.x + size.x, std::prev(best_end_it)->y};
-	best_begin_it = m_skyline.erase(best_begin_it, best_end_it);
-	best_end_it = ++m_skyline.emplace(best_begin_it, tl);
-	if ((best_end_it != m_skyline.end() && br.x < best_end_it->x) || (best_end_it == m_skyline.end() && br.x < texture_size.x)) {
-		m_skyline.emplace(best_end_it, br);
+	try {
+		const glm::u16vec2 tl{best.x, best.y + size.y};
+		const glm::u16vec2 br{best.x + size.x, std::prev(best_end_it)->y};
+		best_begin_it = m_skyline.erase(best_begin_it, best_end_it);
+		best_end_it = std::ranges::next(m_skyline.emplace(best_begin_it, tl));
+		if ((best_end_it != m_skyline.end() && br.x < best_end_it->x) || (best_end_it == m_skyline.end() && br.x < texture_size.x)) {
+			m_skyline.emplace(best_end_it, br);
+		}
+	}
+	catch (std::exception& error) {
+		clear();
+		throw error;
 	}
 
 	return best;

@@ -6,7 +6,7 @@
 
 //
 
-/// Tests that the 'what()' string builds correctly in a class inherited from `tr::exception`.
+/// @brief Tests that the 'what()' string builds correctly in a class inherited from `tr::exception`.
 TEST(ExceptionTest, BuildsWhatStringCorrectly)
 {
 	struct test_error : public tr::exception

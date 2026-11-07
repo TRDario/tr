@@ -8,7 +8,8 @@
 
 namespace tr
 {
-	/// Periodic timer class running a callback at a fixed interval.
+	/// @ingroup utility
+	/// @brief Periodic timer class running a callback at a fixed interval.
 	/// @details
 	/// Timers are movable, but not copyable. A moved-from timer reverts to an inactive state.
 	///
@@ -16,22 +17,22 @@ namespace tr
 	class timer
 	{
 	  public:
-		/// Callback function signature expected by the timer.
+		/// @brief Callback function signature expected by the timer.
 		using callback = std::function<void()>;
 
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Constructs an inactive timer.
+		/// @brief Constructs an inactive timer.
 		[[nodiscard]] timer() = default;
 
-		/// Constructs an active timer.
-		/// @warning If the callback throws an exception, the timer will silently go inactive.
+		/// @brief Constructs an active timer.
 		/// @tparam Rep Duration representation.
 		/// @tparam Period Duration period.
 		/// @tparam Callback Base callback object type.
 		/// @param interval Interval at which the callback is called.
 		/// @param cb Callback object.
+		/// @warning If the callback throws an exception, the timer will silently go inactive.
 		template <typename Rep, typename Period, std::convertible_to<std::function<void()>> Callback>
 		[[nodiscard]] timer(const std::chrono::duration<Rep, Period>& interval, Callback&& cb)
 			: m_active{std::make_shared<std::atomic_bool>(true)}
@@ -40,25 +41,25 @@ namespace tr
 		}
 
 		/// @}
-		/// @name Status
+		/// @name Observers
 		/// @{
 
-		/// Reports whether the timer is active.
+		/// @brief Checks whether the timer is active.
 		/// @return `true` if the timer is active, `false` otherwise.
 		[[nodiscard]] bool active() const;
 
 		/// @}
 
 	  private:
-		/// Timer activity status.
+		/// @brief Timer activity status.
 		std::shared_ptr<std::atomic_bool> m_active;
 
-		/// Timer thread.
+		/// @brief Timer thread.
 		std::jthread m_thread;
 
 		//
 
-		/// Loop thread used by timer threads.
+		/// @brief Loop thread used by timer threads.
 		/// @param stoken Thread stop token.
 		/// @param interval Timer interval.
 		/// @param cb Callback object.

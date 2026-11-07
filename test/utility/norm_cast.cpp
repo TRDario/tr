@@ -7,7 +7,7 @@
 
 //
 
-/// Tests a float-to-float normalized cast.
+/// @brief Tests a float-to-float normalized cast.
 TEST(NormCastTest, FloatToFloat)
 {
 	EXPECT_FLOAT_EQ(tr::norm_cast<float>(0.0), 0.0f);
@@ -18,7 +18,7 @@ TEST(NormCastTest, FloatToFloat)
 	EXPECT_DOUBLE_EQ(tr::norm_cast<double>(1.0f), 1.0);
 }
 
-/// Tests an int-to-int sign conversion normalized cast.
+/// @brief Tests an int-to-int sign conversion normalized cast.
 TEST(NormCastTest, IntTointSignConversion)
 {
 	EXPECT_EQ(tr::norm_cast<tr::u8>(std::numeric_limits<tr::i8>::min()), std::numeric_limits<tr::u8>::min());
@@ -32,7 +32,7 @@ TEST(NormCastTest, IntTointSignConversion)
 	EXPECT_EQ(tr::norm_cast<tr::i8>(std::numeric_limits<tr::u8>::max()), std::numeric_limits<tr::i8>::max());
 }
 
-/// Tests an int-to-int widening normalized cast.
+/// @brief Tests an int-to-int widening normalized cast.
 TEST(NormCastTest, IntTointWidening)
 {
 	using namespace tr::integer_literals;
@@ -68,7 +68,7 @@ TEST(NormCastTest, IntTointWidening)
 	EXPECT_EQ(tr::norm_cast<tr::u64>(std::numeric_limits<tr::u32>::max()), std::numeric_limits<tr::u64>::max());
 }
 
-/// Tests an int-to-int narrowing normalized cast.
+/// @brief Tests an int-to-int narrowing normalized cast.
 TEST(NormCastTest, IntToIntNarrowing)
 {
 	using namespace tr::integer_literals;
@@ -104,7 +104,7 @@ TEST(NormCastTest, IntToIntNarrowing)
 	EXPECT_EQ(tr::norm_cast<tr::u32>(std::numeric_limits<tr::u64>::max()), std::numeric_limits<tr::u32>::max());
 }
 
-/// Tests an int-to-float normalized cast.
+/// @brief Tests an int-to-float normalized cast.
 TEST(NormCastTest, IntToFloat)
 {
 	using namespace tr::integer_literals;
@@ -125,7 +125,7 @@ TEST(NormCastTest, IntToFloat)
 	EXPECT_FLOAT_EQ(tr::norm_cast<float>(std::numeric_limits<tr::i64>::max()), 1.0f);
 }
 
-/// Tests a float-to-int normalized cast.
+/// @brief Tests a float-to-int normalized cast.
 TEST(NormCastTest, FloatToInt)
 {
 	EXPECT_EQ(tr::norm_cast<tr::u8>(0.0f), std::numeric_limits<tr::u8>::min());

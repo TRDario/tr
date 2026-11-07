@@ -8,14 +8,14 @@
 
 namespace tr
 {
-	/// Exception thrown when a file was not found.
+	/// @brief Exception thrown when a file was not found.
 	class file_not_found : public exception
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Constructs an exception.
+		/// @brief Constructs an exception.
 		/// @param path Path to the file that wasn't found.
 		[[nodiscard]] file_not_found(std::string_view path);
 
@@ -23,39 +23,39 @@ namespace tr
 		/// @name Information
 		/// @{
 
-		/// Gets the name of the error.
+		/// @brief Returns the name of the error.
 		/// @return `"File not found"`.
 		[[nodiscard]] std::string_view name() const noexcept override;
 
-		/// Gets the description of the error.
+		/// @brief Returns the description of the error.
 		/// @return Path to the file that wasn't found.
 		[[nodiscard]] std::string_view description() const noexcept override;
 
-		/// Gets further details about the error.
+		/// @brief Returns further details about the error.
 		/// @return Always empty.
 		[[nodiscard]] std::string_view details() const noexcept override;
 
 		//
 
-		/// Gets the path to the file that wasn't found.
+		/// @brief Returns the path to the file that wasn't found.
 		/// @return Path to the file that wasn't found.
 		[[nodiscard]] const std::string& path() const noexcept;
 
 		/// @}
 
 	  private:
-		/// Path to the affected file.
+		/// @brief Path to the affected file.
 		std::string m_path;
 	};
 
-	/// Exception thrown when a file opening fails.
+	/// @brief Exception thrown when a file opening fails.
 	class file_open_error : public exception
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Constructs an exception.
+		/// @brief Constructs an exception.
 		/// @param path Path to the file that failed to open.
 		[[nodiscard]] file_open_error(std::string_view path);
 
@@ -63,41 +63,41 @@ namespace tr
 		/// @name Information
 		/// @{
 
-		/// Gets the name of the error.
+		/// @brief Returns the name of the error.
 		/// @return `"File opening error"`.
 		[[nodiscard]] std::string_view name() const noexcept override;
 
-		/// Gets the description of the error.
+		/// @brief Returns the description of the error.
 		/// @return Path to the file whose opening failed.
 		[[nodiscard]] std::string_view description() const noexcept override;
 
-		/// Gets further details about the error.
+		/// @brief Returns further details about the error.
 		/// @return Always empty.
 		[[nodiscard]] std::string_view details() const noexcept override;
 
 		//
 
-		/// Gets the path to the file that failed to open.
+		/// @brief Returns the path to the file that failed to open.
 		/// @return Path to the file that failed to open.
 		[[nodiscard]] const std::string& path() const noexcept;
 
 		/// @}
 
 	  private:
-		/// Path to the affected file.
+		/// @brief Path to the affected file.
 		std::string m_path;
 	};
 
 	//
 
-	/// Opens a file for writing with extra checks.
+	/// @brief Opens a file for writing with extra checks.
 	/// @param path Path to the file to open.
 	/// @param openmode Stream opening mode.
 	/// @exception file_open_error If opening the file failed.
 	/// @return Output stream to the file at `path`.
 	[[nodiscard]] std::ofstream open_file_w(const std::filesystem::path& path, std::ios::openmode openmode = std::ios::out);
 
-	/// Opens a file for reading with extra checks.
+	/// @brief Opens a file for reading with extra checks.
 	/// @param path Path to the file to open.
 	/// @param openmode Stream opening mode.
 	/// @exception file_not_found If the file was not found.
@@ -107,7 +107,7 @@ namespace tr
 
 	//
 
-	/// Checks whether a stream has reached end-of-file.
+	/// @brief Checks whether a stream has reached end-of-file.
 	/// @param stream Stream to check for EOF.
 	/// @return `true` if the stream reached EOF, `false` otherwise.
 	[[nodiscard]] bool reached_eof(std::istream& stream);

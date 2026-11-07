@@ -6,22 +6,22 @@
 
 //
 
-/// Tests that a temporary file handle is not copyable.
+/// @brief Tests that a temporary file handle is not copyable.
 static_assert(!std::copyable<tr::temporary_file>, "tr::temporary_file should not be copyable, but is!");
 
-/// Tests that a temporary file handle is movable.
+/// @brief Tests that a temporary file handle is movable.
 static_assert(std::movable<tr::temporary_file>, "tr::temporary_file should be movable, but is not!");
 
 //
 
-/// Tests that a registered but not created temporary file is handled gracefully on destruction of the handle.
+/// @brief Tests that a registered but not created temporary file is handled gracefully on destruction of the handle.
 TEST(TemporaryFileTest, IgnoresMissingFile)
 {
 	tr::temporary_file file{"TemporaryFileTest_IgnoresMissingFile"};
 	ASSERT_FALSE(std::filesystem::exists(file.path()));
 }
 
-/// Tests that a registered and created file is removed on destruction of the handle.
+/// @brief Tests that a registered and created file is removed on destruction of the handle.
 TEST(TemporaryFileTest, RemovesCreatedFile)
 {
 	std::filesystem::path file_path;
@@ -34,7 +34,7 @@ TEST(TemporaryFileTest, RemovesCreatedFile)
 	ASSERT_FALSE(std::filesystem::exists(file_path));
 }
 
-/// Tests that the move constructor transfers ownership over a temporary file.
+/// @brief Tests that the move constructor transfers ownership over a temporary file.
 TEST(TemporaryFileTest, MoveConstructorTransfersOwnership)
 {
 	std::unique_ptr<tr::temporary_file> file1{std::make_unique<tr::temporary_file>("TemporaryFileTest_MoveConstructorTransfersOwnership")};
@@ -50,7 +50,7 @@ TEST(TemporaryFileTest, MoveConstructorTransfersOwnership)
 	ASSERT_FALSE(std::filesystem::exists(file_path));
 }
 
-/// Tests that the move assignment operator removes the previously owned file and transfers ownership over a temporary file.
+/// @brief Tests that the move assignment operator removes the previously owned file and transfers ownership over a temporary file.
 TEST(TemporaryFileTest, MoveAssignmentRemovesFileAndTransfersOwnership)
 {
 	std::unique_ptr<tr::temporary_file> file1{

@@ -25,7 +25,7 @@ namespace tr
 	class ping_pong_target
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs an incomplete ping-pong target.

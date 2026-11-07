@@ -37,7 +37,7 @@ namespace tr
 	class vertex_format
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Creates a new vertex format.

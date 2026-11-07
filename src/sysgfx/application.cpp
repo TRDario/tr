@@ -55,37 +55,41 @@ void tr::internal::set_application_metadata(const application_metadata& metadata
 
 //
 
-void tr::internal::show_fatal_error_message_box(const std::exception& error)
+void tr::internal::show_fatal_error_message_box(const std::exception& error) noexcept
 {
-	if (dynamic_ref_cast<const std::bad_alloc>(error).has_value() || dynamic_ref_cast<const out_of_memory>(error).has_value()) {
-		emergency_buffer.reset();
-	}
-
-	const char* const application_name{SDL_GetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING)};
-	const std::string title{std::format("{} - Fatal Error", application_name)};
-
-	opt_ref<const exception> tr_exception{dynamic_ref_cast<const exception>(error)};
-	std::string message;
-	if (tr_exception.has_value()) {
-		message = std::format("A fatal error has occurred ({}).", tr_exception->name());
-		const std::string_view description{tr_exception->description()};
-		if (!description.empty()) {
-			message.push_back('\n');
-			message.append(description);
+	try {
+		if (dynamic_ref_cast<const std::bad_alloc>(error) || dynamic_ref_cast<const out_of_memory>(error)) {
+			emergency_buffer.reset();
 		}
-		const std::string_view details{tr_exception->details()};
-		if (!details.empty()) {
-			message.push_back('\n');
-			message.append(details);
-		}
-	}
-	else {
-		message = std::format("A fatal error has occurred ({}).", error.what());
-	}
-	message.append("\nPress OK to exit the application.");
 
-	TR_LOG_FATAL("tr", "{}", error.what());
-	show_message_box(message_box_type::error, message_box_layout::ok, title, message);
+		const char* const application_name{SDL_GetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING)};
+		const std::string title{std::format("{} - Fatal Error", application_name)};
+
+		opt_ref<const exception> tr_exception{dynamic_ref_cast<const exception>(error)};
+		std::string message;
+		if (tr_exception) {
+			message = std::format("A fatal error has occurred ({}).", tr_exception->name());
+			const std::string_view description{tr_exception->description()};
+			if (!description.empty()) {
+				message.push_back('\n');
+				message.append(description);
+			}
+			const std::string_view details{tr_exception->details()};
+			if (!details.empty()) {
+				message.push_back('\n');
+				message.append(details);
+			}
+		}
+		else {
+			message = std::format("A fatal error has occurred ({}).", error.what());
+		}
+		message.append("\nPress OK to exit the application.");
+
+		TR_LOG_FATAL("tr", "{}", error.what());
+		show_message_box(message_box_type::error, message_box_layout::ok, title, message);
+	}
+	catch (...) {
+	}
 }
 
 SDL_AppResult tr::internal::initialize_application(void**, int, char** argv)
@@ -112,7 +116,7 @@ SDL_AppResult tr::internal::initialize_application(void**, int, char** argv)
 	}
 }
 
-SDL_AppResult tr::internal::handle_application_event(void*, SDL_Event* sdl_event)
+SDL_AppResult tr::internal::handle_application_event(void*, SDL_Event* sdl_event) noexcept
 {
 	try {
 		return static_cast<SDL_AppResult>(running_application->handle_event(event_view{*sdl_event}));
@@ -124,7 +128,7 @@ SDL_AppResult tr::internal::handle_application_event(void*, SDL_Event* sdl_event
 	}
 }
 
-SDL_AppResult tr::internal::update_application(void*)
+SDL_AppResult tr::internal::update_application(void*) noexcept
 {
 	try {
 		static std::chrono::steady_clock::time_point prev{std::chrono::steady_clock::now()};
@@ -140,7 +144,7 @@ SDL_AppResult tr::internal::update_application(void*)
 	}
 }
 
-void tr::internal::shut_down_application(void*, SDL_AppResult)
+void tr::internal::shut_down_application(void*, SDL_AppResult) noexcept
 {
 	running_application.reset();
 	TTF_Quit();
@@ -154,7 +158,7 @@ int tr::internal::run_application_main_loop(int argc, char** argv) noexcept
 
 int tr::internal::run_application(std::unique_ptr<application> application, int argc, char** argv)
 {
-	TR_ASSERT(running_application == nullptr, "Tried to invoke the main loop while it is already ongoing.");
+	TR_ASSERT(!running_application, "Tried to invoke the main loop while it is already ongoing.");
 
 	running_application = std::move(application);
 	const int exit_code{SDL_RunApp(argc, argv, run_application_main_loop, nullptr)};

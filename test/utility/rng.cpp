@@ -6,17 +6,18 @@
 
 //
 
-/// RNG test fixture.
+/// @brief RNG test fixture.
 class RngTest : public testing::Test
 {
   protected:
-	/// RNG being tested (static seed).
+	/// @brief RNG being tested.
+	/// @details The seed of the RNG is fixed for test determinism.
 	tr::rng rng{1337};
 };
 
 //
 
-/// Tests advancing the RNG.
+/// @brief Tests advancing the RNG.
 TEST_F(RngTest, Advances)
 {
 	const tr::u64 first{rng.advance()};
@@ -24,7 +25,7 @@ TEST_F(RngTest, Advances)
 	EXPECT_NE(first, second);
 }
 
-/// Tests for a balanced boolean distribution.
+/// @brief Tests for a balanced boolean distribution.
 TEST_F(RngTest, BoolDistributionIsBalanced)
 {
 	std::array<tr::i64, 2> results{};
@@ -34,7 +35,7 @@ TEST_F(RngTest, BoolDistributionIsBalanced)
 	EXPECT_LT(std::abs(results[1] - results[0]), 1000);
 }
 
-/// Tests for a balanced sign distribution.
+/// @brief Tests for a balanced sign distribution.
 TEST_F(RngTest, SignDistributionIsBalanced)
 {
 	std::array<tr::i64, 2> results{};
@@ -46,7 +47,7 @@ TEST_F(RngTest, SignDistributionIsBalanced)
 	EXPECT_LT(std::abs(results[1] - results[0]), 1000);
 }
 
-/// Tests for a balanced integer distribution in the range [0, MAX).
+/// @brief Tests for a balanced integer distribution in the range [0, MAX).
 TEST_F(RngTest, IntMaxDistributionIsBalanced)
 {
 	std::array<tr::i64, 10> results{};
@@ -62,7 +63,7 @@ TEST_F(RngTest, IntMaxDistributionIsBalanced)
 	EXPECT_LT(minmax.max - minmax.min, 250);
 }
 
-/// Tests for a balanced integer distribution in the range [MIN, MAX).
+/// @brief Tests for a balanced integer distribution in the range [MIN, MAX).
 TEST_F(RngTest, IntMinMaxDistributionIsBalanced)
 {
 	std::array<tr::i64, 11> results{};
@@ -78,7 +79,7 @@ TEST_F(RngTest, IntMinMaxDistributionIsBalanced)
 	EXPECT_LT(minmax.max - minmax.min, 250);
 }
 
-/// Tests for a balanced float distribution in the range [0, 1).
+/// @brief Tests for a balanced float distribution in the range [0, 1).
 TEST_F(RngTest, FloatDistributionIsBalanced)
 {
 	double sum{0};
@@ -91,7 +92,7 @@ TEST_F(RngTest, FloatDistributionIsBalanced)
 	EXPECT_NEAR(sum / 1000000, 0.5, 1e-2);
 }
 
-/// Tests for a balanced float distribution in the range [0, MAX).
+/// @brief Tests for a balanced float distribution in the range [0, MAX).
 TEST_F(RngTest, FloatMaxDistributionIsBalanced)
 {
 	double sum{0};
@@ -104,7 +105,7 @@ TEST_F(RngTest, FloatMaxDistributionIsBalanced)
 	EXPECT_NEAR(sum / 1000000, 2.5, 1e-2);
 }
 
-/// Tests for a balanced float distribution in the range [MIN, MAX).
+/// @brief Tests for a balanced float distribution in the range [MIN, MAX).
 TEST_F(RngTest, FloatMinMaxDistributionIsBalanced)
 {
 	double sum{0};
@@ -117,7 +118,7 @@ TEST_F(RngTest, FloatMinMaxDistributionIsBalanced)
 	EXPECT_NEAR(sum / 1000000, -0.5, 1e-2);
 }
 
-/// Tests for a balanced vector distribution with a fixed magnitude.
+/// @brief Tests for a balanced vector distribution with a fixed magnitude.
 TEST_F(RngTest, VectorMagnitudeDistributionIsBalanced)
 {
 	glm::vec2 sum{};
@@ -130,7 +131,7 @@ TEST_F(RngTest, VectorMagnitudeDistributionIsBalanced)
 	EXPECT_NEAR(glm::length(sum), 0, 1e-2);
 }
 
-/// Tests for a balanced vector distribution within a rectangle.
+/// @brief Tests for a balanced vector distribution within a rectangle.
 TEST_F(RngTest, VectorRectDistributionIsBalanced)
 {
 	const tr::rectangle<float> region{{-100, -100}, {200, 200}};

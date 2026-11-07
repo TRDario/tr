@@ -15,7 +15,7 @@ namespace tr
 	{
 	  public:
 		/// @cond implementation_details
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Wraps a pointer to the pixel data.
@@ -55,7 +55,7 @@ namespace tr
 	{
 	  public:
 		/// @cond implementation_details
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Wraps a pointer to the pixel data.

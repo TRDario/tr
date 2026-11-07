@@ -37,7 +37,7 @@ namespace tr
 			// clang-format off
 			internal::show_open_file_dialog(
 				[](void* callback, const char* const* paths, int filter_index) {
-					reinterpret_cast<function_pointer>(callback)(paths != nullptr ? zstring_view{paths[0]} : zstring_view{}, filter_index);
+					reinterpret_cast<function_pointer>(callback)(paths ? zstring_view{paths[0]} : zstring_view{}, filter_index);
 				},
 				reinterpret_cast<void*>(static_cast<function_pointer>(std::forward<Callback>(callback))),
 				filters,
@@ -50,7 +50,7 @@ namespace tr
 			// clang-format off
 			internal::show_open_file_dialog(
 				[](void* callback, const char* const* paths, int filter_index) {
-					reinterpret_cast<function_pointer>(callback)(paths != nullptr ? zstring_view{paths[0]} : zstring_view{}, filter_index);
+					reinterpret_cast<function_pointer>(callback)(paths ? zstring_view{paths[0]} : zstring_view{}, filter_index);
 				},
 				reinterpret_cast<void*>(static_cast<function_pointer>(&std::remove_cvref_t<Callback>::operator())),
 				filters,
@@ -63,7 +63,7 @@ namespace tr
 			// clang-format off
 			internal::show_open_file_dialog(
 				[](void* callback, const char* const* paths, int filter_index) {
-					(*static_cast<std::remove_cvref_t<Callback>*>(callback))(paths != nullptr ? zstring_view{paths[0]} : zstring_view{}, filter_index);
+					(*static_cast<std::remove_cvref_t<Callback>*>(callback))(paths ? zstring_view{paths[0]} : zstring_view{}, filter_index);
 					delete static_cast<std::remove_cvref_t<Callback>*>(callback);
 				},
 				new std::remove_cvref_t<Callback>{std::forward<Callback>(callback)},
@@ -145,7 +145,7 @@ namespace tr
 			// clang-format off
 			internal::show_save_file_dialog(
 				[](void* callback, const char* const* paths, int filter_index) {
-					reinterpret_cast<function_pointer>(callback)(paths != nullptr ? zstring_view{paths[0]} : zstring_view{}, filter_index);
+					reinterpret_cast<function_pointer>(callback)(paths ? zstring_view{paths[0]} : zstring_view{}, filter_index);
 				},
 				reinterpret_cast<void*>(static_cast<function_pointer>(callback)),
 				filters,
@@ -157,7 +157,7 @@ namespace tr
 			// clang-format off
 			internal::show_save_file_dialog(
 				[](void* callback, const char* const* paths, int filter_index) {
-					reinterpret_cast<function_pointer>(callback)(paths != nullptr ? zstring_view{paths[0]} : zstring_view{}, filter_index);
+					reinterpret_cast<function_pointer>(callback)(paths ? zstring_view{paths[0]} : zstring_view{}, filter_index);
 				},
 				reinterpret_cast<void*>(static_cast<function_pointer>(&std::remove_cvref_t<Callback>::operator())),
 				filters,
@@ -169,7 +169,7 @@ namespace tr
 			// clang-format off
 			internal::show_save_file_dialog(
 				[](void* callback, const char* const* paths, int filter_index) {
-					(*static_cast<std::remove_cvref_t<Callback>*>(callback))(paths != nullptr ? zstring_view{paths[0]} : zstring_view{}, filter_index);
+					(*static_cast<std::remove_cvref_t<Callback>*>(callback))(paths ? zstring_view{paths[0]} : zstring_view{}, filter_index);
 					delete static_cast<std::remove_cvref_t<Callback>*>(callback);
 				},
 				new std::remove_cvref_t<Callback>{std::forward<Callback>(callback)},
@@ -194,7 +194,7 @@ namespace tr
 			// clang-format off
 			internal::show_open_folder_dialog(
 				[](void* callback, const char* const* paths, int) {
-					reinterpret_cast<function_pointer>(callback)(paths != nullptr ? zstring_view{paths[0]} : zstring_view{});
+					reinterpret_cast<function_pointer>(callback)(paths ? zstring_view{paths[0]} : zstring_view{});
 				},
 				reinterpret_cast<void*>(static_cast<function_pointer>(callback)),
 				default_path,
@@ -206,7 +206,7 @@ namespace tr
 			// clang-format off
 			internal::show_open_folder_dialog(
 				[](void* callback, const char* const* paths, int) {
-					reinterpret_cast<function_pointer>(callback)(paths != nullptr ? zstring_view{paths[0]} : zstring_view{});
+					reinterpret_cast<function_pointer>(callback)(paths ? zstring_view{paths[0]} : zstring_view{});
 				},
 				reinterpret_cast<void*>(static_cast<function_pointer>(&std::remove_cvref_t<Callback>::operator())),
 				default_path,
@@ -218,7 +218,7 @@ namespace tr
 			// clang-format off
 			internal::show_open_folder_dialog(
 				[](void* callback, const char* const* paths, int) {
-					(*static_cast<std::remove_cvref_t<Callback>*>(callback))(paths != nullptr ? zstring_view{paths[0]} : zstring_view{});
+					(*static_cast<std::remove_cvref_t<Callback>*>(callback))(paths ? zstring_view{paths[0]} : zstring_view{});
 					delete static_cast<std::remove_cvref_t<Callback>*>(callback);
 				},
 				new std::remove_cvref_t<Callback>{std::forward<Callback>(callback)},

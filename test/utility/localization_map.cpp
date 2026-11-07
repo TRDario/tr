@@ -12,13 +12,13 @@ template <std::input_iterator Base>
 class strict_input_iterator
 {
   public:
-	/// Value type used by the iterator.
+	/// @brief Value type used by the iterator.
 	using value_type = std::iterator_traits<Base>::value_type;
 
-	/// Difference type used by the iterator.
+	/// @brief Difference type used by the iterator.
 	using difference_type = std::iterator_traits<Base>::difference_type;
 
-	/// Reference type used by the iterator.
+	/// @brief Reference type used by the iterator.
 	using reference = std::iterator_traits<Base>::reference;
 
 	/// @brief Category of the iterator.
@@ -27,15 +27,15 @@ class strict_input_iterator
 	/// @brief Concept of the iterator.
 	using iterator_concept = std::input_iterator_tag;
 
-	/// @name Constructors and destructors
+	/// @name Constructors, destructors, and assignment operators
 	/// @{
 
 	/// @brief Constructs a singular iterator.
-	explicit strict_input_iterator() noexcept = default;
+	[[nodiscard]] explicit strict_input_iterator() noexcept = default;
 
 	/// @brief Wraps an input iterator.
 	/// @param base Base iterator
-	explicit strict_input_iterator(Base base) noexcept
+	[[nodiscard]] explicit strict_input_iterator(Base base) noexcept
 		: m_base{base}
 	{
 	}
@@ -45,7 +45,9 @@ class strict_input_iterator
 	/// @{
 
 	/// @brief Compares two iterators for equality.
-	friend bool operator==(strict_input_iterator a, strict_input_iterator b) noexcept = default;
+	/// @param a, b Iterators to compare.
+	/// @return `true` if the iterators are equal, `false` otherwise.
+	[[nodiscard]] friend bool operator==(strict_input_iterator a, strict_input_iterator b) noexcept = default;
 
 	/// @brief Dereferences the iterator.
 	/// @return Dereferenced iterator value.
@@ -72,19 +74,20 @@ class strict_input_iterator
 	}
 
   private:
+	/// @brief Base iterator value.
 	Base m_base;
 };
 
 //
 
-/// Tests that a localization map default-constructs empty.
+/// @brief Tests that a localization map default-constructs empty.
 TEST(LocalizationMapTest, DefaultConstructsEmpty)
 {
 	tr::localization_map map;
 	EXPECT_EQ(map.size(), 0);
 }
 
-/// Tests constructing a localization map from an iterator pair.
+/// @brief Tests constructing a localization map from an iterator pair.
 TEST(LocalizationMapTest, ConstructsFromIteratorPair)
 {
 	constexpr std::array<std::pair<std::string_view, std::string_view>, 2> data{{{"first", "First"}, {"second", "Second"}}};
@@ -96,7 +99,7 @@ TEST(LocalizationMapTest, ConstructsFromIteratorPair)
 	EXPECT_FALSE(map.contains("third"));
 }
 
-/// Tests constructing a localization map from a range.
+/// @brief Tests constructing a localization map from a range.
 TEST(LocalizationMapTest, ConstructsFromRange)
 {
 	const tr::localization_map map{{{"first", "First"}, {"second", "Second"}}};
@@ -107,7 +110,7 @@ TEST(LocalizationMapTest, ConstructsFromRange)
 }
 
 #if defined(TR_ENABLE_ASSERTS) && defined(GTEST_HAS_DEATH_TEST)
-/// Tests that constructing a localization map with duplicate keys triggers an assertion.
+/// @brief Tests that constructing a localization map with duplicate keys triggers an assertion.
 TEST(LocalizationMapTest, ConstructingWithDuplicateKeysTriggersAssertion)
 {
 	constexpr std::array<std::pair<std::string_view, std::string_view>, 2> data{{{"first", "First"}, {"first", "Second"}}};
@@ -116,7 +119,7 @@ TEST(LocalizationMapTest, ConstructingWithDuplicateKeysTriggersAssertion)
 }
 #endif
 
-/// Tests that copy-constructing a localization map copies values from the original map.
+/// @brief Tests that copy-constructing a localization map copies values from the original map.
 TEST(LocalizationMapTest, CopyConstructorCopiesValues)
 {
 	const tr::localization_map original{{{"first", "First"}, {"second", "Second"}}};
@@ -126,7 +129,7 @@ TEST(LocalizationMapTest, CopyConstructorCopiesValues)
 	EXPECT_NE(original["first"].data(), copy["first"].data());
 }
 
-/// Tests that move-constructing a localization map transfers values from the original map.
+/// @brief Tests that move-constructing a localization map transfers values from the original map.
 TEST(LocalizationMapTest, MoveConstructorTransfersValues)
 {
 	tr::localization_map original{{{"first", "First"}, {"second", "Second"}}};
@@ -137,7 +140,7 @@ TEST(LocalizationMapTest, MoveConstructorTransfersValues)
 	EXPECT_TRUE(moved.contains("second"));
 }
 
-/// Tests that copy-assigning a localization map replaces its contents with copied values from the original map.
+/// @brief Tests that copy-assigning a localization map replaces its contents with copied values from the original map.
 TEST(LocalizationMapTest, CopyAssignmentReplacesValuesWithCopied)
 {
 	tr::localization_map map1{{{"first", "First"}, {"second", "Second"}}};
@@ -150,7 +153,7 @@ TEST(LocalizationMapTest, CopyAssignmentReplacesValuesWithCopied)
 	EXPECT_NE(map1["third"].data(), map2["third"].data());
 }
 
-/// Tests that copy-assigning a localization map replaces its contents with transferred values from the original map.
+/// @brief Tests that copy-assigning a localization map replaces its contents with transferred values from the original map.
 TEST(LocalizationMapTest, MoveAssignmentReplacesValuesWithTransferred)
 {
 	tr::localization_map map1{{{"first", "First"}, {"second", "Second"}}};
@@ -162,7 +165,7 @@ TEST(LocalizationMapTest, MoveAssignmentReplacesValuesWithTransferred)
 	EXPECT_TRUE(map1.contains("third"));
 }
 
-/// Tests that accessing a localization map with present keys returns associated values.
+/// @brief Tests that accessing a localization map with present keys returns associated values.
 TEST(LocalizationMapTest, AccessWithPresentKeyReturnsValue)
 {
 	const tr::localization_map map{{{"first", "First"}, {"second", "Second"}}};
@@ -170,7 +173,7 @@ TEST(LocalizationMapTest, AccessWithPresentKeyReturnsValue)
 	EXPECT_EQ(map.value_or("second", "error"), "Second");
 }
 
-/// Tests that accessing a localization map with a missing key returns the passed key or a default value.
+/// @brief Tests that accessing a localization map with a missing key returns the passed key or a default value.
 TEST(LocalizationMapTest, AccessWithMissingKeyReturnsKeyOrDefaultValue)
 {
 	const tr::localization_map map{{{"first", "First"}, {"second", "Second"}}};
@@ -180,7 +183,7 @@ TEST(LocalizationMapTest, AccessWithMissingKeyReturnsKeyOrDefaultValue)
 	EXPECT_EQ(map.value_or(missing_key, default_value), default_value);
 }
 
-/// Tests that clearing a localization map erases its values.
+/// @brief Tests that clearing a localization map erases its values.
 TEST(LocalizationMapTest, ClearEmptiesMap)
 {
 	tr::localization_map map{{{"first", "First"}, {"second", "Second"}}};
@@ -189,7 +192,7 @@ TEST(LocalizationMapTest, ClearEmptiesMap)
 	EXPECT_EQ(map.size(), 0);
 }
 
-/// Tests that updating a localization map with a new key adds a new value.
+/// @brief Tests that updating a localization map with a new key adds a new value.
 TEST(LocalizationMapTest, UpdateWithNewKeyAddsValue)
 {
 	tr::localization_map map{{{"first", "First"}, {"second", "Second"}}};
@@ -198,7 +201,7 @@ TEST(LocalizationMapTest, UpdateWithNewKeyAddsValue)
 	EXPECT_EQ(map["third"], "Third");
 }
 
-/// Tests that updating a localization map with a present key replaces the associated value.
+/// @brief Tests that updating a localization map with a present key replaces the associated value.
 TEST(LocalizationMapTest, UpdateWithPresentKeyReplacesValue)
 {
 	tr::localization_map map{{{"first", "First"}, {"second", "Second"}}};
@@ -207,7 +210,7 @@ TEST(LocalizationMapTest, UpdateWithPresentKeyReplacesValue)
 	EXPECT_EQ(map["first"], "1st");
 }
 
-/// Tests updating a localization map with an input iterator pair to a range of key-value pairs.
+/// @brief Tests updating a localization map with an input iterator pair to a range of key-value pairs.
 TEST(LocalizationMapTest, UpdatesWithInputIteratorPair)
 {
 	constexpr std::array<std::pair<std::string_view, std::string_view>, 2> extra{{{"third", "Third"}, {"first", "1st"}}};
@@ -219,7 +222,7 @@ TEST(LocalizationMapTest, UpdatesWithInputIteratorPair)
 	EXPECT_EQ(map["third"], "Third");
 }
 
-/// Tests updating a localization map with a forward iterator pair to a range of key-value pairs.
+/// @brief Tests updating a localization map with a forward iterator pair to a range of key-value pairs.
 TEST(LocalizationMapTest, UpdatesWithForwardIteratorPair)
 {
 	constexpr std::array<std::pair<std::string_view, std::string_view>, 2> extra{{{"third", "Third"}, {"first", "1st"}}};
@@ -231,7 +234,7 @@ TEST(LocalizationMapTest, UpdatesWithForwardIteratorPair)
 	EXPECT_EQ(map["third"], "Third");
 }
 
-/// Tests updating a localization map with a range of key-value pairs.
+/// @brief Tests updating a localization map with a range of key-value pairs.
 TEST(LocalizationMapTest, UpdatesWithRange)
 {
 	tr::localization_map map{{{"first", "First"}, {"second", "Second"}}};

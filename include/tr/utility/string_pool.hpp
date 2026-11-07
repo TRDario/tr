@@ -10,6 +10,7 @@
 
 namespace tr
 {
+	/// @ingroup containers
 	/// @brief Container storing a series of immutable NUL-terminated strings in a single allocation.
 	/// @details
 	/// `tr::string_pool` is designed for efficient storage and lifetime management of a series of immutable strings. Rather than allocating
@@ -34,6 +35,9 @@ namespace tr
 		class iterator : public iterator_interface<iterator>
 		{
 		  public:
+			/// @name Iterator traits
+			/// @{
+
 			/// @brief Value type used by the iterator.
 			using value_type = zstring_view;
 
@@ -46,8 +50,9 @@ namespace tr
 			/// @brief Iterator concept of the iterator.
 			using iterator_concept = std::bidirectional_iterator_tag;
 
+			/// @}
 			/// @cond Implementation details
-			/// @name Constructors and destructors
+			/// @name Constructors, destructors, and assignment operators
 			/// @{
 
 			/// @brief Constructs a singular iterator.
@@ -61,18 +66,18 @@ namespace tr
 
 			/// @}
 			/// @endcond
-			/// @name Comparison operators
+			/// @name Operators
 			/// @{
 
-			/// @brief String pool iterators are three-way comparable.
-			[[nodiscard]] friend std::strong_ordering operator<=>(iterator, iterator) noexcept = default;
+			/// @brief Compares string pool iterators.
+			/// @param lhs, rhs Iterators to compare.
+			/// @return Ordering of the iterators.
+			[[nodiscard]] friend std::strong_ordering operator<=>(iterator lhs, iterator rhs) noexcept = default;
 
-			/// @brief String pool iterators are equality-comparable.
-			[[nodiscard]] friend bool operator==(iterator, iterator) noexcept = default;
-
-			/// @}
-			/// @name Other operators
-			/// @{
+			/// @brief Compares string pool iterators for equality.
+			/// @param lhs, rhs Iterators to compare.
+			/// @return `true` if the iterators point to the same element, `false` otherwise.
+			[[nodiscard]] friend bool operator==(iterator lhs, iterator rhs) noexcept = default;
 
 			/// @brief Increments the iterator.
 			/// @par Complexity
@@ -123,7 +128,7 @@ namespace tr
 		class string_builder_t
 		{
 		  public:
-			/// @name Constructors and destructors
+			/// @name Constructors, destructors, and assignment operators
 			/// @{
 
 			/// @brief Constructs a string builder.
@@ -133,20 +138,13 @@ namespace tr
 			/// @brief String builders are not copyable.
 			string_builder_t(const string_builder_t&) = delete;
 
+			/// @brief String builders are not copyable.
+			string_builder_t& operator=(const string_builder_t&) = delete;
+
 			/// @brief Takes over the task from another string builder.
 			/// @param rhs String builder to transfer the task from.
 			/// @post `rhs` is left in a special state where it is unassociated with any pool, and thus `out()` cannot be called.
 			[[nodiscard]] string_builder_t(string_builder_t&& rhs) noexcept;
-
-			/// @brief Finalizes building the string.
-			~string_builder_t() noexcept;
-
-			/// @}
-			/// @name Assignment operators
-			/// @{
-
-			/// @brief String builders are not copyable.
-			string_builder_t& operator=(const string_builder_t&) = delete;
 
 			/// @brief Finalizes building the current string and takes over the task from another string builder.
 			/// @param rhs String builder to transfer the task from.
@@ -154,8 +152,11 @@ namespace tr
 			/// @return Reference to `*this`.
 			string_builder_t& operator=(string_builder_t&& rhs) noexcept;
 
+			/// @brief Finalizes building the string.
+			~string_builder_t() noexcept;
+
 			/// @}
-			/// @name Iterator
+			/// @name Iterators
 			/// @{
 
 			/// @brief Returns a character output iterator.
@@ -170,7 +171,7 @@ namespace tr
 			opt_ref<string_pool> m_pool;
 		};
 
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// @brief Constructs an empty string pool.
@@ -184,18 +185,6 @@ namespace tr
 		/// If an exception is thrown, this function has no effect (strong exception guarantee).
 		[[nodiscard]] string_pool(const string_pool& rhs) = default;
 
-		/// @brief Constructs a string pool by moving the contents of another pool.
-		/// @param rhs Pool to move the contents of.
-		/// @par Invalidation
-		/// All iterators (including `end()`) and views to strings previously stored in `rhs` stay valid, but now point to the equivalent
-		/// strings stored in `*this`.
-		/// @post `rhs` is left in a valid, but unspecified state after the move.
-		[[nodiscard]] string_pool(string_pool&& rhs) noexcept = default;
-
-		/// @}
-		/// @name Assignment operators
-		/// @{
-
 		/// @brief Replaces the contents of the pool with a copy of those of another pool.
 		/// @param rhs Pool to copy the contents of.
 		/// @pre There may not be an active string builder associated with this pool at the time this function is called.
@@ -207,6 +196,14 @@ namespace tr
 		/// If an exception is thrown, `*this` is left in a valid, but unspecified state (basic exception guarantee).
 		/// @return Reference to `*this`.
 		string_pool& operator=(const string_pool& rhs);
+
+		/// @brief Constructs a string pool by moving the contents of another pool.
+		/// @param rhs Pool to move the contents of.
+		/// @par Invalidation
+		/// All iterators (including `end()`) and views to strings previously stored in `rhs` stay valid, but now point to the equivalent
+		/// strings stored in `*this`.
+		/// @post `rhs` is left in a valid, but unspecified state after the move.
+		[[nodiscard]] string_pool(string_pool&& rhs) noexcept = default;
 
 		/// @brief Replaces the contents of the pool with those moved from another pool.
 		/// @param rhs Pool to move the contents of.
@@ -235,7 +232,7 @@ namespace tr
 		[[nodiscard]] iterator end() const noexcept;
 
 		/// @}
-		/// @name Size and capacity
+		/// @name Capacity
 		/// @{
 
 		/// @brief Checks whether the string pool is empty.
@@ -260,13 +257,13 @@ namespace tr
 		/// If `capacity` exceeds `capacity_bytes()`, all iterators (including `end()`) and views to strings stored in the pool are
 		/// invalidated. Otherwise, no iterators or references are invalidated.
 		/// @par Complexity
-		/// At most linear with respect to `capacity`.
+		/// At most linear time with respect to `capacity`.
 		/// @par Exception safety
 		/// If an exception is thrown, this function has no effect (strong exception guarantee).
 		void reserve_bytes(usize capacity);
 
 		/// @}
-		/// @name Manipulation
+		/// @name Modifiers
 		/// @{
 
 		/// @brief Erases all strings from the pool.

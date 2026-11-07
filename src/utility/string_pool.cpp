@@ -50,14 +50,14 @@ tr::string_pool::string_builder_t::string_builder_t(string_builder_t&& rhs) noex
 
 tr::string_pool::string_builder_t::~string_builder_t() noexcept
 {
-	if (m_pool.has_value()) {
+	if (m_pool) {
 		m_pool->m_data.push_back('\0');
 	}
 }
 
 tr::string_pool::string_builder_t& tr::string_pool::string_builder_t::operator=(string_builder_t&& rhs) noexcept
 {
-	if (m_pool.has_value()) {
+	if (m_pool) {
 		m_pool->m_data.push_back('\0');
 	}
 	m_pool = std::exchange(rhs.m_pool, std::nullopt);
@@ -66,7 +66,7 @@ tr::string_pool::string_builder_t& tr::string_pool::string_builder_t::operator=(
 
 std::back_insert_iterator<std::vector<char>> tr::string_pool::string_builder_t::out() const noexcept
 {
-	TR_ASSERT(m_pool.has_value(), "Tried to get output iterator from a moved-from string builder.");
+	TR_ASSERT(m_pool, "Tried to get output iterator from a moved-from string builder.");
 
 	return std::back_inserter(m_pool->m_data);
 }

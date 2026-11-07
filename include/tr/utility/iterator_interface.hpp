@@ -8,6 +8,7 @@
 
 namespace tr
 {
+	/// @ingroup meta
 	/// @brief Interface an iterator class can inherit from to automatically derive various functions from a small subset of basic operators
 	/// (`operator++`, `operator--`, `operator+=`, `operator*`).
 	/// @details
@@ -22,14 +23,14 @@ namespace tr
 	class iterator_interface
 	{
 	  private:
-		/// Gets a reference to the base iterator.
+		/// @brief Returns a reference to the base iterator.
 		/// @return Reference to the base iterator.
 		[[nodiscard]] constexpr Iterator& base() noexcept
 		{
 			return static_cast<Iterator&>(*this);
 		}
 
-		/// Gets a reference to the base iterator.
+		/// @brief Returns a reference to the base iterator.
 		/// @return Reference to the base iterator.
 		[[nodiscard]] constexpr const Iterator& base() const noexcept
 		{
@@ -37,17 +38,24 @@ namespace tr
 		}
 
 	  public:
+		/// @name Operators
+		/// @{
+
 		/// @cond implementation_details
 
-		/// (no-op)
+		/// @brief Compares two iterator interfaces.
+		/// @param lhs, rhs Iterator interfaces to compare.
+		/// @return Always `std::strong_ordering::equivalent`.
 		[[nodiscard]] friend constexpr auto operator<=>(const iterator_interface& lhs, const iterator_interface& rhs) noexcept = default;
 
-		/// (no-op)
+		/// @brief Checks two iterator interfaces for equality.
+		/// @param lhs, rhs Iterator interfaces to compare.
+		/// @return Always `true`.
 		[[nodiscard]] friend constexpr bool operator==(const iterator_interface& lhs, const iterator_interface& rhs) noexcept = default;
 
 		/// @endcond
 
-		/// Synthesized post-incrementation operator.
+		/// @brief Synthesized post-incrementation operator.
 		/// @param it Iterator to increment.
 		/// @return Copy of `it` before it was incremented.
 		friend constexpr Iterator operator++(iterator_interface& it, int) noexcept(noexcept(++it.base()))
@@ -58,7 +66,7 @@ namespace tr
 			return copy;
 		}
 
-		/// Synthesized post-decrementation operator.
+		/// @brief Synthesized post-decrementation operator.
 		/// @param it Iterator to decrement.
 		/// @return Copy of `it` before it was decremented.
 		friend constexpr Iterator operator--(iterator_interface& it, int) noexcept(noexcept(--it.base()))
@@ -69,9 +77,7 @@ namespace tr
 			return copy;
 		}
 
-		//
-
-		/// Synthesized subtraction assignment operator.
+		/// @brief Synthesized subtraction assignment operator.
 		/// @tparam Difference Difference type accepted by `operator+=`.
 		/// @param it Iterator to subtract from.
 		/// @param diff Amount of steps to subtract by.
@@ -83,7 +89,7 @@ namespace tr
 			return it.base() += -diff;
 		}
 
-		/// Synthesized addition operator.
+		/// @brief Synthesized addition operator.
 		/// @tparam Difference Difference type accepted by `operator+=`.
 		/// @param it Iterator to add to.
 		/// @param diff Amount of steps to advance by.
@@ -98,7 +104,7 @@ namespace tr
 			return copy;
 		}
 
-		/// Synthesized addition operator.
+		/// @brief Synthesized addition operator.
 		/// @tparam Difference Difference type accepted by `operator+=`.
 		/// @param diff Amount of steps to advance by.
 		/// @param it Iterator to add to.
@@ -113,7 +119,7 @@ namespace tr
 			return copy;
 		}
 
-		/// Synthesized subtraction operator.
+		/// @brief Synthesized subtraction operator.
 		/// @tparam Difference Difference type accepted by `operator+=`.
 		/// @param it Iterator to subtract from.
 		/// @param diff Amount of steps to subtract by.
@@ -128,9 +134,7 @@ namespace tr
 			return copy;
 		}
 
-		//
-
-		/// Synthesized pointer dereferencing operator.
+		/// @brief Synthesized pointer dereferencing operator.
 		/// @return Pointer to the dereferenced value.
 		[[nodiscard]] constexpr auto operator->() const noexcept(noexcept(*base()))
 			requires std::is_lvalue_reference_v<decltype(*base())>
@@ -138,7 +142,7 @@ namespace tr
 			return &*base();
 		}
 
-		/// Synthesized subscripting operator.
+		/// @brief Synthesized subscripting operator.
 		/// @tparam Difference Difference type accepted by `operator+=`.
 		/// @param diff Amount of steps to advance by.
 		/// @return `*(*this + diff)`.
@@ -148,5 +152,7 @@ namespace tr
 		{
 			return *(base() + diff);
 		}
+
+		/// @}
 	};
 } // namespace tr

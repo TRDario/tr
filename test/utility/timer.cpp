@@ -9,11 +9,11 @@ using namespace std::chrono_literals;
 
 //
 
-/// Incrementable counter used by the callback of the timer.
+/// @brief Incrementable counter used by the callback of the timer.
 class callback_counter
 {
   public:
-	/// Increments the counter.
+	/// @brief Increments the counter.
 	void increment()
 	{
 		/* Lock scope */ {
@@ -23,16 +23,16 @@ class callback_counter
 		m_cv.notify_one();
 	}
 
-	/// Waits for a minimum count.
+	/// @brief Waits for a minimum count.
 	/// @param minimum_count Minimum count to wait for.
-	/// @return Whether the wait was successful.
+	/// @return `true` if the wait was successful, `false` otherwise.
 	[[nodiscard]] bool wait_for(tr::usize minimum_count)
 	{
 		std::unique_lock lock{m_mutex};
 		return m_cv.wait_for(lock, 2s, [&] { return m_timestamps.size() >= minimum_count; });
 	}
 
-	/// Gets the list of timestamps.
+	/// @brief Returns the list of timestamps.
 	/// @return Reference to the list of timestamps.
 	[[nodiscard]] const std::vector<std::chrono::steady_clock::time_point>& timestamps() const noexcept
 	{
@@ -40,26 +40,26 @@ class callback_counter
 	}
 
   private:
-	/// Callback counter mutex.
+	/// @brief Callback counter mutex.
 	std::mutex m_mutex;
 
-	/// Callback counter condition variable.
+	/// @brief Callback counter condition variable.
 	std::condition_variable m_cv;
 
-	/// List of callback timestamps.
+	/// @brief List of callback timestamps.
 	std::vector<std::chrono::steady_clock::time_point> m_timestamps;
 };
 
 //
 
-/// Tests that a default-constructed timer is inactive.
+/// @brief Tests that a default-constructed timer is inactive.
 TEST(TimerTest, DefaultConstructsEmpty)
 {
 	tr::timer timer;
 	EXPECT_FALSE(timer.active());
 }
 
-/// Tests a timer constructed active.
+/// @brief Tests a timer constructed active.
 TEST(TimerTest, ConstructsActive)
 {
 	callback_counter counter;
@@ -74,7 +74,7 @@ TEST(TimerTest, ConstructsActive)
 	EXPECT_LT(times[2] - start, 2s);
 }
 
-/// Tests that a timer with a non-positive interval becomes inactive.
+/// @brief Tests that a timer with a non-positive interval becomes inactive.
 TEST(TimerTest, NonPositiveIntervalBecomesInactive)
 {
 	tr::timer timer{0ns, [] {}};
@@ -85,7 +85,7 @@ TEST(TimerTest, NonPositiveIntervalBecomesInactive)
 	EXPECT_FALSE(timer.active());
 }
 
-/// Tests that a timer becomes inactive after its callback throws.
+/// @brief Tests that a timer becomes inactive after its callback throws.
 TEST(TimerTest, ThrowingCallbackBecomesInactive)
 {
 	tr::timer timer{1ms, [] { throw std::runtime_error{"timer callback failure"}; }};
@@ -96,7 +96,7 @@ TEST(TimerTest, ThrowingCallbackBecomesInactive)
 	EXPECT_FALSE(timer.active());
 }
 
-/// Tests that moving the timer transfers ownership.
+/// @brief Tests that moving the timer transfers ownership.
 TEST(TimerTest, MovingTransfersOwnership)
 {
 	callback_counter counter;

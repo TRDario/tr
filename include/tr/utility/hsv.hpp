@@ -1,6 +1,10 @@
 /// @file
 /// @brief Provides `tr::hsv`.
 
+/// @ingroup color
+/// @defgroup hsv HSV
+/// @brief Contains `tr::hsv` and related functionality.
+
 #pragma once
 #include <tr/utility/color_cast.hpp>
 #include <tr/utility/default_binary_io.hpp>
@@ -11,24 +15,25 @@
 
 namespace tr
 {
-	/// Color stored in the HSV color model.
+	/// @ingroup hsv
+	/// @brief Color stored in the HSV color model.
 	struct hsv
 	{
-		/// Hue channel.
+		/// @brief Hue channel.
 		float h;
 
-		/// Saturation channel.
+		/// @brief Saturation channel.
 		float s;
 
-		/// Value channel.
+		/// @brief Value channel.
 		float v;
 
 		/// @name Comparison operators
 		/// @{
 
-		/// Compares two colors for equality.
-		/// @param lhs, rhs Colors to compare.
-		/// @return Whether the two colors are equal.
+		/// @brief Checks two colors for memberwise equality.
+		/// @param lhs, rhs Colors to compare memberwise.
+		/// @return `true` if the colors are equal memberwise, `false` otherwise.
 		[[nodiscard]] friend constexpr bool operator==(hsv lhs, hsv rhs) noexcept = default;
 
 		/// @}
@@ -37,17 +42,18 @@ namespace tr
 
 //
 
-/// Enables default binary IO for `tr::hsv`.
+/// @brief Enables default binary IO for `tr::hsv`.
 template <>
 inline constexpr bool tr::enable_default_binary_io<tr::hsv>{true};
 
 //
 
-/// Color caster from `tr::hsv` to `tr::rgba<double>`.
+/// @ingroup hsv
+/// @brief Color caster from `tr::hsv` to `tr::rgba<double>`.
 template <>
 struct tr::color_caster<tr::hsv, tr::rgba<double>>
 {
-	/// Casts a color from `tr::hsv` to an equivalent value of type `tr::rgba<double>`.
+	/// @brief Casts a color from `tr::hsv` to an equivalent value of type `tr::rgba<double>`.
 	/// @param hsv Color to cast.
 	/// @return Equivalent color value of type `tr::rgba<double>`.
 	[[nodiscard]] static constexpr rgba<double> operator()(const hsv& hsv) noexcept
@@ -92,11 +98,12 @@ struct tr::color_caster<tr::hsv, tr::rgba<double>>
 	}
 };
 
-/// Color caster from `tr::rgba<double>` to `tr::hsv`.
+/// @ingroup hsv
+/// @brief Color caster from `tr::rgba<double>` to `tr::hsv`.
 template <>
 struct tr::color_caster<tr::rgba<double>, tr::hsv>
 {
-	/// Casts a color from `tr::rgba<double>` to an equivalent value of type `tr::hsv`.
+	/// @brief Casts a color from `tr::rgba<double>` to an equivalent value of type `tr::hsv`.
 	/// @param rgba Color to cast.
 	/// @return Equivalent color value of type `tr::hsv`.
 	[[nodiscard]] static constexpr hsv operator()(const rgba<double>& rgba) noexcept

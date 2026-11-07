@@ -41,7 +41,7 @@ namespace tr
 		atlas_entries<Key, void, Hash, Pred> entries;
 		for (auto& [key, entry] : bitmaps) {
 			std::optional<glm::u16vec2> packing_result{entries.try_insert(std::move(key), entry.size(), size)};
-			if (!packing_result.has_value()) {
+			if (!packing_result) {
 				if (size == glm::ivec2{0, 0}) {
 					const glm::uvec2 usize{entry.size()};
 					size = {std::bit_ceil(usize.x + 1), std::bit_ceil(usize.y + 1)};
@@ -50,7 +50,7 @@ namespace tr
 				else {
 					do {
 						size.y < size.x ? size.y *= 2 : size.x *= 2;
-					} while (!(packing_result = entries.try_insert(std::move(key), entry.size(), size)).has_value());
+					} while (!(packing_result = entries.try_insert(std::move(key), entry.size(), size)));
 				}
 			}
 		}

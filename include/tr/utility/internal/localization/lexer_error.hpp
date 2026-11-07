@@ -8,45 +8,46 @@
 
 namespace tr::internal::localization
 {
-	/// Unexpected backslash lexer error.
+	/// @brief Unexpected backslash lexer error.
 	struct unexpected_backslash
 	{
-		/// Line the error occurred on.
+		/// @brief Line the error occurred on.
 		int line;
 	};
 
-	/// Unexpected slash lexer error.
+	/// @brief Unexpected slash lexer error.
 	struct unexpected_slash
 	{
-		/// Line the error occurred on.
+		/// @brief Line the error occurred on.
 		int line;
 	};
 
-	/// Unknown escape sequence lexer error.
+	/// @brief Unknown escape sequence lexer error.
 	struct unknown_escape_sequence
 	{
-		/// Line the error occurred on.
+		/// @brief Line the error occurred on.
 		int line;
 
-		/// Escaped character.
+		/// @brief Escaped character.
 		char character;
 	};
 
-	/// Unterminated multiline comment lexer error.
+	/// @brief Unterminated multiline comment lexer error.
 	struct unterminated_multiline_comment
 	{
-		/// Line the error occurred on.
+		/// @brief Line the error occurred on.
 		int line;
 	};
 
-	/// Unterminated string lexer error.
+	/// @brief Unterminated string lexer error.
 	struct unterminated_string
 	{
-		/// Line the error occurred on.
+		/// @brief Line the error occurred on.
 		int line;
 	};
 
-	/// concept denoting a localization lexer error.
+	/// @brief Concept checking for a localization lexer error.
+	/// @tparam Target Type to check for being a localization lexer error.
 	template <typename Target>
 	concept lexer_error = one_of<Target, unexpected_backslash, unexpected_slash, unknown_escape_sequence, unterminated_multiline_comment,
 								 unterminated_string>;

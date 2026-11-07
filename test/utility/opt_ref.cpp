@@ -7,65 +7,69 @@
 
 //
 
-/// Dummy base class.
+/// @brief Dummy base class.
 struct base
 {
+	/// @brief Dummy virtual destructor.
 	virtual ~base() = default;
 };
 
-/// Dummy derived class.
+/// @brief Dummy derived class.
 struct derived : base
 {
 };
 
 //
 
-/// Tests constructing an empty optional reference.
+/// @brief Tests constructing an empty optional reference.
 TEST(OptRefTest, ConstructsEmpty)
 {
 	tr::opt_ref<int> empty1;
 	tr::opt_ref<int> empty2(std::nullopt);
 
+	EXPECT_FALSE(empty1);
 	EXPECT_FALSE(empty1.has_value());
+	EXPECT_FALSE(empty2);
 	EXPECT_FALSE(empty2.has_value());
 	EXPECT_EQ(empty1.as_ptr(), nullptr);
 	EXPECT_EQ(empty1, empty2);
 }
 
-/// Tests constructing an optional reference from a reference.
+/// @brief Tests constructing an optional reference from a reference.
 TEST(OptRefTest, ConstructsFromReference)
 {
 	int data{10};
 	tr::opt_ref<int> wrapped_ref{data};
 
+	ASSERT_TRUE(wrapped_ref);
 	ASSERT_TRUE(wrapped_ref.has_value());
 	EXPECT_EQ(wrapped_ref.as_ptr(), &data);
 	EXPECT_EQ(*wrapped_ref, 10);
 }
 
-/// Tests constructing an optional reference to const from an optional reference to non-const.
+/// @brief Tests constructing an optional reference to const from an optional reference to non-const.
 TEST(OptRefTest, ConstructsOptRefToConstFromNonConst)
 {
 	int data{10};
 	tr::opt_ref<int> wrapped_ref{data};
 	tr::opt_ref<const int> wrapped_cref{data};
 
-	ASSERT_TRUE(wrapped_cref.has_value());
+	ASSERT_TRUE(wrapped_cref);
 	EXPECT_EQ(*wrapped_cref, 10);
 }
 
-/// Tests constructing an optional reference to base from an optional reference to derived.
+/// @brief Tests constructing an optional reference to base from an optional reference to derived.
 TEST(OptRefTest, ConstructsOptRefToBaseFromDerived)
 {
 	derived data{};
 	tr::opt_ref<derived> wrapped_ref{data};
 	tr::opt_ref<base> wrapped_base_ref{data};
 
-	ASSERT_TRUE(wrapped_base_ref.has_value());
+	ASSERT_TRUE(wrapped_base_ref);
 	EXPECT_EQ((base*)&data, wrapped_base_ref.as_ptr());
 }
 
-/// Tests comparing optional references.
+/// @brief Tests comparing optional references.
 TEST(OptRefTest, Compares)
 {
 	int data1{10};
@@ -84,7 +88,7 @@ TEST(OptRefTest, Compares)
 	EXPECT_NE(wrapped_ref1_opt, empty_ref);
 }
 
-/// Tests accessing the value an optional reference points to.
+/// @brief Tests accessing the value an optional reference points to.
 TEST(OptRefTest, ProvidesAccess)
 {
 	/// Dummy value struct.
@@ -95,7 +99,7 @@ TEST(OptRefTest, ProvidesAccess)
 
 	data_t data{10};
 	tr::opt_ref<data_t> wrapped_ref{data};
-	ASSERT_TRUE(wrapped_ref.has_value());
+	ASSERT_TRUE(wrapped_ref);
 	EXPECT_EQ((*wrapped_ref).value, 10);
 	EXPECT_EQ(wrapped_ref->value, 10);
 	EXPECT_EQ(wrapped_ref.as_ptr(), &data);
@@ -105,14 +109,14 @@ TEST(OptRefTest, ProvidesAccess)
 	EXPECT_EQ(data.value, 20);
 }
 
-/// Tests making an optional reference from a pointer.
+/// @brief Tests making an optional reference from a pointer.
 TEST(OptRefTest, MakeOptRef)
 {
 	int data{10};
 	auto empty_ref{tr::make_opt_ref<int>(nullptr)};
 	auto wrapped_ref{tr::make_opt_ref(&data)};
-	EXPECT_FALSE(empty_ref.has_value());
+	EXPECT_FALSE(empty_ref);
 	EXPECT_EQ(empty_ref, std::nullopt);
-	ASSERT_TRUE(wrapped_ref.has_value());
+	ASSERT_TRUE(wrapped_ref);
 	EXPECT_EQ(wrapped_ref, data);
 }

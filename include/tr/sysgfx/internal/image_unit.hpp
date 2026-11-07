@@ -20,7 +20,7 @@ namespace tr::internal
 	class image_unit
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Allocates an image unit on a graphics context.

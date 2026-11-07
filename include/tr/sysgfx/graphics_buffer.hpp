@@ -27,7 +27,7 @@ namespace tr
 	class graphics_buffer
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs an empty graphics buffer.

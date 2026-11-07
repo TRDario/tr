@@ -9,10 +9,8 @@
 
 namespace tr
 {
-	/// @name Casts
-	/// @{
-
-	/// Performs a dynamic_cast on a reference that returns an optional reference.
+	/// @ingroup wrappers
+	/// @brief Performs a dynamic_cast on a reference that returns an optional reference.
 	/// @tparam To Type to cast to.
 	/// @tparam From Type to cast from. `To` must be derived from `From`.
 	/// @param ref Reference to cast.
@@ -24,7 +22,8 @@ namespace tr
 		return make_opt_ref(dynamic_cast<To*>(std::addressof(ref)));
 	}
 
-	/// Performs a dynamic_cast on a reference that returns an optional reference.
+	/// @ingroup wrappers
+	/// @brief Performs a dynamic_cast on a reference that returns an optional reference.
 	/// @tparam To Type to cast to.
 	/// @tparam From Type to cast from. `To` must be derived from `From`.
 	/// @param ref Reference to cast.
@@ -36,7 +35,8 @@ namespace tr
 		return make_opt_ref(dynamic_cast<To*>(ref.as_ptr()));
 	}
 
-	/// Performs a dynamic_cast on a reference that returns an optional reference.
+	/// @ingroup wrappers
+	/// @brief Performs a dynamic_cast on a reference that returns an optional reference.
 	/// @tparam To Type to cast to.
 	/// @tparam From Type to cast from. `To` must be derived from `From`.
 	/// @param ref Optional reference to cast.
@@ -47,6 +47,4 @@ namespace tr
 	{
 		return make_opt_ref(dynamic_cast<To*>(ref.as_ptr()));
 	}
-
-	/// @}
 } // namespace tr

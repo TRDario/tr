@@ -8,11 +8,11 @@
 
 namespace tr::internal
 {
-	/// Wrapper around a void pointer that automatically casts it to a function pointer type.
+	/// @brief Wrapper around a void pointer that automatically casts it to a function pointer type.
 	class loaded_openal_function
 	{
 	  public:
-		// Hack needed to overload the conversion operator.
+		/// @brief Hack needed to overload the conversion operator.
 		/// @tparam Return Function return type.
 		/// @tparam Args Function argument types.
 		template <typename Return, typename... Args>
@@ -20,7 +20,7 @@ namespace tr::internal
 
 		//
 
-		/// Wraps alcGetProcAddress to return an OpenAL function proxy.
+		/// @brief Wraps alcGetProcAddress to return an OpenAL function proxy.
 		/// @param device Device to get the function address from.
 		/// @param name Function name.
 		[[nodiscard]] inline loaded_openal_function(ALCdevice* device, const char* name) noexcept
@@ -30,7 +30,7 @@ namespace tr::internal
 
 		//
 
-		/// Conversion operator.
+		/// @brief Conversion operator.
 		/// @tparam Return Function return type.
 		/// @tparam Args Function argument types.
 		template <typename Return, typename... Args>
@@ -40,7 +40,7 @@ namespace tr::internal
 		}
 
 	  private:
-		/// Base pointer type.
+		/// @brief Base pointer type.
 		void* m_ptr;
 	};
 } // namespace tr::internal

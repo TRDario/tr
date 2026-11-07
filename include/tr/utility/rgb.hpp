@@ -1,5 +1,9 @@
 /// @file
-/// @brief Provides `tr::rgb`.
+/// @brief Provides `tr::rgb` and related functionality.
+
+/// @ingroup color
+/// @defgroup rgb RGB
+/// @brief Contains `tr::rgb` and related functionality.
 
 #pragma once
 #include <tr/utility/arithmetic_concepts.hpp>
@@ -10,148 +14,136 @@
 
 namespace tr
 {
-	/// Color stored in the RGB color model.
-	template <arithmetic Element>
+	/// @ingroup rgb
+	/// @brief Color stored in the RGB color model.
+	/// @tparam Rep Color channel representation type.
+	template <arithmetic Rep>
 	struct rgb
 	{
-		/// Red color channel.
-		Element r;
+		/// @brief Red color channel.
+		Rep r;
 
-		/// Green color channel.
-		Element g;
+		/// @brief Green color channel.
+		Rep g;
 
-		/// Blue color channel.
-		Element b;
+		/// @brief Blue color channel.
+		Rep b;
 
 		/// @name Conversion operators
 		/// @{
 
-		/// Converts the color to the equivalent vector type.
+		/// @brief Converts the color to the equivalent vector type.
 		/// @return Equivalent color vector.
-		[[nodiscard]] constexpr explicit operator glm::tvec3<Element>() const noexcept
+		[[nodiscard]] constexpr explicit operator glm::tvec3<Rep>() const noexcept
 		{
-			return glm::tvec3<Element>{r, g, b};
-		}
-
-		/// @}
-		/// @name Comparison operators
-		/// @{
-
-		/// Compares two colors for memberwise equality.
-		/// @tparam ElementR Type of the elements of the right-hand side color.
-		/// @param lhs, rhs Colors to compare memberwise.
-		/// @return `true` if the colors are equal memberwise, `false` otherwise.
-		template <arithmetic ElementR>
-		[[nodiscard]] friend constexpr bool operator==(const rgb& lhs, const rgb<ElementR>& rhs) noexcept
-		{
-			return lhs.r == rhs.r && lhs.g == rhs.g && lhs.b == rhs.b;
+			return glm::tvec3<Rep>{r, g, b};
 		}
 
 		/// @}
 		/// @name Arithmetic operators
 		/// @{
 
-		/// Adds a scalar to the color memberwise.
+		/// @brief Adds a scalar to the color memberwise.
 		/// @tparam Scalar Type of the scalar.
 		/// @param rhs Scalar to add to the color memberwise.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
 		constexpr rgb& operator+=(Scalar rhs) noexcept
 		{
-			r += rhs;
-			g += rhs;
-			b += rhs;
+			r = static_cast<Rep>(r + rhs);
+			g = static_cast<Rep>(g + rhs);
+			b = static_cast<Rep>(b + rhs);
 			return *this;
 		}
 
-		/// Adds a color to the color.
-		/// @tparam ElementR Type of the elements of the added color.
+		/// @brief Adds a color to the color.
+		/// @tparam RhsRep Right-hand side color representation type.
 		/// @param rhs Color to add to the color memberwise.
 		/// @return Reference to `*this`.
-		template <arithmetic ElementR>
-		constexpr rgb& operator+=(const rgb<ElementR>& rhs) noexcept
+		template <arithmetic RhsRep>
+		constexpr rgb& operator+=(const rgb<RhsRep>& rhs) noexcept
 		{
-			r += rhs.r;
-			g += rhs.g;
-			b += rhs.b;
+			r = static_cast<Rep>(r + rhs.r);
+			g = static_cast<Rep>(g + rhs.g);
+			b = static_cast<Rep>(b + rhs.b);
 			return *this;
 		}
 
-		/// Subtracts a scalar from the color memberwise.
+		/// @brief Subtracts a scalar from the color memberwise.
 		/// @tparam Scalar Type of the scalar.
 		/// @param rhs Scalar to subtract from the color memberwise.
 		/// @return Reference to `*this`.
-		template <arithmetic ElementR>
-		constexpr rgb& operator-=(ElementR rhs) noexcept
+		template <arithmetic RhsRep>
+		constexpr rgb& operator-=(RhsRep rhs) noexcept
 		{
-			r -= rhs;
-			g -= rhs;
-			b -= rhs;
+			r = static_cast<Rep>(r - rhs);
+			g = static_cast<Rep>(g - rhs);
+			b = static_cast<Rep>(b - rhs);
 			return *this;
 		}
 
-		/// Subtracts a color from the color.
-		/// @tparam ElementR Type of the elements of the added color.
+		/// @brief Subtracts a color from the color.
+		/// @tparam RhsRep Right-hand side color representation type.
 		/// @param rhs Color to subtract from the color memberwise.
 		/// @return Reference to `*this`.
-		template <arithmetic ElementR>
-		constexpr rgb& operator-=(const rgb<ElementR>& rhs) noexcept
+		template <arithmetic RhsRep>
+		constexpr rgb& operator-=(const rgb<RhsRep>& rhs) noexcept
 		{
-			r -= rhs.r;
-			g -= rhs.g;
-			b -= rhs.b;
+			r = static_cast<Rep>(r - rhs.r);
+			g = static_cast<Rep>(g - rhs.g);
+			b = static_cast<Rep>(b - rhs.b);
 			return *this;
 		}
 
-		/// Multiplies a scalar with the color memberwise.
+		/// @brief Multiplies a scalar with the color memberwise.
 		/// @tparam Scalar Type of the scalar.
 		/// @param rhs Scalar to multiply with the color memberwise.
 		/// @return Reference to `*this`.
-		template <arithmetic ElementR>
-		constexpr rgb& operator*=(ElementR rhs) noexcept
+		template <arithmetic RhsRep>
+		constexpr rgb& operator*=(RhsRep rhs) noexcept
 		{
-			r *= rhs;
-			g *= rhs;
-			b *= rhs;
+			r = static_cast<Rep>(r * rhs);
+			g = static_cast<Rep>(g * rhs);
+			b = static_cast<Rep>(b * rhs);
 			return *this;
 		}
 
-		/// Multiplies a color with the color.
-		/// @tparam ElementR Type of the elements of the added color.
+		/// @brief Multiplies a color with the color.
+		/// @tparam RhsRep Right-hand side color representation type.
 		/// @param rhs Color to multiply with the color memberwise.
 		/// @return Reference to `*this`.
-		template <arithmetic ElementR>
-		constexpr rgb& operator*=(const rgb<ElementR>& rhs) noexcept
+		template <arithmetic RhsRep>
+		constexpr rgb& operator*=(const rgb<RhsRep>& rhs) noexcept
 		{
-			r *= rhs.r;
-			g *= rhs.g;
-			b *= rhs.b;
+			r = static_cast<Rep>(r * rhs.r);
+			g = static_cast<Rep>(g * rhs.g);
+			b = static_cast<Rep>(b * rhs.b);
 			return *this;
 		}
 
-		/// Divides a scalar with the color memberwise.
+		/// @brief Divides a scalar with the color memberwise.
 		/// @tparam Scalar Type of the scalar.
 		/// @param rhs Scalar to divide with the color memberwise.
 		/// @return Reference to `*this`.
-		template <arithmetic ElementR>
-		constexpr rgb& operator/=(ElementR rhs) noexcept
+		template <arithmetic RhsRep>
+		constexpr rgb& operator/=(RhsRep rhs) noexcept
 		{
-			r /= rhs;
-			g /= rhs;
-			b /= rhs;
+			r = static_cast<Rep>(r / rhs);
+			g = static_cast<Rep>(g / rhs);
+			b = static_cast<Rep>(b / rhs);
 			return *this;
 		}
 
-		/// Divides a color with the color.
-		/// @tparam ElementR Type of the elements of the added color.
+		/// @brief Divides a color with the color.
+		/// @tparam RhsRep Right-hand side color representation type.
 		/// @param rhs Color to divide with the color memberwise.
 		/// @return Reference to `*this`.
-		template <arithmetic ElementR>
-		constexpr rgb& operator/=(const rgb<ElementR>& rhs) noexcept
+		template <arithmetic RhsRep>
+		constexpr rgb& operator/=(const rgb<RhsRep>& rhs) noexcept
 		{
-			r /= rhs.r;
-			g /= rhs.g;
-			b /= rhs.b;
+			r = static_cast<Rep>(r / rhs.r);
+			g = static_cast<Rep>(g / rhs.g);
+			b = static_cast<Rep>(b / rhs.b);
 			return *this;
 		}
 
@@ -159,157 +151,175 @@ namespace tr
 		/// @name Alpha
 		/// @{
 
-		/// Adds an alpha component to the color.
+		/// @brief Adds an alpha component to the color.
 		/// @param a Alpha component to add to the color.
 		/// @return Color with the alpha component added.
-		[[nodiscard]] constexpr rgba<Element> with_alpha(Element a) const noexcept
+		[[nodiscard]] constexpr rgba<Rep> with_alpha(Rep a) const noexcept
 		{
-			return rgba<Element>{r, g, b, a};
+			return rgba<Rep>{r, g, b, a};
 		}
 
 		/// @}
 	};
 
-	/// @name RGB arithmetic operators
-	/// @{
+	//
 
-	/// Adds a scalar memberwise to an RGB color.
-	/// @tparam Element Type of the elements of the color.
+	/// @ingroup rgb
+	/// @brief Checks two colors for memberwise equality.
+	/// @tparam LhsRep, RhsRep Color representation types.
+	/// @param lhs, rhs Colors to compare memberwise.
+	/// @return `true` if the colors are equal memberwise, `false` otherwise.
+	template <arithmetic LhsRep, arithmetic RhsRep>
+	[[nodiscard]] constexpr bool operator==(const rgb<LhsRep>& lhs, const rgb<RhsRep>& rhs) noexcept
+	{
+		return lhs.r == rhs.r && lhs.g == rhs.g && lhs.b == rhs.b;
+	}
+
+	/// @ingroup rgb
+	/// @brief Adds a scalar memberwise to an RGB color.
+	/// @tparam Rep Color representation type.
 	/// @param lhs Color to add.
 	/// @param rhs Scalar to add memberwise.
 	/// @return Memberwise sum of the elements of the color with the scalar.
-	template <arithmetic Element>
-	[[nodiscard]] constexpr rgb<Element> operator+(rgb<Element> lhs, Element rhs)
+	template <arithmetic Rep>
+	[[nodiscard]] constexpr rgb<Rep> operator+(rgb<Rep> lhs, Rep rhs)
 	{
 		lhs += rhs;
 		return lhs;
 	}
 
-	/// Adds two RGB colors memberwise.
-	/// @tparam Element Type of the elements of the colors.
+	/// @ingroup rgb
+	/// @brief Adds two RGB colors memberwise.
+	/// @tparam Rep Color representation type.
 	/// @param lhs, rhs Colors to add.
 	/// @return Memberwise sum of the colors.
-	template <arithmetic Element>
-	[[nodiscard]] constexpr rgb<Element> operator+(rgb<Element> lhs, const rgb<Element>& rhs)
+	template <arithmetic Rep>
+	[[nodiscard]] constexpr rgb<Rep> operator+(rgb<Rep> lhs, const rgb<Rep>& rhs)
 	{
 		lhs += rhs;
 		return lhs;
 	}
 
-	/// Subtracts a scalar memberwise to an RGB color.
-	/// @tparam Element Type of the elements of the color.
+	/// @ingroup rgb
+	/// @brief Subtracts a scalar memberwise to an RGB color.
+	/// @tparam Rep Color representation type.
 	/// @param lhs Color to subtract from.
 	/// @param rhs Scalar to subtract memberwise.
 	/// @return Memberwise subtraction of the scalar from the elements of the color.
-	template <arithmetic Element>
-	[[nodiscard]] constexpr rgb<Element> operator-(rgb<Element> lhs, Element rhs)
+	template <arithmetic Rep>
+	[[nodiscard]] constexpr rgb<Rep> operator-(rgb<Rep> lhs, Rep rhs)
 	{
 		lhs -= rhs;
 		return lhs;
 	}
 
-	/// Subtracts two RGB colors memberwise.
-	/// @tparam Element Type of the elements of the colors.
+	/// @ingroup rgb
+	/// @brief Subtracts two RGB colors memberwise.
+	/// @tparam Rep Color representation type.
 	/// @param lhs, rhs Colors to subtract.
 	/// @return Memberwise difference of the colors.
-	template <arithmetic Element>
-	[[nodiscard]] constexpr rgb<Element> operator-(rgb<Element> lhs, rgb<Element> rhs)
+	template <arithmetic Rep>
+	[[nodiscard]] constexpr rgb<Rep> operator-(rgb<Rep> lhs, rgb<Rep> rhs)
 	{
 		lhs -= rhs;
 		return lhs;
 	}
 
-	/// Multiplies a scalar memberwise with an RGB color.
-	/// @tparam Element Type of the elements of the color.
+	/// @ingroup rgb
+	/// @brief Multiplies a scalar memberwise with an RGB color.
+	/// @tparam Rep Color representation type.
 	/// @param lhs Color to multiply.
 	/// @param rhs Scalar to multiply with.
 	/// @return Memberwise multiplication of the elements of the color with the scalar.
-	template <arithmetic Element>
-	[[nodiscard]] constexpr rgb<Element> operator*(rgb<Element> lhs, Element rhs)
+	template <arithmetic Rep>
+	[[nodiscard]] constexpr rgb<Rep> operator*(rgb<Rep> lhs, Rep rhs)
 	{
 		lhs *= rhs;
 		return lhs;
 	}
 
-	/// Multiplies two RGB colors memberwise.
-	/// @tparam Element Type of the elements of the colors.
+	/// @ingroup rgb
+	/// @brief Multiplies two RGB colors memberwise.
+	/// @tparam Rep Color representation type.
 	/// @param lhs, rhs Colors to multiply.
 	/// @return Memberwise multiplication of the colors.
-	template <arithmetic Element>
-	[[nodiscard]] constexpr rgb<Element> operator*(rgb<Element> lhs, const rgb<Element>& rhs)
+	template <arithmetic Rep>
+	[[nodiscard]] constexpr rgb<Rep> operator*(rgb<Rep> lhs, const rgb<Rep>& rhs)
 	{
 		lhs *= rhs;
 		return lhs;
 	}
 
-	/// Divides a scalar memberwise with an RGB color.
-	/// @tparam Element Type of the elements of the color.
+	/// @ingroup rgb
+	/// @brief Divides a scalar memberwise by an RGB color.
+	/// @tparam Rep Color representation type.
 	/// @param lhs Color to divide.
-	/// @param rhs Scalar to divide with.
-	/// @return Memberwise division of the elements of the color with the scalar.
-	template <arithmetic Element>
-	[[nodiscard]] constexpr rgb<Element> operator/(rgb<Element> lhs, Element rhs)
+	/// @param rhs Scalar to divide by.
+	/// @return Memberwise division of the elements of the color by the scalar.
+	template <arithmetic Rep>
+	[[nodiscard]] constexpr rgb<Rep> operator/(rgb<Rep> lhs, Rep rhs)
 	{
 		lhs /= rhs;
 		return lhs;
 	}
 
-	/// Divides two RGB colors memberwise.
-	/// @tparam Element Type of the elements of the colors.
+	/// @ingroup rgb
+	/// @brief Divides two RGB colors memberwise.
+	/// @tparam Rep Color representation type.
 	/// @param lhs, rhs Colors to divide.
 	/// @return Memberwise division of the colors.
-	template <arithmetic Element>
-	[[nodiscard]] constexpr rgb<Element> operator/(rgb<Element> lhs, const rgb<Element>& rhs)
+	template <arithmetic Rep>
+	[[nodiscard]] constexpr rgb<Rep> operator/(rgb<Rep> lhs, const rgb<Rep>& rhs)
 	{
 		lhs /= rhs;
 		return lhs;
 	}
-
-	/// @}
 } // namespace tr
 
 //
 
-/// Enables default binary IO for `tr::rgb`.
-template <tr::arithmetic Element>
-inline constexpr bool tr::enable_default_binary_io<tr::rgb<Element>>{true};
+/// @brief Enables default binary IO for `tr::rgb`.
+template <typename Rep>
+inline constexpr bool tr::enable_default_binary_io<tr::rgb<Rep>>{true};
 
 //
 
-/// Color caster between RGB colors of different element types.
-/// @tparam ElementFrom Type of the elements of the source color.
-/// @tparam ElementTo Type of the elements of the result color.
-template <tr::arithmetic ElementFrom, tr::arithmetic ElementTo>
-struct tr::color_caster<tr::rgb<ElementFrom>, tr::rgb<ElementTo>>
+/// @ingroup rgb
+/// @brief Color caster between RGB colors of different element types.
+/// @tparam RepFrom Representation type of the source color.
+/// @tparam RepTo Representation type of the result color.
+template <tr::arithmetic RepFrom, tr::arithmetic RepTo>
+struct tr::color_caster<tr::rgb<RepFrom>, tr::rgb<RepTo>>
 {
-	/// Casts a color from `tr::rgb<ElementFrom>` to an equivalent value of type `tr::rgb<ElementTo>`.
+	/// @brief Casts a color from `tr::rgb<RepFrom>` to an equivalent value of type `tr::rgb<RepTo>`.
 	/// @param from Color to cast.
-	/// @return Equivalent color value of type `tr::rgb<ElementTo>`.
-	[[nodiscard]] static constexpr rgb<ElementTo> operator()(const rgb<ElementFrom>& from) noexcept
+	/// @return Equivalent color value of type `tr::rgb<RepTo>`.
+	[[nodiscard]] static constexpr rgb<RepTo> operator()(const rgb<RepFrom>& from) noexcept
 	{
-		return rgb<ElementTo>{
-			norm_cast<ElementTo>(from.r),
-			norm_cast<ElementTo>(from.g),
-			norm_cast<ElementTo>(from.b),
+		return rgb<RepTo>{
+			norm_cast<RepTo>(from.r),
+			norm_cast<RepTo>(from.g),
+			norm_cast<RepTo>(from.b),
 		};
 	}
 };
 
-/// Color caster from an RGB color to an RGBA color.
-/// @tparam ElementFrom Type of the elements of the source color.
-/// @tparam ElementTo Type of the elements of the result color.
-template <tr::arithmetic ElementFrom, tr::arithmetic ElementTo>
-struct tr::color_caster<tr::rgb<ElementFrom>, tr::rgba<ElementTo>>
+/// @ingroup rgb
+/// @brief Color caster from an RGB color to an RGBA color.
+/// @tparam RepFrom Representation type of the source color.
+/// @tparam RepTo Representation type of the result color.
+template <tr::arithmetic RepFrom, tr::arithmetic RepTo>
+struct tr::color_caster<tr::rgb<RepFrom>, tr::rgba<RepTo>>
 {
-	/// Casts a color from `tr::rgb<ElementFrom>` to an equivalent value of type `tr::rgba<ElementTo>`.
+	/// @brief Casts a color from `tr::rgb<RepFrom>` to an equivalent value of type `tr::rgba<RepTo>`.
 	/// @param from Color to cast.
-	/// @return Equivalent color value of type `tr::rgba<ElementTo>`.
-	[[nodiscard]] static constexpr rgba<ElementTo> operator()(const rgb<ElementFrom>& from) noexcept
+	/// @return Equivalent color value of type `tr::rgba<RepTo>`.
+	[[nodiscard]] static constexpr rgba<RepTo> operator()(const rgb<RepFrom>& from) noexcept
 	{
-		return rgba<ElementTo>{
-			norm_cast<ElementTo>(from.r),
-			norm_cast<ElementTo>(from.g),
-			norm_cast<ElementTo>(from.b),
+		return rgba<RepTo>{
+			norm_cast<RepTo>(from.r),
+			norm_cast<RepTo>(from.g),
+			norm_cast<RepTo>(from.b),
 		};
 	}
 };

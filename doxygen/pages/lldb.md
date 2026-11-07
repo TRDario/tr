@@ -20,5 +20,5 @@ tr provides LLDB formatters for several datatypes and containers used and provid
  - `tr::texture_view`/`tr::mutable_texture_view`
  - `tr::utf8::iterator`/`tr::utf8::indexed_iterator`
 
-The easiest way to include these formatters is to insert `command script import <path to ptr>/lldb/tr.py` inside `.lldbinit` in your
+The easiest way to include these formatters is to insert `command script import <path to tr source>/lldb/tr.py` inside `.lldbinit` in your
 project or home directory to automatically include the full list on startup.

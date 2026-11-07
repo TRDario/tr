@@ -9,6 +9,7 @@
 
 namespace tr
 {
+	/// @ingroup handle
 	/// @brief `std::unique_ptr`-like object owning and managing an object passed via an integral handle.
 	/// @details `tr::unique_handle` is designed to be used as the base layer on top of which a more specialized wrapper is built. It
 	/// provides the proper move and RAII semantics, but has no support for other methods.
@@ -29,7 +30,7 @@ namespace tr
 		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// @brief Default-constructs an empty unique handle.
+		/// @brief Constructs an empty unique handle.
 		[[nodiscard]] constexpr unique_handle() noexcept
 			requires std::is_nothrow_default_constructible_v<Deleter>
 			: Deleter{}
@@ -182,6 +183,7 @@ namespace tr
 
 //
 
+/// @ingroup handle
 /// @brief Unique handle formatter.
 template <typename Handle, Handle Empty, typename Deleter, typename CharT>
 class std::formatter<tr::unique_handle<Handle, Empty, Deleter>, CharT> : private std::formatter<Handle, CharT>
@@ -201,6 +203,7 @@ class std::formatter<tr::unique_handle<Handle, Empty, Deleter>, CharT> : private
 };
 
 #ifndef TR_DOXYGEN
+/// @ingroup handle
 /// @brief Unique handle hasher.
 template <typename Handle, Handle Empty, typename Deleter>
 struct boost::hash<tr::unique_handle<Handle, Empty, Deleter>>

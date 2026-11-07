@@ -32,7 +32,7 @@ namespace tr
 	class uniform_buffer : private untyped_uniform_buffer
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Allocates an uninitialized uniform buffer.

@@ -6,20 +6,20 @@
 
 //
 
-/// Hash map test fixture.
+/// @brief Hash map test fixture.
 class HashMapTest : public ::testing::Test
 {
   protected:
-	/// First test map.
+	/// @brief First test map.
 	tr::string_flat_map<int> map1{{"one", 1}, {"two", 2}};
 
-	/// Second test map.
+	/// @brief Second test map.
 	tr::string_node_map<int> map2{{"four", 4}, {"five", 5}};
 };
 
 //
 
-/// Tests `tr::get()` for hash maps.
+/// @brief Tests `tr::get()` for hash maps.
 TEST_F(HashMapTest, Gets)
 {
 	EXPECT_EQ(tr::get(map1, "one"), 1);
@@ -33,15 +33,15 @@ TEST_F(HashMapTest, Gets)
 	EXPECT_EQ(tr::get(map2, "four"), 40);
 }
 
-/// Tests `tr::try_get()` for hash maps.
+/// @brief Tests `tr::try_get()` for hash maps.
 TEST_F(HashMapTest, TriesGetting)
 {
 	EXPECT_EQ(*tr::try_get(map1, "one"), 1);
 	EXPECT_EQ(*tr::try_get(std::as_const(map1), "two"), 2);
 	EXPECT_EQ(*tr::try_get(map2, "four"), 4);
 	EXPECT_EQ(*tr::try_get(std::as_const(map2), "five"), 5);
-	EXPECT_FALSE(tr::try_get(map1, "three").has_value());
-	EXPECT_FALSE(tr::try_get(std::as_const(map1), "three").has_value());
-	EXPECT_FALSE(tr::try_get(map2, "three").has_value());
-	EXPECT_FALSE(tr::try_get(std::as_const(map2), "three").has_value());
+	EXPECT_FALSE(tr::try_get(map1, "three"));
+	EXPECT_FALSE(tr::try_get(std::as_const(map1), "three"));
+	EXPECT_FALSE(tr::try_get(map2, "three"));
+	EXPECT_FALSE(tr::try_get(std::as_const(map2), "three"));
 }

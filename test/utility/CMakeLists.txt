@@ -14,13 +14,11 @@ add_executable(
 	color_cast.cpp
 	color_hex_code.cpp
 	defer.cpp
-	draw_geometry.cpp
 	dynamic_ref_cast.cpp
 	encryption.cpp
 	enum.cpp
 	exception.cpp
 	format_concepts.cpp
-	handle.cpp
 	hash_concepts.cpp
 	hash_map.cpp
 	iostream.cpp
@@ -28,7 +26,6 @@ add_executable(
 	inplace_string.cpp
 	inplace_vector.cpp
 	iterator_interface.cpp
-	line.cpp
 	localization_map.cpp
 	localization_script.cpp
 	lock_free_queue.cpp
@@ -56,6 +53,7 @@ add_executable(
 	temporary_file.cpp
 	timer.cpp
 	type_name.cpp
+	unique_handle.cpp
 	utf8.cpp
 	variant.cpp
 	vector.cpp

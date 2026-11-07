@@ -8,74 +8,80 @@
 
 namespace tr
 {
-	/// Standard duration datatype.
+	/// @ingroup wrappers
+	/// @defgroup chrono Chrono
+	/// @brief Contains miscellaneous chrono-related utilities.
+
+	/// @ingroup chrono
+	/// @brief Standard duration datatype.
 	using duration = std::chrono::nanoseconds;
 
 	inline namespace aliases
 	{
-		/// Namespace containing common chrono aliases.
+		/// @ingroup chrono
+		/// @brief Namespace containing common chrono aliases.
 		inline namespace chrono_aliases
 		{
-			/// Duration in seconds.
+			/// @brief Duration in seconds.
 			/// @tparam Rep Representation type of the duration.
 			template <typename Rep>
 			using secs = std::chrono::duration<Rep>;
 
-			/// Duration in seconds with a float representation.
+			/// @brief Duration in seconds with a float representation.
 			using fsecs = secs<float>;
 
-			/// Duration in seconds with a double representation.
+			/// @brief Duration in seconds with a double representation.
 			using dsecs = secs<double>;
 
-			/// Duration in seconds with an integer representation.
+			/// @brief Duration in seconds with an integer representation.
 			using isecs = std::chrono::seconds;
 
 			//
 
-			/// Duration in milliseconds.
+			/// @brief Duration in milliseconds.
 			/// @tparam Rep Representation type of the duration.
 			template <typename Rep>
 			using msecs = std::chrono::duration<Rep, std::milli>;
 
-			/// Duration in milliseconds with a float representation.
+			/// @brief Duration in milliseconds with a float representation.
 			using fmsecs = msecs<float>;
 
-			/// Duration in milliseconds with a double representation.
+			/// @brief Duration in milliseconds with a double representation.
 			using dmsecs = msecs<double>;
 
-			/// Duration in milliseconds with an integer representation.
+			/// @brief Duration in milliseconds with an integer representation.
 			using imsecs = std::chrono::milliseconds;
 
 			//
 
-			/// Duration in microseconds.
+			/// @brief Duration in microseconds.
 			/// @tparam Rep Representation type of the duration.
 			template <typename Rep>
 			using usecs = std::chrono::duration<Rep, std::micro>;
 
-			/// Duration in microseconds with a float representation.
+			/// @brief Duration in microseconds with a float representation.
 			using fusecs = usecs<float>;
 
-			/// Duration in microseconds with a double representation.
+			/// @brief Duration in microseconds with a double representation.
 			using dusecs = usecs<double>;
 
-			/// Duration in microseconds with an integer representation.
+			/// @brief Duration in microseconds with an integer representation.
 			using iusecs = std::chrono::microseconds;
 
 			//
 
-			/// Duration in nanoseconds.
+			/// @brief Duration in nanoseconds.
 			/// @tparam Rep Representation type of the duration.
 			template <typename Rep>
 			using nsecs = std::chrono::duration<Rep, std::nano>;
 
-			/// Duration in nanoseconds with a float representation.
+			/// @brief Duration in nanoseconds with a float representation.
 			using fnsecs = nsecs<float>;
 
-			/// Duration in nanoseconds with a double representation.
+			/// @brief Duration in nanoseconds with a double representation.
 			using dnsecs = nsecs<double>;
 
-			/// Duration in nanoseconds with an integer representation.
+			/// @brief Duration in nanoseconds with an integer representation.
 			using insecs = std::chrono::nanoseconds;
 		} // namespace chrono_aliases
 	} // namespace aliases
@@ -84,13 +90,11 @@ namespace tr
 
 	inline namespace literals
 	{
-		/// Namespace containing additional chrono literals.
+		/// @ingroup chrono
+		/// @brief Namespace containing additional chrono literals.
 		inline namespace chrono_literals
 		{
-			/// @name Literals
-			/// @{
-
-			/// Creates a duration from a frequency in hertz.
+			/// @brief Returns a duration derived from a frequency in hertz.
 			/// @param hz Frequency in hertz.
 			/// @return Duration `1s / hz`.
 			[[nodiscard]] consteval duration operator""_hz(unsigned long long hz) noexcept
@@ -98,22 +102,20 @@ namespace tr
 				return duration{isecs{1}} / static_cast<long long>(hz);
 			}
 
-			/// Creates a duration from a frequency in hertz.
+			/// @brief Returns a duration derived from a frequency in hertz.
 			/// @param hz Frequency in hertz.
 			/// @return Duration `1s / hz`.
 			[[nodiscard]] consteval duration operator""_hz(long double hz) noexcept
 			{
 				return std::chrono::duration_cast<duration>(duration{isecs{1}} / hz);
 			}
-
-			/// @}
 		} // namespace chrono_literals
 	} // namespace literals
 
-	/// @name Chrono
-	/// @{
+	//
 
-	/// Computes the ratio between two durations.
+	/// @ingroup chrono
+	/// @brief Returns the ratio between two durations.
 	/// @tparam Rep1 Representation type of the first duration.
 	/// @tparam Rep2 Representation type of the second duration.
 	/// @tparam Period1 Period of the first duration.
@@ -128,10 +130,10 @@ namespace tr
 
 	//
 
-	/// Cross-platform, thread-safe localtime.
-	/// @param time Timestamp value.
+	/// @ingroup chrono
+	/// @brief Converts time since epoch into calendar time expressed in local time and returns it.
+	/// @details This function is a cross-platform thread-safe replacement of `std::localtime()`.
+	/// @param time Time since epoch.
 	/// @return Local time information.
 	[[nodiscard]] std::tm localtime(std::time_t time) noexcept;
-
-	/// @}
 } // namespace tr

@@ -43,7 +43,7 @@ tr::window::window(zstring_view title, window_parameters parameters)
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, true);
 
 	m_ptr.reset(SDL_CreateWindow(title.c_str(), parameters.size.x, parameters.size.y, window_flags));
-	if (m_ptr == nullptr) {
+	if (!m_ptr) {
 		throw window_open_error{};
 	}
 	if (parameters.min_size != not_resizable) {
@@ -60,7 +60,7 @@ void tr::window::deleter::operator()(SDL_Window* window) noexcept
 
 bool tr::window::valid() const noexcept
 {
-	return m_ptr != nullptr;
+	return static_cast<bool>(m_ptr);
 }
 
 //
@@ -203,7 +203,7 @@ void tr::window::set_mouse_mode(mouse_mode mode)
 		m_cursor_reset_timer.reset();
 		break;
 	case mouse_mode::relative:
-		if (!m_cursor_reset_timer.has_value()) {
+		if (!m_cursor_reset_timer) {
 			m_cursor_reset_timer.emplace(std::chrono::seconds{1}, [this] {
 				float x, y;
 				SDL_GetMouseState(&x, &y);

@@ -6,16 +6,16 @@
 
 //
 
-/// Tracked integer type used in the lock-free queue tests.
+/// @brief Tracked integer type used in the lock-free queue tests.
 class tracked_queue_int
 {
   public:
-	/// Number of alive tracked integers.
+	/// @brief Number of alive tracked integers.
 	inline static tr::usize alive{0};
 
 	//
 
-	/// Constructs a tracked integer.
+	/// @brief Constructs a tracked integer.
 	/// @param value Value of the integer.
 	[[nodiscard]] explicit tracked_queue_int(int value) noexcept
 		: m_value{value}
@@ -23,7 +23,7 @@ class tracked_queue_int
 		++alive;
 	}
 
-	/// Copy-constructs a tracked integer.
+	/// @brief Copy-constructs a tracked integer.
 	/// @param rhs Integer to copy.
 	[[nodiscard]] tracked_queue_int(const tracked_queue_int& rhs) noexcept
 		: m_value{rhs.m_value}
@@ -31,7 +31,7 @@ class tracked_queue_int
 		++alive;
 	}
 
-	/// Destroys a tracked integer.
+	/// @brief Destroys a tracked integer.
 	~tracked_queue_int() noexcept
 	{
 		--alive;
@@ -39,7 +39,7 @@ class tracked_queue_int
 
 	//
 
-	/// Copy-assigns a tracked integer.
+	/// @brief Copy-assigns a tracked integer.
 	/// @param rhs Integer to copy.
 	/// @return Reference to `*this`.
 	tracked_queue_int& operator=(const tracked_queue_int& rhs) noexcept
@@ -50,7 +50,7 @@ class tracked_queue_int
 
 	//
 
-	/// Gets the value of the tracked integer.
+	/// @brief Returns the value of the tracked integer.
 	/// @return Value of the tracked integer.
 	[[nodiscard]] int value() const noexcept
 	{
@@ -58,28 +58,28 @@ class tracked_queue_int
 	}
 
   private:
-	/// Value of the tracked integer.
+	/// @brief Value of the tracked integer.
 	int m_value;
 };
 
 //
 
-/// Tests that a lock-free queue is not copyable.
+/// @brief Tests that a lock-free queue is not copyable.
 static_assert(!std::copyable<tr::lock_free_queue<tracked_queue_int, 2>>, "Lock-free queue should not be copyable, but is!");
 
-/// Tests that a lock-free queue is not movable.
+/// @brief Tests that a lock-free queue is not movable.
 static_assert(!std::movable<tr::lock_free_queue<tracked_queue_int, 2>>, "Lock-free queue should not be movable, but is!");
 
 //
 
-/// Tests that a default-constructed lock-free queue is empty.
+/// @brief Tests that a default-constructed lock-free queue is empty.
 TEST(LockFreeQueueTest, DefaultConstructsEmpty)
 {
 	tr::lock_free_queue<int, 4> queue;
-	EXPECT_FALSE(queue.try_pop_front().has_value());
+	EXPECT_FALSE(queue.try_pop_front());
 }
 
-/// Tests emplacing back and popping from a lock-free queue.
+/// @brief Tests emplacing back and popping from a lock-free queue.
 TEST(LockFreeQueueTest, EmplacesBackAndPops)
 {
 	tr::lock_free_queue<int, 2> queue;
@@ -90,10 +90,10 @@ TEST(LockFreeQueueTest, EmplacesBackAndPops)
 	EXPECT_TRUE(queue.try_emplace_back(3));
 	EXPECT_EQ(queue.try_pop_front(), 1);
 	EXPECT_EQ(queue.try_pop_front(), 3);
-	EXPECT_FALSE(queue.try_pop_front().has_value());
+	EXPECT_FALSE(queue.try_pop_front());
 }
 
-/// Tests popping from a lock-free queue into an output parameter.
+/// @brief Tests popping from a lock-free queue into an output parameter.
 TEST(LockFreeQueueTest, PopsIntoOutputParameter)
 {
 	tr::lock_free_queue<int, 2> queue;
@@ -105,7 +105,7 @@ TEST(LockFreeQueueTest, PopsIntoOutputParameter)
 	EXPECT_FALSE(queue.try_pop_front(output));
 }
 
-/// Tests that a lock-free queue correctly handles the lifetimes of its elements.
+/// @brief Tests that a lock-free queue correctly handles the lifetimes of its elements.
 TEST(LockFreeQueueTest, CorrectlyHandlesElementLifetimes)
 {
 	tracked_queue_int::alive = 0;
@@ -123,7 +123,7 @@ TEST(LockFreeQueueTest, CorrectlyHandlesElementLifetimes)
 	EXPECT_EQ(tracked_queue_int::alive, 0);
 }
 
-/// Tests using multiple concurrent producers and consumers on a lock-free queue.
+/// @brief Tests using multiple concurrent producers and consumers on a lock-free queue.
 TEST(LockFreeQueueTest, SupportsConcurrentProducersAndConsumers)
 {
 	constexpr tr::usize thread_count{4};

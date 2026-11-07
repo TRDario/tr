@@ -1,5 +1,9 @@
 /// @file
-/// @brief Provides `tr::rng`.
+/// @brief Provides `tr::rng` and various random generator functions.
+
+/// @ingroup utility
+/// @defgroup rng Random number generation
+/// @brief Contains `tr::rng` and various random generator functions.
 
 #pragma once
 #include <tr/utility/integer.hpp>
@@ -10,18 +14,19 @@
 
 namespace tr
 {
-	/// Generates a random seed.
+	/// @ingroup rng
+	/// @brief Generates a random seed.
 	/// @return Random 64-bit seed.
 	[[nodiscard]] u64 generate_random_seed();
 
-	/// Xorshiftr128+ random number generator.
+	/// @brief Xorshiftr128+ random number generator.
 	class rng
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Initializes RNG.
+		/// @brief Initializes RNG.
 		/// @param seed Seed to initialize the generator with.
 		[[nodiscard]] rng(u64 seed = generate_random_seed()) noexcept;
 
@@ -29,31 +34,33 @@ namespace tr
 		/// @name Raw
 		/// @{
 
-		/// Advances the RNG and returns a value.
+		/// @brief Advances the RNG and returns a value.
 		/// @return New randomly-generated value.
 		u64 advance() noexcept;
 
 		/// @}
 
 	  private:
-		/// Internal state of the generator.
+		/// @brief Internal state of the generator.
 		u64 m_state[2];
 	};
 
-	/// @name Random number generation
-	/// @{
+	//
 
-	/// Generates a random boolean value.
+	/// @ingroup rng
+	/// @brief Generates a random boolean value.
 	/// @param rng RNG used to generate the value.
 	/// @return Random boolean value.
 	[[nodiscard]] bool generate_bool(rng& rng) noexcept;
 
-	/// Generates a random sign (-1 or 1).
+	/// @ingroup rng
+	/// @brief Generates a random sign (-1 or 1).
 	/// @param rng RNG used to generate the value.
 	/// @return `-1` or `1`.
 	[[nodiscard]] int generate_sign(rng& rng) noexcept;
 
-	/// Generates a random integral value.
+	/// @ingroup rng
+	/// @brief Generates a random integral value.
 	/// @tparam Integer Integer type.
 	/// @param rng RNG used to generate the value.
 	/// @return Random integral value.
@@ -69,7 +76,8 @@ namespace tr
 		}
 	}
 
-	/// Generates a random integral value in the range [0, `max`).
+	/// @ingroup rng
+	/// @brief Generates a random integral value in the range [0, `max`).
 	/// @tparam Integer Integer type.
 	/// @param rng RNG used to generate the value.
 	/// @param max Upper bound of the random range.
@@ -83,7 +91,8 @@ namespace tr
 		return static_cast<Integer>(generate_int<std::make_unsigned_t<Integer>>(rng) % max);
 	}
 
-	/// Generates a random integral value in the range [`min`, `max`).
+	/// @ingroup rng
+	/// @brief Generates a random integral value in the range [`min`, `max`).
 	/// @tparam Integer Integer type.
 	/// @param rng RNG used to generate the value.
 	/// @param min Lower bound of the random range.
@@ -98,7 +107,8 @@ namespace tr
 		return static_cast<Integer>(generate_int<std::make_unsigned_t<Integer>>(rng) % (max - min) + min);
 	}
 
-	/// Generates a random floating point value in the range [0, 1).
+	/// @ingroup rng
+	/// @brief Generates a random floating point value in the range [0, 1).
 	/// @tparam FloatingPoint Floating-point type.
 	/// @param rng RNG used to generate the value.
 	/// @return Random floating-point value constrained to [0, 1).
@@ -108,7 +118,8 @@ namespace tr
 		return static_cast<FloatingPoint>(rng.advance()) / static_cast<FloatingPoint>(UINT64_MAX);
 	}
 
-	/// Generates a random floating point value in the range [0, `max`).
+	/// @ingroup rng
+	/// @brief Generates a random floating point value in the range [0, `max`).
 	/// @tparam FloatingPoint Floating-point type.
 	/// @param rng RNG used to generate the value.
 	/// @param max Upper bound of the random range.
@@ -120,7 +131,8 @@ namespace tr
 		return generate_float<FloatingPoint>(rng) * max;
 	}
 
-	/// Generates a random floating point value in the range [`min`, `max`).
+	/// @ingroup rng
+	/// @brief Generates a random floating point value in the range [`min`, `max`).
 	/// @tparam FloatingPoint Floating-point type.
 	/// @param rng RNG used to generate the value.
 	/// @param min Lower bound of the random range.
@@ -135,7 +147,8 @@ namespace tr
 		return generate_float<FloatingPoint>(rng) * (max - min) + min;
 	}
 
-	/// Generates a random vector with a specific magnitude.
+	/// @ingroup rng
+	/// @brief Generates a random vector with a specific magnitude.
 	/// @param rng RNG used to generate the value.
 	/// @param magnitude Magnitude of the vector.
 	/// @return Vector with a set magnitude and random direction.
@@ -149,7 +162,8 @@ namespace tr
 		return glm::tvec2<Rep>{magnitude * cos, magnitude * sin};
 	}
 
-	/// Generates a random point within a rectangular region.
+	/// @ingroup rng
+	/// @brief Generates a random point within a rectangular region.
 	/// @param rng RNG used to generate the value.
 	/// @param region Region to constrain the vector to.
 	/// @return Vector to a random point within `region`.
@@ -159,6 +173,4 @@ namespace tr
 		return glm::tvec2<Rep>{generate_float(rng, region.tl.x, region.tl.x + region.size.x),
 							   generate_float(rng, region.tl.y, region.tl.y + region.size.y)};
 	}
-
-	/// @}
 } // namespace tr

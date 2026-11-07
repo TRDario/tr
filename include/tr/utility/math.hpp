@@ -9,10 +9,8 @@
 
 namespace tr
 {
-	/// @name Casts
-	/// @{
-
-	/// Casts a floating point number to an integer by rounding the value.
+	/// @ingroup math
+	/// @brief Casts a floating point number to an integer by rounding the value.
 	/// @tparam To Target integer type.
 	/// @tparam From Source floating-point type.
 	/// @param from Source floating-point value.
@@ -23,7 +21,8 @@ namespace tr
 		return static_cast<To>(std::round(from));
 	}
 
-	/// Casts a floating point number to an integer by flooring the value.
+	/// @ingroup math
+	/// @brief Casts a floating point number to an integer by flooring the value.
 	/// @tparam To Target integer type.
 	/// @tparam From Source floating-point type.
 	/// @param from Source floating-point value.
@@ -34,7 +33,8 @@ namespace tr
 		return static_cast<To>(std::floor(from));
 	}
 
-	/// Casts a floating point number to an integer by rounding the value up.
+	/// @ingroup math
+	/// @brief Casts a floating point number to an integer by rounding the value up.
 	/// @tparam To Target integer type.
 	/// @tparam From Source floating-point type.
 	/// @param from Source floating-point value.
@@ -45,11 +45,10 @@ namespace tr
 		return static_cast<To>(std::ceil(from));
 	}
 
-	/// @}
-	/// @name Mathematical operations
-	/// @{
+	//
 
-	/// Sign operation.
+	/// @ingroup math
+	/// @brief Returns the sign of the value.
 	/// @tparam X Value type.
 	/// @param x Value to get the sign of.
 	/// @return `1` if the value is positive, `-1` if the value is negative, or `0`.
@@ -64,7 +63,8 @@ namespace tr
 		}
 	}
 
-	/// Generic modulo operation.
+	/// @ingroup math
+	/// @brief Returns the modulo of `x` by `y`.
 	/// @tparam X, Y Value types.
 	/// @param x Dividend value.
 	/// @param y Divisor value.
@@ -81,7 +81,8 @@ namespace tr
 		}
 	}
 
-	/// Euclidian modulo operation (always returns in the range [0, `mod`)).
+	/// @ingroup math
+	/// @brief Returns the euclidian modulo of `x` by `y`. (always returns in the range [0, `mod`)).
 	/// @tparam X, Y Value types.
 	/// @param x Dividend value.
 	/// @param y Divisor value.
@@ -94,7 +95,8 @@ namespace tr
 		return normal_mod >= decltype(normal_mod){} ? normal_mod : normal_mod + y;
 	}
 
-	/// Linearly interpolates between two values.
+	/// @ingroup math
+	/// @brief Linearly interpolates between two values.
 	/// @tparam X, Y, A Value types.
 	/// @param x, y Sample values.
 	/// @param a Interpolation factor.
@@ -106,7 +108,8 @@ namespace tr
 		return x * (1 - a) + y * a;
 	}
 
-	/// Squaring operation.
+	/// @ingroup math
+	/// @brief Returns the square of a value.
 	/// @tparam X Value type.
 	/// @param x Value to square.
 	/// @return `x²`.
@@ -116,6 +119,4 @@ namespace tr
 	{
 		return x * x;
 	}
-
-	/// @}
 } // namespace tr

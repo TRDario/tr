@@ -8,80 +8,90 @@
 
 namespace tr
 {
-	/// Basic benchmarking class.
+	/// @ingroup utility
+	/// @brief Benchmark object recording and aggregating execution time measurements for a region of code delineated with `start()` and
+	/// `stop()`.
+	/// @details
+	/// `tr::benchmark` is intended to be used to benchmark sections of code that execute in the order of nanoseconds - milliseconds that
+	/// are executed repeatedly, possibly many times a second. Measurements are stored for up to 2 seconds and then discarded, which may
+	/// interfere with longer or more infrequent measurements.
 	class benchmark
 	{
 	  public:
-		/// Measurement produced by the benchmark.
+		/// @brief Measurement produced by the benchmark.
 		struct measurement
 		{
-			// Starting time point of the measurement.
+			/// @brief Starting time point of the measurement.
 			std::chrono::steady_clock::time_point start;
 
-			// Duration of the measurement.
+			/// @brief Duration of the measurement.
 			duration duration;
 		};
 
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Constructs an empty benchmark.
+		/// @brief Constructs an empty benchmark.
 		[[nodiscard]] benchmark() noexcept = default;
 
 		/// @}
-		/// @name Controls
+		/// @name Measurement
 		/// @{
 
-		/// Starts a new measurement.
+		/// @brief Starts a new measurement.
 		void start() noexcept;
 
-		/// Stops a measurement.
-		void stop();
+		/// @brief Stops a measurement.
+		void stop() noexcept;
 
-		/// Clears all previous and ongoing measurements from the queue.
+		/// @}
+		/// @name Modifiers
+		/// @{
+
+		/// @brief Clears all previous and ongoing measurements from the queue.
 		void clear() noexcept;
 
 		/// @}
-		/// @name Results
+		/// @name Observers
 		/// @{
 
-		/// Gets the duration of the latest measurement.
-		/// @return Duration of the latest measurement.
+		/// @brief Returns the duration of the latest measurement.
+		/// @return Duration of the latest measurement, or 0s if there are no available measurements.
 		[[nodiscard]] duration latest() const noexcept;
 
-		/// Gets the duration of the shortest available measurement.
-		/// @return Duration of the shortest available measurement.
+		/// @brief Returns the duration of the shortest available measurement.
+		/// @return Duration of the shortest available measurement, or 0s if there are no available measurements.
 		[[nodiscard]] duration min() const noexcept;
 
-		/// Gets the duration of the longest available measurement.
-		/// @return Duration of the longest available measurement.
+		/// @brief Returns the duration of the longest available measurement.
+		/// @return Duration of the longest available measurement, or 0s if there are no available measurements.
 		[[nodiscard]] duration max() const noexcept;
 
-		/// Gets the average duration of the available measurements.
-		/// @return Average duration of the available measurements.
+		/// @brief Returns the average duration of the available measurements.
+		/// @return Average duration of the available measurements, or 0s if there are no available measurements.
 		[[nodiscard]] duration avg() const noexcept;
 
-		/// Gets the average number of measurements per second.
-		/// @return Average number of measurements per second.
+		/// @brief Returns the average number of measurements per second.
+		/// @return Average number of measurements per second, or 0 if there are no available measurements.
 		[[nodiscard]] double fps() const noexcept;
 
-		/// Gets the available measurements.
+		/// @brief Returns the available measurements.
 		/// @return Reference to the queue of available measurements.
 		[[nodiscard]] const std::deque<measurement>& measurements() const noexcept;
 
 	  private:
-		/// Sentinel starting point for a measurement that hasn't been started.
+		/// @brief Sentinel starting point for a measurement that hasn't been started.
 		static constexpr std::chrono::steady_clock::time_point not_started{};
 
-		/// Maximum allowed age of a measurement before it is thrown out.
+		/// @brief Maximum allowed age of a measurement before it is thrown out.
 		static constexpr tr::dsecs max_measurement_age{2.5};
 
 		//
 
-		/// Benchmark measurement deque.
+		/// @brief Benchmark measurement deque.
 		std::deque<measurement> m_measurements;
 
-		/// Starting time point of the latest started (but not ended) measurement.
+		/// @brief Starting time point of the latest started (but not ended) measurement.
 		std::chrono::steady_clock::time_point m_start{not_started};
 	};
 } // namespace tr

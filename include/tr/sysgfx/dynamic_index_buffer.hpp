@@ -29,7 +29,7 @@ namespace tr
 	class dynamic_index_buffer : private graphics_buffer
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Creates an empty dynamic index buffer.

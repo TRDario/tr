@@ -22,7 +22,7 @@ tr::bitmap_view::bitmap_view(std::span<const std::byte> raw_data, glm::ivec2 siz
 tr::bitmap_view::bitmap_view(const std::byte* raw_data_start, int pitch, glm::ivec2 size, pixel_format format)
 	: m_ptr{SDL_CreateSurfaceFrom(size.x, size.y, static_cast<SDL_PixelFormat>(format), const_cast<std::byte*>(raw_data_start), pitch)}
 {
-	if (m_ptr == nullptr) {
+	if (!m_ptr) {
 		throw out_of_memory{"bitmap view allocation"};
 	}
 }
@@ -36,7 +36,7 @@ void tr::bitmap_view::deleter::operator()(SDL_Surface* ptr) noexcept
 
 tr::bitmap_view::operator tr::sub_bitmap() const noexcept
 {
-	return sub(rectangle<int>{.tl{0, 0}, .size{size()}});
+	return sub(rectangle<int>{size()});
 }
 
 tr::sub_bitmap tr::bitmap_view::sub(rectangle<int> region) const noexcept
@@ -48,7 +48,7 @@ tr::sub_bitmap tr::bitmap_view::sub(rectangle<int> region) const noexcept
 
 bool tr::bitmap_view::valid() const noexcept
 {
-	return m_ptr != nullptr;
+	return static_cast<bool>(m_ptr);
 }
 
 glm::ivec2 tr::bitmap_view::size() const noexcept

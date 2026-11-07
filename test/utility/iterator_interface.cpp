@@ -6,43 +6,49 @@
 
 //
 
-/// Iterator used to exercise the operators synthesized by iterator_interface.
+/// @brief Iterator used to exercise the operators synthesized by iterator_interface.
 struct synthesized_iterator : tr::iterator_interface<synthesized_iterator>
 {
-	/// Position pointer of the iterator.
+	/// @brief Position pointer of the iterator.
 	int* ptr;
 
 	//
 
-	/// Constructs an iterator.
-	constexpr explicit synthesized_iterator(int* ptr) noexcept
+	/// @brief Constructs an iterator.
+	/// @param ptr Position pointer of the iterator.
+	[[nodiscard]] constexpr explicit synthesized_iterator(int* ptr) noexcept
 		: ptr{ptr}
 	{
 	}
 
 	//
 
-	/// Dereferences the iterator.
-	constexpr int& operator*() const noexcept
+	/// @brief Dereferences the iterator.
+	/// @return Reference to the pointed-to value.
+	[[nodiscard]] constexpr int& operator*() const noexcept
 	{
 		return *ptr;
 	}
 
-	/// Increments the iterator.
+	/// @brief Increments the iterator.
+	/// @return Reference to `*this`.
 	constexpr synthesized_iterator& operator++() noexcept
 	{
 		++ptr;
 		return *this;
 	}
 
-	/// Decrements the iterator.
+	/// @brief Decrements the iterator.
+	/// @return Reference to `*this`.
 	constexpr synthesized_iterator& operator--() noexcept
 	{
 		--ptr;
 		return *this;
 	}
 
-	/// Advances the iterator.
+	/// @brief Advances the iterator.
+	/// @param difference Amount to advance the iterator by.
+	/// @return Reference to `*this`.
 	constexpr synthesized_iterator& operator+=(std::ptrdiff_t difference) noexcept
 	{
 		ptr += difference;
@@ -50,47 +56,51 @@ struct synthesized_iterator : tr::iterator_interface<synthesized_iterator>
 	}
 };
 
-/// Iterator exposing only dereferencing, used to check unavailable operations.
+/// @brief Iterator exposing only dereferencing, used to check unavailable operations.
 struct dereference_only_iterator : tr::iterator_interface<dereference_only_iterator>
 {
-	/// Position pointer of the iterator.
+	/// @brief Position pointer of the iterator.
 	int* ptr;
 
 	//
 
-	/// Constructs an iterator.
-	constexpr explicit dereference_only_iterator(int* ptr) noexcept
+	/// @brief Constructs an iterator.
+	/// @param ptr Position pointer of the iterator.
+	[[nodiscard]] constexpr explicit dereference_only_iterator(int* ptr) noexcept
 		: ptr{ptr}
 	{
 	}
 
 	//
 
-	/// Dereferences the iterator.
-	constexpr int& operator*() const noexcept
+	/// @brief Dereferences the iterator.
+	/// @return Reference to the pointed-to value.
+	[[nodiscard]] constexpr int& operator*() const noexcept
 	{
 		return *ptr;
 	}
 };
 
-/// Iterator whose dereference returns a value rather than a reference.
+/// @brief Iterator whose dereference returns a value rather than a reference.
 struct value_dereference_only_iterator : tr::iterator_interface<value_dereference_only_iterator>
 {
-	/// Value of the iterator.
+	/// @brief Value of the iterator.
 	int value;
 
 	//
 
-	/// Constructs an iterator.
-	constexpr explicit value_dereference_only_iterator(int value) noexcept
+	/// @brief Constructs an iterator.
+	/// @param value Value of the iterator.
+	[[nodiscard]] constexpr explicit value_dereference_only_iterator(int value) noexcept
 		: value{value}
 	{
 	}
 
 	//
 
-	/// Dereferences the iterator.
-	constexpr int operator*() const noexcept
+	/// @brief Dereferences the iterator.
+	/// @return Value of the iterator.
+	[[nodiscard]] constexpr int operator*() const noexcept
 	{
 		return value;
 	}
@@ -98,112 +108,118 @@ struct value_dereference_only_iterator : tr::iterator_interface<value_dereferenc
 
 //
 
-/// Iterator with defined post-incrementation.
+/// @brief Concept checking for an iterator with defined post-incrementation.
+/// @tparam Iterator Iterator type to check for post-increment.
 template <typename Iterator>
 concept has_post_increment = requires(Iterator& it) { it++; };
 
-/// Iterator with defined post-incrementation.
+/// @brief Concept checking for an iterator with defined post-incrementation.
+/// @tparam Iterator Iterator type to check for post-decrement.
 template <typename Iterator>
 concept has_post_decrement = requires(Iterator& it) { it--; };
 
-/// Iterator with defined addition.
+/// @brief Concept checking for an iterator with defined addition.
+/// @tparam Iterator Iterator type to check for addition.
 template <typename Iterator>
 concept has_addition = requires(const Iterator& it) {
 	it + 2;
 	2 + it;
 };
 
-/// Iterator with defined subtraction.
+/// @brief Concept checking for an iterator with defined subtraction.
+/// @tparam Iterator Iterator type to check for subtraction.
 template <typename Iterator>
 concept has_subtraction = requires(Iterator& it) {
 	it -= 2;
 	it - 2;
 };
 
-/// Iterator with defined subscript dereferencing.
+/// @brief Concept checking for an iterator with defined subscript dereferencing.
+/// @tparam Iterator Iterator type to check for subscript dereference.
 template <typename Iterator>
 concept has_subscript_dereference = requires(const Iterator& it) { it[2]; };
 
-/// Iterator with defined pointer dereferencing.
+/// @brief Concept checking for an iterator with defined pointer dereferencing.
+/// @tparam Iterator Iterator type to check for pointer dereference.
 template <typename Iterator>
 concept has_pointer_dereference = requires(const Iterator& it) { it.operator->(); };
 
 //
 // clang-format off
 
-/// Tests that `tr::iterator_interface` synthesizes post-incrementation for `synthesized_iterator`.
+/// @brief Tests that `tr::iterator_interface` synthesizes post-incrementation for `synthesized_iterator`.
 static_assert(
 	has_post_increment<synthesized_iterator>,
 	"tr::iterator_interface should have synthesized post-incrementation, but didn't!"
 );
 
-/// Tests that `tr::iterator_interface` synthesizes post-decrementation for `synthesized_iterator`..
+/// @brief Tests that `tr::iterator_interface` synthesizes post-decrementation for `synthesized_iterator`..
 static_assert(
 	has_post_decrement<synthesized_iterator>,
 	"tr::iterator_interface should have synthesized post-decrementation, but didn't!"
 );
 
-/// Tests that `tr::iterator_interface` synthesizes addition for `synthesized_iterator`..
+/// @brief Tests that `tr::iterator_interface` synthesizes addition for `synthesized_iterator`..
 static_assert(
 	has_addition<synthesized_iterator>,
 	"tr::iterator_interface should have synthesized addition, but didn't!"
 );
 
-/// Tests that `tr::iterator_interface` synthesizes subtraction for `synthesized_iterator`.
+/// @brief Tests that `tr::iterator_interface` synthesizes subtraction for `synthesized_iterator`.
 static_assert(
 	has_subtraction<synthesized_iterator>,
 	"tr::iterator_interface should have synthesized subtraction, but didn't!"
 );
 
-/// Tests that `tr::iterator_interface` synthesizes subscript dereferencing for `synthesized_iterator`..
+/// @brief Tests that `tr::iterator_interface` synthesizes subscript dereferencing for `synthesized_iterator`..
 static_assert(
 	has_subscript_dereference<synthesized_iterator>,
 	"tr::iterator_interface should have synthesized subscripting, but didn't!"
 );
 
-/// Tests that `tr::iterator_interface` synthesizes pointer dereferencing for `synthesized_iterator`..
+/// @brief Tests that `tr::iterator_interface` synthesizes pointer dereferencing for `synthesized_iterator`..
 static_assert(
 	has_pointer_dereference<synthesized_iterator>,
 	"tr::iterator_interface should have synthesized pointer dereferencing, but didn't!"
 );
 
-/// Tests that `tr::iterator_interface` does not synthesize post-incrementation for `dereference_only_iterator`.
+/// @brief Tests that `tr::iterator_interface` does not synthesize post-incrementation for `dereference_only_iterator`.
 static_assert(
 	!has_post_increment<dereference_only_iterator>,
 	"tr::iterator_interface should not have synthesized post-incrementation, but did!"
 );
 
-/// Tests that `tr::iterator_interface` does not synthesize post-decrementation for `dereference_only_iterator`.
+/// @brief Tests that `tr::iterator_interface` does not synthesize post-decrementation for `dereference_only_iterator`.
 static_assert(
 	!has_post_decrement<dereference_only_iterator>,
 	"tr::iterator_interface should not have synthesized post-decrementation, but did!"
 );
 
-/// Tests that `tr::iterator_interface` synthesizes addition for `dereference_only_iterator`..
+/// @brief Tests that `tr::iterator_interface` synthesizes addition for `dereference_only_iterator`..
 static_assert(
 	!has_addition<dereference_only_iterator>,
 	"tr::iterator_interface should not have synthesized addition, but did!"
 );
 
-/// Tests that `tr::iterator_interface` does not synthesize subtraction for `dereference_only_iterator`.
+/// @brief Tests that `tr::iterator_interface` does not synthesize subtraction for `dereference_only_iterator`.
 static_assert(
 	!has_subtraction<dereference_only_iterator>,
 	"tr::iterator_interface should not have synthesized subtraction, but did!"
 );
 
-/// Tests that `tr::iterator_interface` does not synthesize subscript dereferencing for `dereference_only_iterator`.
+/// @brief Tests that `tr::iterator_interface` does not synthesize subscript dereferencing for `dereference_only_iterator`.
 static_assert(
 	!has_subscript_dereference<dereference_only_iterator>,
 	"tr::iterator_interface should not have synthesized subscripting, but did!"
 );
 
-/// Tests that `tr::iterator_interface` synthesizes pointer dereferencing for `dereference_only_iterator`.
+/// @brief Tests that `tr::iterator_interface` synthesizes pointer dereferencing for `dereference_only_iterator`.
 static_assert(
 	has_pointer_dereference<dereference_only_iterator>,
 	"tr::iterator_interface should have synthesized pointer dereferencing, but didn't!"
 );
 
-/// Tests that `tr::iterator_interface` synthesizes pointer dereferencing for `value_dereference_only_iterator`.
+/// @brief Tests that `tr::iterator_interface` synthesizes pointer dereferencing for `value_dereference_only_iterator`.
 static_assert(
 	!has_pointer_dereference<value_dereference_only_iterator>,
 	"tr::iterator_interface should not have synthesized pointer dereferencing, but did!"
@@ -212,7 +228,7 @@ static_assert(
 // clang-format on
 //
 
-/// Tests that post-incrementation is synthesized correctly.
+/// @brief Tests that post-incrementation is synthesized correctly.
 TEST(IteratorInterfaceTest, SynthesizesPostIncrement)
 {
 	int values[]{1, 2, 3};
@@ -222,7 +238,7 @@ TEST(IteratorInterfaceTest, SynthesizesPostIncrement)
 	EXPECT_EQ(iterator.ptr, values + 1);
 }
 
-/// Tests that post-decrementation is synthesized correctly.
+/// @brief Tests that post-decrementation is synthesized correctly.
 TEST(IteratorInterfaceTest, SynthesizesPostDecrement)
 {
 	int values[]{1, 2, 3};
@@ -232,7 +248,7 @@ TEST(IteratorInterfaceTest, SynthesizesPostDecrement)
 	EXPECT_EQ(iterator.ptr, values + 1);
 }
 
-/// Tests that subtraction assignment is synthesized correctly.
+/// @brief Tests that subtraction assignment is synthesized correctly.
 TEST(IteratorInterfaceTest, SynthesizesSubtractionAssignment)
 {
 	int values[]{1, 2, 3, 4};
@@ -242,7 +258,7 @@ TEST(IteratorInterfaceTest, SynthesizesSubtractionAssignment)
 	EXPECT_EQ(iterator.ptr, values + 1);
 }
 
-/// Tests that arithmetic operators are synthesized correctly.
+/// @brief Tests that arithmetic operators are synthesized correctly.
 TEST(IteratorInterfaceTest, SynthesizesArithmeticOperators)
 {
 	int values[]{1, 2, 3, 4};
@@ -253,7 +269,7 @@ TEST(IteratorInterfaceTest, SynthesizesArithmeticOperators)
 	EXPECT_EQ(iterator.ptr, values + 1);
 }
 
-/// Tests that pointer dereferencing is synthesized correctly.
+/// @brief Tests that pointer dereferencing is synthesized correctly.
 TEST(IteratorInterfaceTest, SynthesizesPointerDereference)
 {
 	int value{42};
@@ -262,7 +278,7 @@ TEST(IteratorInterfaceTest, SynthesizesPointerDereference)
 	EXPECT_EQ(*iterator.operator->(), 42);
 }
 
-/// Tests that subscript dereferencing is synthesized correctly.
+/// @brief Tests that subscript dereferencing is synthesized correctly.
 TEST(IteratorInterfaceTest, SynthesizesSubscriptDereference)
 {
 	int values[]{1, 2, 3};

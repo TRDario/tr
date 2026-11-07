@@ -6,7 +6,7 @@
 
 //
 
-/// Tests constructing RGBA colors and defaulting alpha to opaque.
+/// @brief Tests constructing RGBA colors and defaulting alpha to opaque.
 TEST(RgbaTest, ConstructsWithOpaqueDefaultAlpha)
 {
 	const tr::rgba<float> color{0.1f, 0.2f, 0.3f};
@@ -18,7 +18,7 @@ TEST(RgbaTest, ConstructsWithOpaqueDefaultAlpha)
 	EXPECT_NE(color, (tr::rgba<float>{0.1f, 0.2f, 0.3f, 0.5f}));
 }
 
-/// Tests conversion to a vector.
+/// @brief Tests conversion to a vector.
 TEST(RgbaTest, ConvertsToVector)
 {
 	const tr::rgba<float> color{0.1f, 0.2f, 0.3f, 0.4f};
@@ -29,7 +29,7 @@ TEST(RgbaTest, ConvertsToVector)
 	EXPECT_FLOAT_EQ(vector.a, 0.4f);
 }
 
-/// Tests scalar and component-wise RGBA arithmetic.
+/// @brief Tests scalar and component-wise RGBA arithmetic.
 TEST(RgbaTest, PerformsArithmetic)
 {
 	const tr::rgba<int> color{12, 18, 24, 30};

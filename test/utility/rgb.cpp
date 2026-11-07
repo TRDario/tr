@@ -7,7 +7,7 @@
 
 //
 
-/// Tests constructing and comparing RGB colors.
+/// @brief Tests constructing and comparing RGB colors.
 TEST(RgbTest, ConstructsAndCompares)
 {
 	const tr::rgb<int> color{10, 20, 30};
@@ -18,7 +18,7 @@ TEST(RgbTest, ConstructsAndCompares)
 	EXPECT_NE(color, (tr::rgb<int>{10, 20, 31}));
 }
 
-/// Tests conversion to a vector and adding an alpha channel.
+/// @brief Tests conversion to a vector and adding an alpha channel.
 TEST(RgbTest, ConvertsToVectorAndAddsAlpha)
 {
 	const tr::rgb<float> color{0.1f, 0.2f, 0.3f};
@@ -29,7 +29,7 @@ TEST(RgbTest, ConvertsToVectorAndAddsAlpha)
 	EXPECT_EQ(color.with_alpha(0.4f), (tr::rgba<float>{0.1f, 0.2f, 0.3f, 0.4f}));
 }
 
-/// Tests scalar and component-wise RGB arithmetic.
+/// @brief Tests scalar and component-wise RGB arithmetic.
 TEST(RgbTest, PerformsArithmetic)
 {
 	const tr::rgb<int> color{12, 18, 24};

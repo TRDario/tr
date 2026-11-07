@@ -75,7 +75,7 @@ namespace tr
 			zstring_view gl_version;
 		};
 
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Creates a graphics context on a window.
@@ -526,7 +526,7 @@ namespace tr
 		//
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-		/// Checks if a vertex buffer's type's attribute match those of the current vertex format.
+		/// Checks whether a vertex buffer's type's attribute match those of the current vertex format.
 		/// @param label Label of the vertex buffer.
 		/// @param slot Slot the vertex buffer is being set to.
 		/// @param vertex_attributes Vertex attribute list of the elements of the vertex buffer.

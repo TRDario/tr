@@ -40,7 +40,7 @@ namespace tr
 	class dynamic_atlas
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Creates an empty atlas.
@@ -280,7 +280,7 @@ namespace tr
 		void add(Key key, sub_bitmap bitmap, Args&&... args)
 		{
 			std::optional<glm::u16vec2> tl{m_entries.try_insert(std::move(key), bitmap.size(), size(), std::forward<Args>(args)...)};
-			if (!tl.has_value()) {
+			if (!tl) {
 				glm::u16vec2 new_size;
 				if (m_texture.size() == glm::ivec2{0, 0}) {
 					const glm::uvec2 usize{bitmap.size()};
@@ -291,8 +291,7 @@ namespace tr
 					new_size = size();
 					do {
 						new_size.y < new_size.x ? new_size.y *= 2 : new_size.x *= 2;
-					} while (
-						!(tl = m_entries.try_insert(std::move(key), bitmap.size(), new_size, std::forward<Args>(args)...)).has_value());
+					} while (!(tl = m_entries.try_insert(std::move(key), bitmap.size(), new_size, std::forward<Args>(args)...)));
 				}
 				reserve(new_size);
 			}

@@ -52,7 +52,7 @@ namespace tr
 	{
 	  public:
 		/// @cond implementation_details
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs a shader.

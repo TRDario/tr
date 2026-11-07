@@ -7,7 +7,7 @@
 
 namespace tr::internal
 {
-	/// Converts SDL keymods to tr keymods.
+	/// @brief Converts SDL keymods to tr keymods.
 	/// @param mods SDL keymods.
 	/// @return Equivalent tr keymods.
 	[[nodiscard]] constexpr keymod convert_sdl_keymods(SDL_Keymod mods) noexcept

@@ -19,7 +19,7 @@ namespace tr
 	class texture_view
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Creates an empty texture view.

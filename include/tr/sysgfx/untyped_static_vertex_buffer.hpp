@@ -32,7 +32,7 @@ namespace tr
 	class untyped_static_vertex_buffer : private graphics_buffer
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Uploads vertex data into a static vertex buffer.

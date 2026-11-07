@@ -6,12 +6,12 @@
 
 //
 
-/// Test result type.
+/// @brief Test result type.
 using test_result = tr::result<tr::result_values<int, float>, tr::result_errors<char, std::string>>;
 
 //
 
-/// Tests identifying value and error alternative types for the test result type.
+/// @brief Tests identifying value and error alternative types for the test result type.
 TEST(ResultTest, IdentifiesAlternativeTypes)
 {
 	static_assert(test_result::is_value_type<int>);
@@ -25,7 +25,7 @@ TEST(ResultTest, IdentifiesAlternativeTypes)
 	static_assert(!test_result::is_error_type<float>);
 }
 
-/// Tests identifying stored value alternatives in a result.
+/// @brief Tests identifying stored value alternatives in a result.
 TEST(ResultTest, IdentifiesValues)
 {
 	const test_result int_value{42};
@@ -37,7 +37,7 @@ TEST(ResultTest, IdentifiesValues)
 	EXPECT_FALSE(float_value.is_error());
 }
 
-/// Tests identifying stored error alternatives in a result.
+/// @brief Tests identifying stored error alternatives in a result.
 TEST(ResultTest, IdentifiesErrors)
 {
 	const test_result char_error{'e'};

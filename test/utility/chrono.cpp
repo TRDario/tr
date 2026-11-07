@@ -9,7 +9,7 @@ using namespace tr::chrono_literals;
 
 //
 
-/// Tests creating durations from integral frequencies.
+/// @brief Tests creating durations from integral frequencies.
 TEST(ChronoTest, CreatesDurationsFromIntegralFrequencies)
 {
 	EXPECT_EQ(1_hz, 1s);
@@ -17,21 +17,21 @@ TEST(ChronoTest, CreatesDurationsFromIntegralFrequencies)
 	EXPECT_EQ(60_hz, tr::duration{1s} / 60);
 }
 
-/// Tests creating durations from fractional frequencies.
+/// @brief Tests creating durations from fractional frequencies.
 TEST(ChronoTest, CreatesDurationsFromFractionalFrequencies)
 {
 	EXPECT_EQ(2.5_hz, 400ms);
 	EXPECT_EQ(0.5_hz, 2s);
 }
 
-/// Tests computing ratios between durations.
+/// @brief Tests computing ratios between durations.
 TEST(ChronoTest, ComputesDurationRatios)
 {
 	EXPECT_FLOAT_EQ(tr::ratio(2s, 500ms), 4.0f);
 	EXPECT_FLOAT_EQ(tr::ratio(250ms, 1s), 0.25f);
 }
 
-/// Tests converting a timestamp to local time.
+/// @brief Tests converting a timestamp to local time.
 TEST(ChronoTest, ConvertsToLocalTime)
 {
 	const std::time_t timestamp{1700000000};

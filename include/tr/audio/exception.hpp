@@ -16,15 +16,15 @@ namespace tr
 		/// @name Information
 		/// @{
 
-		/// Gets the name of the error.
+		/// @brief Returns the name of the error.
 		/// @return `"Audio device opening error"`.
 		[[nodiscard]] std::string_view name() const noexcept override;
 
-		/// Gets the description of the error.
+		/// @brief Returns the description of the error.
 		/// @return Always empty.
 		[[nodiscard]] std::string_view description() const noexcept override;
 
-		/// Gets further details about the error.
+		/// @brief Returns further details about the error.
 		/// @return Always empty.
 		[[nodiscard]] std::string_view details() const noexcept override;
 
@@ -35,7 +35,7 @@ namespace tr
 	class audio_context_init_error final : public tr::exception
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Creates an audio context initialization error.
@@ -46,15 +46,15 @@ namespace tr
 		/// @name Information
 		/// @{
 
-		/// Gets the name of the error.
+		/// @brief Returns the name of the error.
 		/// @return `"Audio context initialization error"`.
 		[[nodiscard]] std::string_view name() const noexcept override;
 
-		/// Gets the description of the error.
+		/// @brief Returns the description of the error.
 		/// @return Description of the error.
 		[[nodiscard]] std::string_view description() const noexcept override;
 
-		/// Gets further details about the error.
+		/// @brief Returns further details about the error.
 		/// @return Always false.
 		[[nodiscard]] std::string_view details() const noexcept override;
 
@@ -69,7 +69,7 @@ namespace tr
 	class audio_file_open_error final : public exception
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs an exception.
@@ -80,15 +80,15 @@ namespace tr
 		/// @name Information
 		/// @{
 
-		/// Gets the name of the error.
+		/// @brief Returns the name of the error.
 		/// @return "Audio file opening error".
 		[[nodiscard]] std::string_view name() const noexcept override;
 
-		/// Gets the description of the error.
+		/// @brief Returns the description of the error.
 		/// @return Description of the error.
 		[[nodiscard]] std::string_view description() const noexcept override;
 
-		/// Gets further details about the error.
+		/// @brief Returns further details about the error.
 		/// @return Always empty.
 		[[nodiscard]] std::string_view details() const noexcept override;
 

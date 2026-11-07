@@ -74,7 +74,7 @@ namespace tr
 			abort
 		};
 
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs an application.

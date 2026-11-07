@@ -28,7 +28,7 @@ namespace tr
 	class render_target
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// @cond implementation_details

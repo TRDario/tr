@@ -6,7 +6,7 @@
 
 //
 
-/// Tests that a deferred operation executes on scope end.
+/// @brief Tests that a deferred operation executes on scope end.
 TEST(DeferTest, ExecutesOnScopeEnd)
 {
 	int i{0};

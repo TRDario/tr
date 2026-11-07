@@ -8,7 +8,7 @@
 
 //
 
-/// Tests casting between RGB channel types.
+/// @brief Tests casting between RGB channel types.
 TEST(ColorCastTest, CastsBetweenRgbChannelTypes)
 {
 	const tr::rgb<tr::u8> color{255, 128, 0};
@@ -19,7 +19,7 @@ TEST(ColorCastTest, CastsBetweenRgbChannelTypes)
 	EXPECT_EQ(tr::color_cast<tr::rgb<tr::u8>>(color), color);
 }
 
-/// Tests casting between RGBA channel types.
+/// @brief Tests casting between RGBA channel types.
 TEST(ColorCastTest, CastsBetweenRgbaChannelTypes)
 {
 	const tr::rgba<tr::u8> color{255, 128, 0, 128};
@@ -31,7 +31,7 @@ TEST(ColorCastTest, CastsBetweenRgbaChannelTypes)
 	EXPECT_EQ(tr::color_cast<tr::rgba<tr::u8>>(color), color);
 }
 
-/// Tests casts between RGB and RGBA color models.
+/// @brief Tests casts between RGB and RGBA color models.
 TEST(ColorCastTest, CastsBetweenRgbAndRgba)
 {
 	const tr::rgb<tr::u8> rgb{255, 128, 0};
@@ -43,7 +43,7 @@ TEST(ColorCastTest, CastsBetweenRgbAndRgba)
 	EXPECT_EQ(tr::color_cast<tr::rgb<tr::u8>>(rgba), rgb);
 }
 
-/// Tests casts to and from HSV through the RGBA color model.
+/// @brief Tests casts to and from HSV through the RGBA color model.
 TEST(ColorCastTest, CastsThroughHsv)
 {
 	const tr::rgb<float> green{tr::color_cast<tr::rgb<float>>(tr::hsv{120.0f, 1.0f, 1.0f})};

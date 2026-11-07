@@ -42,6 +42,7 @@
 #include <set>                                    // IWYU pragma: export
 #include <source_location>                        // IWYU pragma: export
 #include <span>                                   // IWYU pragma: export
+#include <spanstream>                             // IWYU pragma: export
 #include <stack>                                  // IWYU pragma: export
 #include <stdexcept>                              // IWYU pragma: export
 #include <string>                                 // IWYU pragma: export

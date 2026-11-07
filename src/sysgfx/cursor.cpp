@@ -16,7 +16,7 @@ tr::cursor::cursor()
 
 tr::cursor::cursor(SDL_Cursor* ptr)
 {
-	if (ptr == nullptr) {
+	if (!ptr) {
 		throw out_of_memory{"cursor allocation"};
 	}
 	m_ptr.reset(ptr);
@@ -46,7 +46,7 @@ void tr::cursor::deleter::operator()(SDL_Cursor* ptr) noexcept
 
 bool tr::cursor::valid() const noexcept
 {
-	return m_ptr != nullptr;
+	return static_cast<bool>(m_ptr);
 }
 
 //

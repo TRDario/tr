@@ -33,7 +33,7 @@ namespace tr
 	class shader_array : private untyped_shader_buffer
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Allocates an uninitialized shader array.

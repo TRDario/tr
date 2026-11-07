@@ -9,14 +9,16 @@
 
 namespace tr
 {
-	/// List of value alternatives for `tr::result`.
+	/// @ingroup variant
+	/// @brief List of value alternatives for `tr::result`.
 	/// @tparam Alternatives Value alternatives.
 	template <typename... Alternatives>
 	struct result_values
 	{
 	};
 
-	/// List of error alternatives for `tr::result`.
+	/// @ingroup variant
+	/// @brief List of error alternatives for `tr::result`.
 	/// @tparam Alternatives Error alternatives.
 	template <typename... Alternatives>
 	struct result_errors
@@ -26,7 +28,8 @@ namespace tr
 	template <specialization_of<result_values> Values, specialization_of<result_errors> Errors>
 	class result;
 
-	/// Result variant with distinct value and error alternatives.
+	/// @ingroup variant
+	/// @brief Result variant with distinct sets of value and error alternatives.
 	/// @tparam Values Value alternatives.
 	/// @tparam Errors Error alternatives.
 	template <typename... Values, typename... Errors>
@@ -34,37 +37,37 @@ namespace tr
 	class result<result_values<Values...>, result_errors<Errors...>> : public variant<Values..., Errors...>
 	{
 	  public:
-		/// @name Constants
+		/// @name Type traits
 		/// @{
 
-		/// Holds whether a type is a value type.
+		/// @brief Checks whether a type is a value type.
 		/// @tparam Target Type to check.
 		template <typename Target>
 		static constexpr bool is_value_type{one_of<Target, Values...>};
 
-		/// Holds whether a type is a error type.
+		/// @brief Checks whether a type is a error type.
 		/// @tparam Target Type to check.
 		template <typename Target>
 		static constexpr bool is_error_type{one_of<Target, Errors...>};
 
 		/// @}
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		using variant<Values..., Errors...>::variant;
 
 		/// @}
-		/// @name Error
+		/// @name Observers
 		/// @{
 
-		/// Gets if the variant holds a value type.
+		/// @brief Checks whether the variant holds a value type.
 		/// @return `true` if the variant holds a value type, `false` otherwise.
 		[[nodiscard]] constexpr bool is_value() const noexcept
 		{
 			return (std::holds_alternative<Values>(*this) || ...);
 		}
 
-		/// Gets if the variant holds an error type.
+		/// @brief Checks whether the variant holds an error type.
 		/// @return `true` if the variant holds an error type, `false` otherwise.
 		[[nodiscard]] constexpr bool is_error() const noexcept
 		{

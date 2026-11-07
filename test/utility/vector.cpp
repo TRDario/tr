@@ -8,7 +8,7 @@ using namespace tr::angle_literals;
 
 //
 
-/// Tests creating a normalized vector from an angle.
+/// @brief Tests creating a normalized vector from an angle.
 TEST(VectorTest, CreatesNormalVector)
 {
 	const glm::vec2 right{tr::normal(0_radf)};
@@ -19,7 +19,7 @@ TEST(VectorTest, CreatesNormalVector)
 	EXPECT_FLOAT_EQ(up.y, 1.0f);
 }
 
-/// Tests creating a vector from a magnitude and angle.
+/// @brief Tests creating a vector from a magnitude and angle.
 TEST(VectorTest, CreatesVectorFromMagnitudeAndAngle)
 {
 	const glm::vec2 vector{tr::magth(3.0f, 0.25_trf)};
@@ -27,7 +27,7 @@ TEST(VectorTest, CreatesVectorFromMagnitudeAndAngle)
 	EXPECT_FLOAT_EQ(vector.y, 3.0f);
 }
 
-/// Tests computing squared lengths in one through four dimensions.
+/// @brief Tests computing squared lengths in one through four dimensions.
 TEST(VectorTest, ComputesSquaredLength)
 {
 	EXPECT_EQ(tr::length2(glm::vec<1, int>{3}), 9);
@@ -37,7 +37,7 @@ TEST(VectorTest, ComputesSquaredLength)
 	EXPECT_DOUBLE_EQ(tr::length2(glm::dvec2{1.5, 2.0}), 6.25);
 }
 
-/// Tests computing squared distance and promoting mixed representation types.
+/// @brief Tests computing squared distance and promoting mixed representation types.
 TEST(VectorTest, ComputesSquaredDistance)
 {
 	const glm::ivec2 a{1, 2};
@@ -46,7 +46,7 @@ TEST(VectorTest, ComputesSquaredDistance)
 	EXPECT_EQ(tr::distance2(glm::ivec3{1, 2, 3}, glm::ivec3{1, 2, 3}), 0);
 }
 
-/// Tests computing the reciprocal of every vector component.
+/// @brief Tests computing the reciprocal of every vector component.
 TEST(VectorTest, ComputesInverse)
 {
 	const glm::dvec3 inverse{tr::inverse(glm::ivec3{2, 4, -5})};
@@ -55,7 +55,7 @@ TEST(VectorTest, ComputesInverse)
 	EXPECT_DOUBLE_EQ(inverse.z, -0.2);
 }
 
-/// Tests the signed 2D cross product for same and mixed representation types.
+/// @brief Tests the signed 2D cross product for same and mixed representation types.
 TEST(VectorTest, ComputesCrossProduct)
 {
 	EXPECT_EQ(tr::cross(glm::ivec2{1, 0}, glm::ivec2{0, 1}), 1);

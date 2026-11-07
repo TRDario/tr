@@ -1,5 +1,5 @@
 /// @file
-/// Provides geometric vector utilities.
+/// @brief Provides geometric vector utilities.
 
 #pragma once
 #include <tr/utility/angle.hpp>
@@ -8,10 +8,10 @@
 
 namespace tr
 {
-	/// @name Vector operations
-	/// @{
+	//
 
-	/// Creates a normalized vector from an angle value.
+	/// @ingroup math
+	/// @brief Returns a normalized vector from an angle value.
 	/// @tparam Rep Representation type of the angle and result vector.
 	/// @param angle Angle defining the direction the vector will be pointing in.
 	/// @return Normalized vector pointing in the direction defined by `angle`.
@@ -21,7 +21,8 @@ namespace tr
 		return glm::tvec2<Rep>{angle.cos(), angle.sin()};
 	}
 
-	/// Creates a vector from a magnitude and angle.
+	/// @ingroup math
+	/// @brief Returns a vector created from a magnitude and angle.
 	/// @tparam Rep Representation type of the magnitude, angle and result vector.
 	/// @param magnitude Magnitude of the vector.
 	/// @param angle Angle defining the direction the vector will be pointing in.
@@ -34,7 +35,8 @@ namespace tr
 
 	//
 
-	/// Computes the squared length of a vector.
+	/// @ingroup math
+	/// @brief Returns the squared length of a vector.
 	/// @tparam Dimensions Number of dimensions of the vector.
 	/// @tparam Rep Representation type of the vector.
 	/// @param a Vector to get the square length of.
@@ -59,7 +61,8 @@ namespace tr
 		}
 	}
 
-	/// Computes the squared distance between two points.
+	/// @ingroup math
+	/// @brief Returns the squared distance between two points.
 	/// @tparam Dimensions Number of dimensions of the vectors.
 	/// @tparam ARep, BRep Representation types of the vectors.
 	/// @param a, b Vectors to the points the distance is being measured for.
@@ -70,7 +73,8 @@ namespace tr
 		return length2(glm::vec<Dimensions, std::common_type_t<ARep, BRep>>{b} - glm::vec<Dimensions, std::common_type_t<ARep, BRep>>{a});
 	}
 
-	/// Computes the inverse of a vector.
+	/// @ingroup math
+	/// @brief Returns the inverse of a vector.
 	/// @tparam Dimensions Number of dimensions of the vector.
 	/// @tparam Rep Representation type of the vector.
 	/// @param a Vector to get the inverse of.
@@ -87,16 +91,15 @@ namespace tr
 		return result;
 	}
 
-	/// Computes the 2D cross product of two vectors.
+	/// @ingroup math
+	/// @brief Returns the Z component of the cross product of two vectors on the 2D plane.
 	/// @tparam Dimensions Number of dimensions of the vectors.
 	/// @tparam ARep, BRep Representation types of the vectors.
 	/// @param a, b Values to get the cross product of.
-	/// @return `a×b`.
+	/// @return The Z component of `a×b`, i.e. `a.x * b.y - a.y * b.x`.
 	template <arithmetic ARep, arithmetic BRep>
 	[[nodiscard]] constexpr std::common_type_t<ARep, BRep> cross(glm::tvec2<ARep> a, glm::tvec2<BRep> b) noexcept
 	{
 		return a.x * b.y - a.y * b.x;
 	}
-
-	/// @}
 } // namespace tr

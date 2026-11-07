@@ -6,20 +6,21 @@
 
 //
 
-/// Dummy base class.
+/// @brief Dummy base class.
 struct base
 {
+	/// @brief Dummy virtual destructor.
 	virtual ~base() = default;
 };
 
-/// Dummy derived class.
+/// @brief Dummy derived class.
 struct derived : base
 {
 };
 
 //
 
-/// Tests `tr::dynamic_ref_cast()` casting plain references.
+/// @brief Tests `tr::dynamic_ref_cast()` casting plain references.
 TEST(DynamicRefCastTest, CastsReference)
 {
 	base data1{};
@@ -33,7 +34,7 @@ TEST(DynamicRefCastTest, CastsReference)
 	EXPECT_EQ(wrapped_data1_ref, std::nullopt);
 }
 
-/// Tests `tr::dynamic_ref_cast()` casting `tr::ref`.
+/// @brief Tests `tr::dynamic_ref_cast()` casting `tr::ref`.
 TEST(DynamicRefCastTest, CastsTrReference)
 {
 	base data1{};
@@ -48,7 +49,7 @@ TEST(DynamicRefCastTest, CastsTrReference)
 	EXPECT_EQ(wrapped_data1_ref, std::nullopt);
 }
 
-/// Tests `tr::dynamic_ref_cast()` casting `tr::opt_ref`.
+/// @brief Tests `tr::dynamic_ref_cast()` casting `tr::opt_ref`.
 TEST(DynamicRefCastTest, CastsOptTrReference)
 {
 	base data1{};

@@ -8,9 +8,10 @@
 
 namespace tr
 {
-	/// Gets a human-readable name string for a type.
-	/// @note May not return the exact same string on all compilers.
+	/// @ingroup meta
+	/// @brief Returns a human-readable name string for a type.
 	/// @tparam Target Type to get the name of.
+	/// @note This function is not guaranteed to return the exact same string on all compilers.
 	/// @return String view to the name of the type.
 	template <typename Target>
 	[[nodiscard]] consteval std::string_view type_name() noexcept

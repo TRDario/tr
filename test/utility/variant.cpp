@@ -6,7 +6,7 @@
 
 //
 
-/// Tests checking a variant alternative.
+/// @brief Tests checking a variant alternative.
 TEST(VariantTest, ChecksAlternative)
 {
 	tr::variant<int, float, char> var{5.0f};
@@ -15,7 +15,7 @@ TEST(VariantTest, ChecksAlternative)
 	EXPECT_FALSE(var.is<char>());
 }
 
-/// Tests optionally getting a variant alternative.
+/// @brief Tests optionally getting a variant alternative.
 TEST(VariantTest, GetsOptionalAlternative)
 {
 	tr::variant<int, float, char> var1{5.0f};
@@ -33,7 +33,7 @@ TEST(VariantTest, GetsOptionalAlternative)
 	EXPECT_EQ(*var2_int, 5);
 }
 
-/// Tests converting a variant to an optional reference to an alternative.
+/// @brief Tests converting a variant to an optional reference to an alternative.
 TEST(VariantTest, ConvertsToAlternativeOptRef)
 {
 	tr::variant<int, float, char> var1{5.0f};
@@ -51,7 +51,7 @@ TEST(VariantTest, ConvertsToAlternativeOptRef)
 	EXPECT_EQ(*var2_int, 5);
 }
 
-/// Tests getting a variant alternative.
+/// @brief Tests getting a variant alternative.
 TEST(VariantTest, GetsAlternative)
 {
 	tr::variant<int, float, char> var1{5.0f};
@@ -69,7 +69,7 @@ TEST(VariantTest, GetsAlternative)
 	EXPECT_EQ(val3, "string");
 }
 
-/// Tests visiting a variant.
+/// @brief Tests visiting a variant.
 TEST(VariantTest, Visits)
 {
 	constexpr auto visitor{[]<typename T>(const T&) { return std::same_as<T, int>; }};

@@ -1,6 +1,10 @@
 /// @file
 /// @brief Provides miscellaneous hash map functionality.
 
+/// @ingroup containers
+/// @defgroup hash_map Hash maps
+/// @brief Contains miscellaneous hash map functionality.
+
 #pragma once
 #include <tr/utility/format_concepts.hpp>
 #include <tr/utility/hash_concepts.hpp>
@@ -12,48 +16,54 @@
 
 namespace tr
 {
-	/// Transparent string hasher.
+	/// @ingroup hash_map
+	/// @brief Transparent string hasher.
 	struct string_hash : boost::hash<std::string_view>
 	{
-		/// Marks the hasher as transparent.
+		/// @brief Marks the hasher as transparent.
 		using is_transparent = std::true_type;
 	};
 
-	/// Transparent string equality comparator.
+	/// @ingroup hash_map
+	/// @brief Transparent string equality comparator.
 	struct string_eq : std::equal_to<std::string_view>
 	{
-		/// Marks the hasher as transparent.
+		/// @brief Marks the hasher as transparent.
 		using is_transparent = std::true_type;
 	};
 
 	//
 
-	/// String-key flat map.
+	/// @ingroup hash_map
+	/// @brief String-key flat map.
 	/// @tparam Value Map value type.
 	template <typename Value>
 	using string_flat_map = boost::unordered_flat_map<std::string, Value, string_hash, string_eq>;
 
-	/// String-key node map.
+	/// @ingroup hash_map
+	/// @brief String-key node map.
 	/// @tparam Value Map value type.
 	template <typename Value>
 	using string_node_map = boost::unordered_node_map<std::string, Value, string_hash, string_eq>;
 
-	/// Inplace string-key flat map.
+	/// @ingroup hash_map
+	/// @brief Inplace string-key flat map.
 	/// @tparam KeyCapacity String capacity of keys.
 	/// @tparam Value Map value type.
 	template <usize KeyCapacity, typename Value>
 	using inplace_string_flat_map = boost::unordered_flat_map<inplace_string<KeyCapacity>, Value, string_hash, string_eq>;
 
-	/// Inplace string-key node map.
+	/// @ingroup hash_map
+	/// @brief Inplace string-key node map.
 	/// @tparam KeyCapacity String capacity of keys.
 	/// @tparam Value Map value type.
 	template <usize KeyCapacity, typename Value>
 	using inplace_string_node_map = boost::unordered_node_map<inplace_string<KeyCapacity>, Value, string_hash, string_eq>;
 
-	/// @name Hash maps
-	/// @{
+	//
 
-	/// Gets a value from a flat map.
+	/// @ingroup hash_map
+	/// @brief Returns a value from a flat map.
 	/// @tparam Key Map key type.
 	/// @tparam Value Map value type.
 	/// @tparam Hash Map hasher type.
@@ -78,7 +88,8 @@ namespace tr
 		return it->second;
 	}
 
-	/// Gets a value from a node map.
+	/// @ingroup hash_map
+	/// @brief Returns a value from a node map.
 	/// @tparam Key Map key type.
 	/// @tparam Value Map value type.
 	/// @tparam Hash Map hasher type.
@@ -103,7 +114,8 @@ namespace tr
 		return it->second;
 	}
 
-	/// Gets a value from a flat map.
+	/// @ingroup hash_map
+	/// @brief Returns a value from a flat map.
 	/// @tparam Key Map key type.
 	/// @tparam Value Map value type.
 	/// @tparam Hash Map hasher type.
@@ -128,7 +140,8 @@ namespace tr
 		return it->second;
 	}
 
-	/// Gets a value from a node map.
+	/// @ingroup hash_map
+	/// @brief Returns a value from a node map.
 	/// @tparam Key Map key type.
 	/// @tparam Value Map value type.
 	/// @tparam Hash Map hasher type.
@@ -155,7 +168,8 @@ namespace tr
 
 	//
 
-	/// Tries to get a value from a flat map.
+	/// @ingroup hash_map
+	/// @brief Attempts to return a value from a flat map.
 	/// @tparam Key Map key type.
 	/// @tparam Value Map value type.
 	/// @tparam Hash Map hasher type.
@@ -171,7 +185,8 @@ namespace tr
 		return it != map.end() ? opt_ref<Value>{it->second} : std::nullopt;
 	}
 
-	/// Tries to get a value from a node map.
+	/// @ingroup hash_map
+	/// @brief Attempts to return a value from a node map.
 	/// @tparam Key Map key type.
 	/// @tparam Value Map value type.
 	/// @tparam Hash Map hasher type.
@@ -187,7 +202,8 @@ namespace tr
 		return it != map.end() ? opt_ref<Value>{it->second} : std::nullopt;
 	}
 
-	/// Tries to get a value from a flat map.
+	/// @ingroup hash_map
+	/// @brief Attempts to return a value from a flat map.
 	/// @tparam Key Map key type.
 	/// @tparam Value Map value type.
 	/// @tparam Hash Map hasher type.
@@ -203,7 +219,8 @@ namespace tr
 		return it != map.end() ? opt_ref<const Value>{it->second} : std::nullopt;
 	}
 
-	/// Tries to get a value from a node map.
+	/// @ingroup hash_map
+	/// @brief Attempts to return a value from a node map.
 	/// @tparam Key Map key type.
 	/// @tparam Value Map value type.
 	/// @tparam Hash Map hasher type.
@@ -218,6 +235,4 @@ namespace tr
 		const typename boost::unordered_node_map<Key, Value, Hash, Pred>::const_iterator it{map.find(std::forward<Keylike>(keylike))};
 		return it != map.end() ? opt_ref<const Value>{it->second} : std::nullopt;
 	}
-
-	/// @}
 } // namespace tr

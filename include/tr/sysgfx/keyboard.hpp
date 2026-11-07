@@ -125,10 +125,10 @@ namespace tr
 		// Chord scancode.
 		scancode scan{scancode::unknown};
 
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Default-constructs a scan chord.
+		/// Constructs an unknown scan chord.
 		[[nodiscard]] constexpr scan_chord() noexcept = default;
 
 		/// Constructs a scan chord without modifiers.
@@ -217,10 +217,10 @@ namespace tr
 		// Chord keycode.
 		keycode key{keycode::unknown};
 
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Default-constructs a key chord.
+		/// Constructs an unknown key chord.
 		[[nodiscard]] constexpr key_chord() noexcept = default;
 
 		/// Constructs a key chord without modifiers.

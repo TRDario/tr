@@ -8,11 +8,11 @@
 
 namespace tr::internal
 {
-	/// Wrapper around a void pointer that automatically casts it to a function pointer type.
+	/// @brief Wrapper around a void pointer that automatically casts it to a function pointer type.
 	class loaded_opengl_function
 	{
 	  public:
-		// Hack needed to overload the conversion operator.
+		/// @brief Hack needed to overload the conversion operator.
 		/// @tparam Return Function return type.
 		/// @tparam Args Function argument types.
 		template <typename Return, typename... Args>
@@ -20,7 +20,7 @@ namespace tr::internal
 
 		//
 
-		/// Wraps SDL_GL_GetProcAddress to return an OpenGL function proxy.
+		/// @brief Wraps SDL_GL_GetProcAddress to return an OpenGL function proxy.
 		/// @param name Function name.
 		[[nodiscard]] inline loaded_opengl_function(const char* name) noexcept
 			: m_ptr{SDL_GL_GetProcAddress(name)}
@@ -29,7 +29,7 @@ namespace tr::internal
 
 		//
 
-		/// Conversion operator.
+		/// @brief Conversion operator.
 		/// @tparam Return Function return type.
 		/// @tparam Args Function argument types.
 		template <typename Return, typename... Args>
@@ -39,7 +39,7 @@ namespace tr::internal
 		}
 
 	  private:
-		/// Base pointer type.
+		/// @brief Base pointer type.
 		SDL_FunctionPointer m_ptr;
 	};
 } // namespace tr::internal

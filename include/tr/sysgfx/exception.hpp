@@ -12,7 +12,7 @@ namespace tr
 	class bitmap_load_error : public exception
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs an exception.
@@ -24,15 +24,15 @@ namespace tr
 		/// @name Information
 		/// @{
 
-		/// Gets the name of the error.
+		/// @brief Returns the name of the error.
 		/// @return `"Bitmap loading error"`.
 		[[nodiscard]] std::string_view name() const noexcept override;
 
-		/// Gets the description of the error.
+		/// @brief Returns the description of the error.
 		/// @return Description of the error.
 		[[nodiscard]] std::string_view description() const noexcept override;
 
-		/// Gets further details about the error.
+		/// @brief Returns further details about the error.
 		/// @return Details of the error.
 		[[nodiscard]] std::string_view details() const noexcept override;
 
@@ -50,7 +50,7 @@ namespace tr
 	class bitmap_save_error : public exception
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs an exception.
@@ -62,15 +62,15 @@ namespace tr
 		/// @name Information
 		/// @{
 
-		/// Gets the name of the error.
+		/// @brief Returns the name of the error.
 		/// @return `"Bitmap saving error"`.
 		[[nodiscard]] std::string_view name() const noexcept override;
 
-		/// Gets the description of the error.
+		/// @brief Returns the description of the error.
 		/// @return Description of the error.
 		[[nodiscard]] std::string_view description() const noexcept override;
 
-		/// Gets further details about the error.
+		/// @brief Returns further details about the error.
 		/// @return Details of the error.
 		[[nodiscard]] std::string_view details() const noexcept override;
 
@@ -88,7 +88,7 @@ namespace tr
 	class cursor_error : public exception
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs a cursor error.
@@ -99,15 +99,15 @@ namespace tr
 		/// @name Information
 		/// @{
 
-		/// Gets the name of the error.
+		/// @brief Returns the name of the error.
 		/// @return `"Cursor error"`.
 		[[nodiscard]] std::string_view name() const noexcept override;
 
-		/// Gets the description of the error.
+		/// @brief Returns the description of the error.
 		/// @return Description of the error.
 		[[nodiscard]] std::string_view description() const noexcept override;
 
-		/// Gets further details about the error.
+		/// @brief Returns further details about the error.
 		/// @return Always empty.
 		[[nodiscard]] std::string_view details() const noexcept override;
 
@@ -125,7 +125,7 @@ namespace tr
 	class graphics_context_init_error : public exception
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs a graphics context initialization error.
@@ -135,15 +135,15 @@ namespace tr
 		/// @name Information
 		/// @{
 
-		/// Gets the name of the error.
+		/// @brief Returns the name of the error.
 		/// @return `"Graphics context opening error"`.
 		[[nodiscard]] std::string_view name() const noexcept override;
 
-		/// Gets the description of the error.
+		/// @brief Returns the description of the error.
 		/// @return Description of the error.
 		[[nodiscard]] std::string_view description() const noexcept override;
 
-		/// Gets further details about the error.
+		/// @brief Returns further details about the error.
 		/// @return Always empty.
 		[[nodiscard]] std::string_view details() const noexcept override;
 
@@ -164,15 +164,15 @@ namespace tr
 
 		//
 
-		/// Gets the name of the error.
+		/// @brief Returns the name of the error.
 		/// @return `"Path error"`.
 		[[nodiscard]] std::string_view name() const noexcept override;
 
-		/// Gets the description of the error.
+		/// @brief Returns the description of the error.
 		/// @return Description of the error.
 		[[nodiscard]] std::string_view description() const noexcept override;
 
-		/// Gets further details about the error.
+		/// @brief Returns further details about the error.
 		/// @return Always empty.
 		[[nodiscard]] std::string_view details() const noexcept override;
 
@@ -185,7 +185,7 @@ namespace tr
 	class set_clipboard_error : public exception
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs a clipboard setting error.
@@ -195,15 +195,15 @@ namespace tr
 		/// @name Information
 		/// @{
 
-		/// Gets the name of the error.
+		/// @brief Returns the name of the error.
 		/// @return `"Clipboard setting error"`.
 		[[nodiscard]] std::string_view name() const noexcept override;
 
-		/// Gets the description of the error.
+		/// @brief Returns the description of the error.
 		/// @return Description of the error.
 		[[nodiscard]] std::string_view description() const noexcept override;
 
-		/// Gets further details about the error.
+		/// @brief Returns further details about the error.
 		/// @return Always empty.
 		[[nodiscard]] std::string_view details() const noexcept override;
 
@@ -218,7 +218,7 @@ namespace tr
 	class shader_load_error : public exception
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs an exception.
@@ -230,15 +230,15 @@ namespace tr
 		/// @name Information
 		/// @{
 
-		/// Gets the name of the error.
+		/// @brief Returns the name of the error.
 		/// @return `"Shader loading error"`.
 		[[nodiscard]] std::string_view name() const noexcept override;
 
-		/// Gets the description of the error.
+		/// @brief Returns the description of the error.
 		/// @return Description of the error.
 		[[nodiscard]] std::string_view description() const noexcept override;
 
-		/// Gets further details about the error.
+		/// @brief Returns further details about the error.
 		/// @return Details of the error.
 		[[nodiscard]] std::string_view details() const noexcept override;
 
@@ -256,7 +256,7 @@ namespace tr
 	class ttfont_load_error : public exception
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs an exception.
@@ -268,15 +268,15 @@ namespace tr
 		/// @name Information
 		/// @{
 
-		/// Gets the name of the error.
+		/// @brief Returns the name of the error.
 		/// @return `"TrueType font loading error"`.
 		[[nodiscard]] std::string_view name() const noexcept override;
 
-		/// Gets the description of the error.
+		/// @brief Returns the description of the error.
 		/// @return Description of the error.
 		[[nodiscard]] std::string_view description() const noexcept override;
 
-		/// Gets further details about the error.
+		/// @brief Returns further details about the error.
 		/// @return Details of the error.
 		[[nodiscard]] std::string_view details() const noexcept override;
 
@@ -294,7 +294,7 @@ namespace tr
 	class ttfont_render_error : public exception
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs an exception.
@@ -305,15 +305,15 @@ namespace tr
 		/// @name Information
 		/// @{
 
-		/// Gets the name of the error.
+		/// @brief Returns the name of the error.
 		/// @return `"TrueType font rendering error"`.
 		[[nodiscard]] std::string_view name() const noexcept override;
 
-		/// Gets the description of the error.
+		/// @brief Returns the description of the error.
 		/// @return Description of the error.
 		[[nodiscard]] std::string_view description() const noexcept override;
 
-		/// Gets further details about the error.
+		/// @brief Returns further details about the error.
 		/// @return Always empty.
 		[[nodiscard]] std::string_view details() const noexcept override;
 
@@ -328,7 +328,7 @@ namespace tr
 	class ttfont_error : public exception
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs a window error.
@@ -349,15 +349,15 @@ namespace tr
 		/// @name Information
 		/// @{
 
-		/// Gets the name of the error.
+		/// @brief Returns the name of the error.
 		/// @return `"TrueType font error"`.
 		[[nodiscard]] std::string_view name() const noexcept override;
 
-		/// Gets the description of the error.
+		/// @brief Returns the description of the error.
 		/// @return Description of the error.
 		[[nodiscard]] std::string_view description() const noexcept override;
 
-		/// Gets further details about the error.
+		/// @brief Returns further details about the error.
 		/// @return Details of the error.
 		[[nodiscard]] std::string_view details() const noexcept override;
 
@@ -375,7 +375,7 @@ namespace tr
 	class window_error : public exception
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs a window error.
@@ -396,15 +396,15 @@ namespace tr
 		/// @name Information
 		/// @{
 
-		/// Gets the name of the error.
+		/// @brief Returns the name of the error.
 		/// @return `"Window error"`.
 		[[nodiscard]] std::string_view name() const noexcept override;
 
-		/// Gets the description of the error.
+		/// @brief Returns the description of the error.
 		/// @return Description of the error.
 		[[nodiscard]] std::string_view description() const noexcept override;
 
-		/// Gets further details about the error.
+		/// @brief Returns further details about the error.
 		/// @return Details of the error.
 		[[nodiscard]] std::string_view details() const noexcept override;
 
@@ -422,7 +422,7 @@ namespace tr
 	class window_open_error : public exception
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs a window opening error.
@@ -432,15 +432,15 @@ namespace tr
 		/// @name Information
 		/// @{
 
-		/// Gets the name of the error.
+		/// @brief Returns the name of the error.
 		/// @return `"Window opening error"`.
 		[[nodiscard]] std::string_view name() const noexcept override;
 
-		/// Gets the description of the error.
+		/// @brief Returns the description of the error.
 		/// @return Description of the error.
 		[[nodiscard]] std::string_view description() const noexcept override;
 
-		/// Gets further details about the error.
+		/// @brief Returns further details about the error.
 		/// @return Always empty.
 		[[nodiscard]] std::string_view details() const noexcept override;
 

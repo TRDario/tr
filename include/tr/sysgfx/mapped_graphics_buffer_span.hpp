@@ -51,7 +51,7 @@ namespace tr
 		/// Iterator type used by the span.
 		using iterator = std::span<Element>::iterator;
 
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// @cond implementation_details

@@ -6,7 +6,7 @@
 
 //
 
-/// Custom assertion macro only called in builds with graphics checks.
+/// @brief Custom assertion macro only called in builds with graphics checks.
 /// @details
 /// If `TR_ENABLE_CHECKED_GRAPHICS` is defined, it checks if condition is true, and if not, logs a formatted error message and aborts the
 /// program.

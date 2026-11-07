@@ -1,6 +1,10 @@
 /// @file
 /// @brief Provides miscellaneous range utilities.
 
+/// @ingroup containers
+/// @defgroup ranges Ranges
+/// @brief Contains miscellaneous range utilities.
+
 #pragma once
 #include <tr/utility/integer.hpp>
 #include <tr/utility/macro.hpp>
@@ -10,10 +14,8 @@
 
 namespace tr
 {
-	/// @name Ranges
-	/// @{
-
-	/// Reinterprets a span of one type to a span of another.
+	/// @ingroup ranges
+	/// @brief Reinterprets a span of one type to a span of another.
 	/// @tparam To Element type to reinterpret as.
 	/// @tparam From Source element type.
 	/// @tparam Extent Extent of the source span.
@@ -37,7 +39,8 @@ namespace tr
 
 	//
 
-	/// Gets a view of a contiguous range as a span of immutable bytes.
+	/// @ingroup ranges
+	/// @brief Returns a view of a contiguous range as a span of immutable bytes.
 	/// @tparam Range Contiguous range of standard layout elements.
 	/// @param range Contiguous range to reinterpret as bytes.
 	/// @return `range` reinterpreted as a range of bytes.
@@ -49,8 +52,9 @@ namespace tr
 		return std::as_bytes(std::span{range});
 	}
 
-	/// Gets a view of an object as a span of immutable bytes.
-	/// @tparam Standard layout object type.
+	/// @ingroup ranges
+	/// @brief Returns a view of an object as a span of immutable bytes.
+	/// @tparam Object Standard layout object type.
 	/// @param object Object to reinterpret as bytes.
 	/// @return `object` reinterpreted as a range of bytes.
 	template <typename Object>
@@ -60,7 +64,8 @@ namespace tr
 		return std::as_bytes(std::span<const Object, 1>{std::addressof(object), 1});
 	}
 
-	/// Gets a view of a contiguous range as a span of mutable bytes.
+	/// @ingroup ranges
+	/// @brief Returns a view of a contiguous range as a span of mutable bytes.
 	/// @tparam Range Contiguous range of standard layout elements.
 	/// @param range Contiguous range to reinterpret as bytes.
 	/// @return `range` reinterpreted as a range of mutable bytes.
@@ -73,8 +78,9 @@ namespace tr
 		return std::as_writable_bytes(std::span{range});
 	}
 
-	/// Gets a view of an object as a span of mutable bytes.
-	/// @tparam Standard layout object type.
+	/// @ingroup ranges
+	/// @brief Returns a view of an object as a span of mutable bytes.
+	/// @tparam Object Standard layout object type.
 	/// @param object Object to reinterpret as bytes.
 	/// @return `object` reinterpreted as a range of mutable bytes.
 	template <typename Object>
@@ -86,10 +92,12 @@ namespace tr
 
 	//
 
-	/// Reinterprets a range of mutable bytes as an object and returns a reference to it.
+	/// @ingroup ranges
+	/// @brief Reinterprets a range of mutable bytes as an object and returns a reference to it.
 	/// @tparam Object Object type to reinterpret the byte range as.
 	/// @tparam Range Contiguous range of mutable bytes.
 	/// @param bytes Range to reinterpret.
+	/// @pre `bytes` must match the size of the object, be correctly aligned, and point to an object whose lifetime has begun.
 	/// @return Reference to the reinterpreted object.
 	template <typename Object, typename Range>
 		requires std::is_standard_layout_v<Object> && std::ranges::contiguous_range<Range> && std::ranges::borrowed_range<Range> &&
@@ -109,10 +117,12 @@ namespace tr
 		return *reinterpret_cast<Object*>(span.data());
 	}
 
-	/// Reinterprets a range of immutable bytes as an object and returns a reference to it.
+	/// @ingroup ranges
+	/// @brief Reinterprets a range of immutable bytes as an object and returns a reference to it.
 	/// @tparam Object Object type to reinterpret the byte range as.
 	/// @tparam Range Contiguous range of bytes.
 	/// @param bytes Range to reinterpret.
+	/// @pre `bytes` must match the size of the object, be correctly aligned, and point to an object whose lifetime has begun.
 	/// @return Reference to the reinterpreted object.
 	template <typename Object, typename Range>
 		requires std::is_standard_layout_v<Object> && std::ranges::contiguous_range<Range> && std::ranges::borrowed_range<Range> &&
@@ -132,10 +142,12 @@ namespace tr
 		return *reinterpret_cast<const Object*>(span.data());
 	}
 
-	/// Reinterprets a range of mutable bytes as a span of objects.
+	/// @ingroup ranges
+	/// @brief Reinterprets a range of mutable bytes as a span of objects.
 	/// @tparam Element Element type to reinterpret the byte range as.
 	/// @tparam Range Contiguous range of mutable bytes.
 	/// @param bytes Range to reinterpret.
+	/// @pre `bytes` must be sized to a multiple of `sizeof(Object)`, be correctly aligned, and point to objects whose lifetimes have begun.
 	/// @return Span of `Element`.
 	template <typename Element, typename Range>
 		requires std::is_standard_layout_v<Element> && std::ranges::contiguous_range<Range> && std::ranges::borrowed_range<Range> &&
@@ -157,10 +169,12 @@ namespace tr
 		}
 	}
 
-	/// Reinterprets a range of immutable bytes as a span of objects.
+	/// @ingroup ranges
+	/// @brief Reinterprets a range of immutable bytes as a span of objects.
 	/// @tparam Element Element type to reinterpret the byte range as.
 	/// @tparam Range Contiguous range of bytes.
 	/// @param bytes Range to reinterpret.
+	/// @pre `bytes` must be sized to a multiple of `sizeof(Object)`, be correctly aligned, and point to objects whose lifetimes have begun.
 	/// @return Span of `const Element`.
 	template <typename Element, typename Range>
 		requires std::is_standard_layout_v<Element> && std::ranges::contiguous_range<Range> && std::ranges::borrowed_range<Range> &&
@@ -184,12 +198,14 @@ namespace tr
 
 	//
 
-	/// Returns an iterator to the last element in `searched` that matches one of the elements in `whitelist`.
+	/// @ingroup ranges
+	/// @brief Returns an iterator to the last element in `searched` that matches one of the elements in `whitelist`.
 	/// @tparam SearchedRange Type of the searched range.
 	/// @tparam WhitelistRange Type of the whitelist range.
 	/// @param searched Range to search.
 	/// @param whitelist List of elements to search for.
-	/// @return Iterator to the last element in `searched` that matches one in `whitelist`.
+	/// @return Iterator to the last element in `searched` that matches one in `whitelist`, `std::ranges::end(searched)` if no match was
+	/// foud, or `std::ranges::dangling` if the returned result would be dangling.
 	template <std::ranges::range SearchedRange, std::ranges::forward_range WhitelistRange>
 		requires std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<WhitelistRange>>
 	[[nodiscard]] constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_last_of(SearchedRange&& searched,
@@ -203,12 +219,14 @@ namespace tr
 		return std::ranges::end(searched);
 	}
 
-	/// Returns an iterator to the first element in `searched` that doesn't match one of the elements in `blacklist`.
+	/// @ingroup ranges
+	/// @brief Returns an iterator to the first element in `searched` that doesn't match one of the elements in `blacklist`.
 	/// @tparam SearchedRange Type of the searched range.
 	/// @tparam BlacklistRange Type of the blacklist range.
 	/// @param searched Range to search.
 	/// @param blacklist List of elements to not search for.
-	/// @return Iterator to the first element in `searched` that doesn't match one of the elements in `blacklist`.
+	/// @return Iterator to the first element in `searched` that doesn't match one of the elements in `blacklist`,
+	/// `std::ranges::end(searched)` if no match was found, or `std::ranges::dangling` if the returned result would be dangling.
 	template <std::ranges::range SearchedRange, std::ranges::forward_range BlacklistRange>
 		requires std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<BlacklistRange>>
 	[[nodiscard]] constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_first_not_of(SearchedRange&& searched,
@@ -222,12 +240,14 @@ namespace tr
 		return std::ranges::end(searched);
 	}
 
-	/// Returns an iterator to the last element in `searched` that doesn't match one of the elements in `blacklist`.
+	/// @ingroup ranges
+	/// @brief Returns an iterator to the last element in `searched` that doesn't match one of the elements in `blacklist`.
 	/// @tparam SearchedRange Type of the searched range.
 	/// @tparam BlacklistRange Type of the blacklist range.
 	/// @param searched Range to search.
 	/// @param blacklist List of elements to not search for.
-	/// @return Iterator to the last element in `searched` that doesn't match one of the elements in `blacklist`.
+	/// @return Iterator to the last element in `searched` that doesn't match one of the elements in `blacklist`,
+	/// `std::ranges::end(searched)` if no match was found, or `std::ranges::dangling` if the returned result would be dangling.
 	template <std::ranges::bidirectional_range SearchedRange, std::ranges::forward_range BlacklistRange>
 		requires std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<BlacklistRange>>
 	[[nodiscard]] constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_last_not_of(SearchedRange&& searched,
@@ -243,8 +263,9 @@ namespace tr
 
 	//
 
-	/// Sums the elements of a range.
-	/// @tparam Type of the summed range.
+	/// @ingroup ranges
+	/// @brief Sums the elements of a range.
+	/// @tparam Range Type of the summed range.
 	/// @tparam Value Summed value type.
 	/// @param range Range to sum
 	/// @param initial_value Initial value to sum with.
@@ -257,11 +278,14 @@ namespace tr
 
 	//
 
-	/// O(1) unstable vector-like container erase function.
+	/// @ingroup ranges
+	/// @brief Constant-time unstable vector-like container erase function.
 	/// @details O(1) erasure is achieved by swapping the final element into the position of the erased and then popping back.
 	/// @tparam Container Vector-like container type.
 	/// @param container Container to erase from.
 	/// @param where Element in the container to erase.
+	/// @par Complexity
+	/// Constant time.
 	template <typename Container>
 		requires std::ranges::contiguous_range<Container> && std::movable<std::ranges::range_value_t<Container>> &&
 				 requires(Container& v) { v.pop_back(); }
@@ -274,8 +298,9 @@ namespace tr
 		container.pop_back();
 	}
 
-	/// @}
+	//
 
-	/// Dereferencing range view.
+	/// @ingroup ranges
+	/// @brief Dereferencing range view.
 	inline constexpr auto deref{std::views::transform([](auto& v) -> decltype(auto) { return *v; })};
 } // namespace tr

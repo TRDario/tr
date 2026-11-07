@@ -9,18 +9,18 @@
 
 namespace tr
 {
-	/// Default binary reader.
+	/// @brief Default binary reader.
 	/// @tparam Defaulted Type with `enable_default_binary_io<Defaulted>{true}`.
 	template <typename Defaulted>
 		requires enable_default_binary_io<Defaulted>
 	struct binary_reader<Defaulted>
 	{
-		/// Marks the reader as default, this is checked in some specializations to enable optimizations.
+		/// @brief Marks the reader as default, this is checked in some specializations to enable optimizations.
 		using default_reader = std::true_type;
 
 		//
 
-		/// Reads a variable from a stream.
+		/// @brief Reads a variable from a stream.
 		/// @param is Input stream.
 		/// @param out Output parameter.
 		static void operator()(std::istream& is, Defaulted& out)
@@ -29,13 +29,13 @@ namespace tr
 		}
 	};
 
-	/// Standard array binary reader.
+	/// @brief Standard array binary reader.
 	/// @tparam Element Array element type.
 	/// @tparam Size Size of the array.
 	template <binary_readable Element, usize Size>
 	struct binary_reader<std::array<Element, Size>>
 	{
-		/// Reads a variable from a stream.
+		/// @brief Reads a variable from a stream.
 		/// @param is Input stream.
 		/// @param out Output parameter.
 		static void operator()(std::istream& is, std::array<Element, Size>& out)
@@ -44,12 +44,12 @@ namespace tr
 		}
 	};
 
-	/// Pair binary reader.
-	/// @tparam First, Second Pair elmenet types.
+	/// @brief Pair binary reader.
+	/// @tparam First, Second Pair element types.
 	template <binary_readable First, binary_readable Second>
 	struct binary_reader<std::pair<First, Second>>
 	{
-		/// Reads a variable from a stream.
+		/// @brief Reads a variable from a stream.
 		/// @param is Input stream.
 		/// @param out Output parameter.
 		static void operator()(std::istream& is, std::pair<First, Second>& out)
@@ -58,22 +58,22 @@ namespace tr
 		}
 	};
 
-	/// Standard string binary reader.
+	/// @brief Standard string binary reader.
 	template <>
 	struct binary_reader<std::string>
 	{
-		/// Reads a variable from a stream.
+		/// @brief Reads a variable from a stream.
 		/// @param is Input stream.
 		/// @param out Output parameter.
 		static void operator()(std::istream& is, std::string& out);
 	};
 
-	/// Standard vector binary reader.
+	/// @brief Standard vector binary reader.
 	/// @tparam Element Vector element type.
 	template <binary_constructible Element>
 	struct binary_reader<std::vector<Element>>
 	{
-		/// Reads a variable from a stream.
+		/// @brief Reads a variable from a stream.
 		/// @param is Input stream.
 		/// @param out Output parameter.
 		static void operator()(std::istream& is, std::vector<Element>& out)
@@ -83,13 +83,13 @@ namespace tr
 		}
 	};
 
-	/// Standard set binary reader.
+	/// @brief Standard set binary reader.
 	/// @tparam Key Set key type.
 	/// @tparam Other Other set types.
 	template <binary_constructible Key, typename... Other>
 	struct binary_reader<std::set<Key, Other...>>
 	{
-		/// Reads a variable from a stream.
+		/// @brief Reads a variable from a stream.
 		/// @param is Input stream.
 		/// @param out Output parameter.
 		static void operator()(std::istream& is, std::set<Key, Other...>& out)
@@ -102,14 +102,14 @@ namespace tr
 		}
 	};
 
-	/// Standard map binary reader.
+	/// @brief Standard map binary reader.
 	/// @tparam Key Map key type.
 	/// @tparam Value Map value type.
 	/// @tparam Other Other map types.
 	template <binary_constructible Key, binary_constructible Value, typename... Other>
 	struct binary_reader<std::map<Key, Value, Other...>>
 	{
-		/// Reads a variable from a stream.
+		/// @brief Reads a variable from a stream.
 		/// @param is Input stream.
 		/// @param out Output parameter.
 		static void operator()(std::istream& is, std::map<Key, Value, Other...>& out)
@@ -124,13 +124,13 @@ namespace tr
 		}
 	};
 
-	/// Unordered flat set binary reader.
+	/// @brief Unordered flat set binary reader.
 	/// @tparam Key Set key type.
 	/// @tparam Other Other set types.
 	template <binary_constructible Key, typename... Other>
 	struct binary_reader<boost::unordered_flat_set<Key, Other...>>
 	{
-		/// Reads a variable from a stream.
+		/// @brief Reads a variable from a stream.
 		/// @param is Input stream.
 		/// @param out Output parameter.
 		static void operator()(std::istream& is, boost::unordered_flat_set<Key, Other...>& out)
@@ -144,13 +144,13 @@ namespace tr
 		}
 	};
 
-	/// Unordered node set binary reader.
+	/// @brief Unordered node set binary reader.
 	/// @tparam Key Set key type.
 	/// @tparam Other Other set types.
 	template <binary_constructible Key, typename... Other>
 	struct binary_reader<boost::unordered_node_set<Key, Other...>>
 	{
-		/// Reads a variable from a stream.
+		/// @brief Reads a variable from a stream.
 		/// @param is Input stream.
 		/// @param out Output parameter.
 		static void operator()(std::istream& is, boost::unordered_node_set<Key, Other...>& out)
@@ -164,14 +164,14 @@ namespace tr
 		}
 	};
 
-	/// Unordered flat map binary reader.
+	/// @brief Unordered flat map binary reader.
 	/// @tparam Key Map key type.
 	/// @tparam Value Map value type.
 	/// @tparam Other Other map types.
 	template <binary_constructible Key, binary_constructible Value, typename... Other>
 	struct binary_reader<boost::unordered_flat_map<Key, Value, Other...>>
 	{
-		/// Reads a variable from a stream.
+		/// @brief Reads a variable from a stream.
 		/// @param is Input stream.
 		/// @param out Output parameter.
 		static void operator()(std::istream& is, boost::unordered_flat_map<Key, Value, Other...>& out)
@@ -187,14 +187,14 @@ namespace tr
 		}
 	};
 
-	/// Unordered node map binary reader.
+	/// @brief Unordered node map binary reader.
 	/// @tparam Key Map key type.
 	/// @tparam Value Map value type.
 	/// @tparam Other Other map types.
 	template <binary_constructible Key, binary_constructible Value, typename... Other>
 	struct binary_reader<boost::unordered_node_map<Key, Value, Other...>>
 	{
-		/// Reads a variable from a stream.
+		/// @brief Reads a variable from a stream.
 		/// @param is Input stream.
 		/// @param out Output parameter.
 		static void operator()(std::istream& is, boost::unordered_node_map<Key, Value, Other...>& out)
@@ -212,16 +212,16 @@ namespace tr
 
 	//
 
-	/// Default binary writer.
+	/// @brief Default binary writer.
 	/// @tparam Defaulted Type with `enable_default_binary_io<Defaulted>{true}`.
 	template <typename Defaulted>
 		requires enable_default_binary_io<Defaulted>
 	struct binary_writer<Defaulted>
 	{
-		/// Marks the writer as default, this is checked in some specializations to enable optimizations.
+		/// @brief Marks the writer as default, this is checked in some specializations to enable optimizations.
 		using default_writer = std::true_type;
 
-		/// Writes a variable to a stream.
+		/// @brief Writes a variable to a stream.
 		/// @param os Output stream.
 		/// @param in Variable to write to the stream.
 		static void operator()(std::ostream& os, const Defaulted& in)
@@ -230,13 +230,13 @@ namespace tr
 		}
 	};
 
-	/// Span binary writer.
+	/// @brief Span binary writer.
 	/// @tparam Element Span element type.
 	/// @tparam Size Span size.
 	template <binary_writable Element, usize Size>
 	struct binary_writer<std::span<Element, Size>>
 	{
-		/// Writes a variable to a stream.
+		/// @brief Writes a variable to a stream.
 		/// @param os Output stream.
 		/// @param in Variable to write to the stream.
 		static void operator()(std::ostream& os, const std::span<Element, Size>& in)
@@ -254,12 +254,12 @@ namespace tr
 		}
 	};
 
-	/// Pair binary writer.
+	/// @brief Pair binary writer.
 	/// @tparam First, Second Pair element types.
 	template <binary_writable First, binary_writable Second>
 	struct binary_writer<std::pair<First, Second>>
 	{
-		/// Writes a variable to a stream.
+		/// @brief Writes a variable to a stream.
 		/// @param os Output stream.
 		/// @param in Variable to write to the stream.
 		static void operator()(std::ostream& os, const std::pair<First, Second> in)
@@ -268,32 +268,32 @@ namespace tr
 		}
 	};
 
-	/// C String binary writer.
+	/// @brief C String binary writer.
 	template <>
 	struct binary_writer<const char*>
 	{
-		/// Writes a variable to a stream.
+		/// @brief Writes a variable to a stream.
 		/// @param os Output stream.
 		/// @param in Variable to write to the stream.
 		static void operator()(std::ostream& os, const char* in);
 	};
 
-	/// Standard string view binary writer.
+	/// @brief Standard string view binary writer.
 	template <>
 	struct binary_writer<std::string_view>
 	{
-		/// Writes a variable to a stream.
+		/// @brief Writes a variable to a stream.
 		/// @param os Output stream.
 		/// @param in Variable to write to the stream.
 		static void operator()(std::ostream& os, const std::string_view& in);
 	};
 
-	/// C String binary writer.
+	/// @brief C String binary writer.
 	/// @tparam Size String size.
 	template <usize Size>
 	struct binary_writer<char[Size]>
 	{
-		/// Writes a variable to a stream.
+		/// @brief Writes a variable to a stream.
 		/// @param os Output stream.
 		/// @param in Variable to write to the stream.
 		static void operator()(std::ostream& os, const char (&in)[Size])
@@ -302,23 +302,23 @@ namespace tr
 		}
 	};
 
-	/// Standard string binary writer.
+	/// @brief Standard string binary writer.
 	template <>
 	struct binary_writer<std::string>
 	{
-		/// Writes a variable to a stream.
+		/// @brief Writes a variable to a stream.
 		/// @param os Output stream.
 		/// @param in Variable to write to the stream.
 		static void operator()(std::ostream& os, const std::string& in);
 	};
 
-	/// Raw array binary writer.
+	/// @brief Raw array binary writer.
 	/// @tparam Element Array element type.
 	/// @tparam Size Array size.
 	template <binary_writable Element, usize Size>
 	struct binary_writer<Element[Size]>
 	{
-		/// Writes a variable to a stream.
+		/// @brief Writes a variable to a stream.
 		/// @param os Output stream.
 		/// @param in Variable to write to the stream.
 		static void operator()(std::ostream& os, const Element (&in)[Size])
@@ -327,13 +327,13 @@ namespace tr
 		}
 	};
 
-	/// Standard array binary writer.
+	/// @brief Standard array binary writer.
 	/// @tparam Element Array element type.
 	/// @tparam Size Array size.
 	template <binary_writable Element, usize Size>
 	struct binary_writer<std::array<Element, Size>>
 	{
-		/// Writes a variable to a stream.
+		/// @brief Writes a variable to a stream.
 		/// @param os Output stream.
 		/// @param in Variable to write to the stream.
 		static void operator()(std::ostream& os, const std::array<Element, Size>& in)
@@ -342,12 +342,12 @@ namespace tr
 		}
 	};
 
-	/// Standard vector binary writer.
+	/// @brief Standard vector binary writer.
 	/// @tparam Element Vector element type.
 	template <binary_writable Element>
 	struct binary_writer<std::vector<Element>>
 	{
-		/// Writes a variable to a stream.
+		/// @brief Writes a variable to a stream.
 		/// @param os Output stream.
 		/// @param in Variable to write to the stream.
 		static void operator()(std::ostream& os, const std::vector<Element>& in)
@@ -356,13 +356,13 @@ namespace tr
 		}
 	};
 
-	/// Standard set binary writer.
+	/// @brief Standard set binary writer.
 	/// @tparam Key Set key type.
 	/// @tparam Other Other set types.
 	template <binary_writable Key, typename... Other>
 	struct binary_writer<std::set<Key, Other...>>
 	{
-		/// Writes a variable to a stream.
+		/// @brief Writes a variable to a stream.
 		/// @param os Output stream.
 		/// @param in Variable to write to the stream.
 		static void operator()(std::ostream& os, const std::set<Key, Other...>& in)
@@ -374,14 +374,14 @@ namespace tr
 		}
 	};
 
-	/// Standard map binary writer.
+	/// @brief Standard map binary writer.
 	/// @tparam Key Map key type.
 	/// @tparam Value Map value type.
 	/// @tparam Other Other map types.
 	template <binary_writable Key, binary_writable Value, typename... Other>
 	struct binary_writer<std::map<Key, Value, Other...>>
 	{
-		/// Writes a variable to a stream.
+		/// @brief Writes a variable to a stream.
 		/// @param os Output stream.
 		/// @param in Variable to write to the stream.
 		static void operator()(std::ostream& os, const std::map<Key, Value, Other...>& in)
@@ -393,13 +393,13 @@ namespace tr
 		}
 	};
 
-	/// Unordered flat set binary writer.
+	/// @brief Unordered flat set binary writer.
 	/// @tparam Key Set key type.
 	/// @tparam Other Other set types.
 	template <binary_writable Key, typename... Other>
 	struct binary_writer<boost::unordered_flat_set<Key, Other...>>
 	{
-		/// Writes a variable to a stream.
+		/// @brief Writes a variable to a stream.
 		/// @param os Output stream.
 		/// @param in Variable to write to the stream.
 		static void operator()(std::ostream& os, const boost::unordered_flat_set<Key, Other...>& in)
@@ -411,13 +411,13 @@ namespace tr
 		}
 	};
 
-	/// Unordered node set binary writer.
+	/// @brief Unordered node set binary writer.
 	/// @tparam Key Set key type.
 	/// @tparam Other Other set types.
 	template <binary_writable Key, typename... Other>
 	struct binary_writer<boost::unordered_node_set<Key, Other...>>
 	{
-		/// Writes a variable to a stream.
+		/// @brief Writes a variable to a stream.
 		/// @param os Output stream.
 		/// @param in Variable to write to the stream.
 		static void operator()(std::ostream& os, const boost::unordered_node_set<Key, Other...>& in)
@@ -429,14 +429,14 @@ namespace tr
 		}
 	};
 
-	/// Unordered flat map writer.
+	/// @brief Unordered flat map writer.
 	/// @tparam Key Map key type.
 	/// @tparam Value Map value type.
 	/// @tparam Other Other map types.
 	template <binary_writable Key, binary_writable Value, typename... Other>
 	struct binary_writer<boost::unordered_flat_map<Key, Value, Other...>>
 	{
-		/// Writes a variable to a stream.
+		/// @brief Writes a variable to a stream.
 		/// @param os Output stream.
 		/// @param in Variable to write to the stream.
 		static void operator()(std::ostream& os, const boost::unordered_flat_map<Key, Value, Other...>& in)
@@ -448,14 +448,14 @@ namespace tr
 		}
 	};
 
-	/// Unordered node map writer.
+	/// @brief Unordered node map writer.
 	/// @tparam Key Map key type.
 	/// @tparam Value Map value type.
 	/// @tparam Other Other map types.
 	template <binary_writable Key, binary_writable Value, typename... Other>
 	struct binary_writer<boost::unordered_node_map<Key, Value, Other...>>
 	{
-		/// Writes a variable to a stream.
+		/// @brief Writes a variable to a stream.
 		/// @param os Output stream.
 		/// @param in Variable to write to the stream.
 		static void operator()(std::ostream& os, const boost::unordered_node_map<Key, Value, Other...>& in)

@@ -8,7 +8,9 @@
 
 namespace tr
 {
-	/// Formattable type.
+	/// @ingroup meta
+	/// @brief Concept checking for a formattable type.
+	/// @tparam Target Type to check for being formattable.
 	/// @tparam Context Formatting context type.
 	/// @tparam Formatter Formatter type.
 	template <typename Target, typename Context,
@@ -19,12 +21,16 @@ namespace tr
 		{ cf.format(t, fc) } -> std::same_as<typename Context::iterator>;
 	};
 
-	/// Formattable type.
+	/// @ingroup meta
+	/// @brief Concept checking for a formattable type.
+	/// @tparam Target Type to check for being formattable.
 	/// @tparam CharT Output character type.
 	template <typename Target, typename CharT = char>
 	concept formattable = formattable_with<std::remove_reference_t<Target>, std::basic_format_context<CharT*, CharT>>;
 
-	/// Format string that is valid for a set of types.
+	/// @ingroup meta
+	/// @brief Concept checking for a format string that is valid for a set of types.
+	/// @tparam Target String literal to check for being a valid format string for `Args...`.
 	/// @tparam Args List of arguments to the formatting function.
 	template <string_literal Target, typename... Args>
 	concept valid_format_string_for = (formattable<Args, char> && ...) &&

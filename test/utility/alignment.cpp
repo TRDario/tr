@@ -6,23 +6,23 @@
 
 //
 
-/// Data about an alignment case.
+/// @brief Data about an alignment case.
 struct alignment_case
 {
-	/// Vertical alignment.
+	/// @brief Vertical alignment.
 	tr::valign valign;
 
-	/// Horizontal alignment.
+	/// @brief Horizontal alignment.
 	tr::halign halign;
 
-	/// Combined alignment.
+	/// @brief Combined alignment.
 	tr::align align;
 
-	/// Position of the top-left corner with origin=(20, 50), size=(30, 10).
+	/// @brief Position of the top-left corner with origin=(20, 50), size=(30, 10).
 	glm::vec2 tl;
 };
 
-/// List of alignment cases.
+/// @brief List of alignment cases.
 constexpr std::array<alignment_case, 9> alignment_cases{
 	alignment_case{tr::valign::top, tr::halign::left, tr::align::tl, {20, 50}},
 	alignment_case{tr::valign::top, tr::halign::center, tr::align::tc, {5, 50}},
@@ -37,7 +37,7 @@ constexpr std::array<alignment_case, 9> alignment_cases{
 
 //
 
-/// Tests composing and decomposing horizontal and vertical alignment.
+/// @brief Tests composing and decomposing horizontal and vertical alignment.
 TEST(AlignmentTest, ComposesAndDecomposes)
 {
 	for (const alignment_case& alignment_case : alignment_cases) {
@@ -48,7 +48,7 @@ TEST(AlignmentTest, ComposesAndDecomposes)
 	}
 }
 
-/// Tests computing the top-left corner of a rectangle.
+/// @brief Tests computing the top-left corner of a rectangle.
 TEST(AlignmentTest, ComputesTopLeft)
 {
 	for (const alignment_case& alignment_case : alignment_cases) {

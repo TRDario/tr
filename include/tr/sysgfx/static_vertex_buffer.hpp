@@ -37,7 +37,7 @@ namespace tr
 		/// Value type used by the buffer.
 		using value_type = Element;
 
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Uploads vertex data into a static vertex buffer.

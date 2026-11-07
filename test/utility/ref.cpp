@@ -6,20 +6,21 @@
 
 //
 
-/// Dummy base class.
+/// @brief Dummy base class.
 struct base
 {
+	/// @brief Dummy virtual destructor.
 	virtual ~base() = default;
 };
 
-/// Dummy derived class.
+/// @brief Dummy derived class.
 struct derived : base
 {
 };
 
 //
 
-/// Tests constructing a reference from a raw reference.
+/// @brief Tests constructing a reference from a raw reference.
 TEST(RefTest, ConstructsFromReference)
 {
 	int data{10};
@@ -28,7 +29,7 @@ TEST(RefTest, ConstructsFromReference)
 	EXPECT_EQ(&data, &unwrapped_ref);
 }
 
-/// Tests constructing a reference to const from a reference to non-const.
+/// @brief Tests constructing a reference to const from a reference to non-const.
 TEST(RefTest, ConstructsOptRefToConstFromNonConst)
 {
 	int data{10};
@@ -38,7 +39,7 @@ TEST(RefTest, ConstructsOptRefToConstFromNonConst)
 	EXPECT_EQ(&data, &unwrapped_cref);
 }
 
-/// Tests constructing a reference to base from a reference to derived.
+/// @brief Tests constructing a reference to base from a reference to derived.
 TEST(RefTest, ConstructsOptRefToBaseFromDerived)
 {
 	derived data{};
@@ -48,7 +49,7 @@ TEST(RefTest, ConstructsOptRefToBaseFromDerived)
 	EXPECT_EQ((base*)&data, &unwrapped_base_ref);
 }
 
-/// Tests comparing references.
+/// @brief Tests comparing references.
 TEST(RefTest, Compares)
 {
 	int data1{10};
@@ -62,7 +63,7 @@ TEST(RefTest, Compares)
 	EXPECT_NE(wrapped_ref1, wrapped_ref2);
 }
 
-/// Tests accessing the value a reference points to.
+/// @brief Tests accessing the value a reference points to.
 TEST(RefTest, ProvidesAccess)
 {
 	/// Dummy value struct.

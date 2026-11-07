@@ -31,8 +31,8 @@ tr::render_target::render_target(const graphics_context& context) noexcept
 		  internal::graphics_object_id::invalid,
 		  0,
 		  context.window().size().y,
-		  rectangle<u16>{.tl{0, 0}, .size{context.window().size()}},
-		  rectangle<u16>{.tl{0, 0}, .size{context.window().size()}},
+		  rectangle<u16>{context.window().size()},
+		  rectangle<u16>{context.window().size()},
 	  }
 {
 }
@@ -41,8 +41,8 @@ tr::render_target::render_target(const framebuffer& framebuffer, glm::ivec2 fram
 	: render_target{
 		  framebuffer,
 		  framebuffer_size.y,
-		  rectangle<u16>{.tl{0, 0}, .size{framebuffer_size}},
-		  rectangle<u16>{.tl{0, 0}, .size{framebuffer_size}},
+		  rectangle<u16>{framebuffer_size},
+		  rectangle<u16>{framebuffer_size},
 	  }
 {
 }

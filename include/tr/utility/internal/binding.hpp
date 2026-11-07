@@ -3,6 +3,7 @@
 
 #pragma once
 #include <tr/utility/integer.hpp>
+#include <tr/utility/macro.hpp>
 
 //
 
@@ -10,7 +11,7 @@ namespace tr::internal
 {
 #if TR_HAS_BUILTIN(__builtin_structured_binding_size)
 	// clang-format off
-	/// Gets the type of the `Index`th member of a structured binding of `Target`.
+	/// @brief Returns the type of the `Index`th member of a structured binding of `Target`.
 	/// @tparam Index Index of the structured binding member.
 	/// @tparam Target Type being destructured.
 	template <usize Index, typename Target>

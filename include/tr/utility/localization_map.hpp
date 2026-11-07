@@ -11,10 +11,12 @@
 
 namespace tr
 {
+	/// @ingroup localization
 	/// @brief Concept checking whether variables of type `Target` are suitable for use as key-value input pairs for `tr::localization_map`.
 	/// @details To fulfill this concept, variables of type `Target` must be able to destructure to two values convertible to
 	/// `std::string_view`. On platforms other than Clang, `Target` must have defined `std::tuple_size` and `std::tuple_element`
 	/// specializations to qualify.
+	/// @tparam Target Type to check for being suitable as a localization key-value input pair.
 	/// @hideinitializer
 	template <typename Target>
 	concept localization_key_value_pair =
@@ -34,6 +36,7 @@ namespace tr
 #endif
 	;
 
+	/// @ingroup localization
 	/// @brief Read-optimized container for storing key-value string pairs.
 	/// @details
 	/// `tr::localization_map` is designed for efficient storage and lookup of string key-value pairs, primarily for use in storing
@@ -45,7 +48,7 @@ namespace tr
 	class localization_map
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// @brief Constructs an empty localization map.
@@ -124,16 +127,7 @@ namespace tr
 		/// If an exception is thrown, this function has no effect (strong exception guarantee).
 		[[nodiscard]] localization_map(const localization_map& rhs);
 
-		/// @brief Constructs a localization map by moving the contents of another map.
-		/// @param rhs Map to move the contents of.
-		/// @post `rhs` is left in a valid, but unspecified state after the move.
-		[[nodiscard]] localization_map(localization_map&& rhs) noexcept = default;
-
-		/// @}
-		/// @name Assignment operators
-		/// @{
-
-		/// @brief Replaces the contents of the localization map with a copy of those of another pool.
+		/// @brief Replaces the contents of the localization map with a copy of those of another map.
 		/// @param rhs Map to copy the contents of.
 		/// @par Invalidation
 		/// All views to strings previously stored in `*this` are invalidated.
@@ -144,42 +138,33 @@ namespace tr
 		/// @return Reference to `*this`.
 		localization_map& operator=(const localization_map& rhs);
 
-		/// @brief Replaces the contents of the localization map with those moved from another pool.
+		/// @brief Constructs a localization map by moving the contents of another map.
+		/// @param rhs Map to move the contents of.
+		/// @par Invalidation
+		/// All views to strings previously stored in `rhs` stay valid, but now point to the equivalent strings stored in `*this`.
+		/// @post `rhs` is left in a valid, but unspecified state after the move.
+		[[nodiscard]] localization_map(localization_map&& rhs) noexcept = default;
+
+		/// @brief Replaces the contents of the localization map with those moved from another map.
 		/// @param rhs Map to move the contents of.
 		/// @par Invalidation
 		/// All views to strings previously stored in `*this` are invalidated.
+		///
+		/// All views to strings previously stored in `rhs` stay valid, but now point to the equivalent strings stored in `*this`.
 		/// @post `rhs` is left in a valid, but unspecified state after the move.
 		/// @return Reference to `*this`.
 		localization_map& operator=(localization_map&& rhs) noexcept = default;
 
 		/// @}
-		/// @name Access
+		/// @name Capacity
 		/// @{
 
 		/// @brief Returns the number of entries in the map.
 		/// @return Number of entries in the map.
 		[[nodiscard]] usize size() const noexcept;
 
-		/// @brief Checks whether a key has an associated value string in the map.
-		/// @param key Key string to check.
-		/// @return `true` if a value string associated with `key` exists in the map, `false` otherwise.
-		[[nodiscard]] bool contains(std::string_view key) const noexcept;
-
-		/// @brief Tries to return the value string associated with a key string.
-		/// @param key Key string to get the associated value string for.
-		/// @post The string backing `key` must stay valid after the function returns in case it's returned.
-		/// @return Value string associated with `key`, or `key` if one doesn't exist.
-		[[nodiscard]] std::string_view operator[](std::string_view key) const noexcept;
-
-		/// @brief Returns the value string associated with a key string or a default value if one doesn't exist.
-		/// @param key Key string to get the associated value string for.
-		/// @param default_value Default value string to return if there is no value string associated with `key` in the map.
-		/// @post The string backing `default_value` must stay valid after the function returns in case it's returned.
-		/// @return Value string associated with `key`, or `default_value` if one doesn't exist.
-		[[nodiscard]] std::string_view value_or(std::string_view key, std::string_view default_value) const noexcept;
-
 		/// @}
-		/// @name Modification
+		/// @name Modifiers
 		/// @{
 
 		/// @brief Erases all entries from the map.
@@ -194,7 +179,7 @@ namespace tr
 		/// @par Invalidation
 		/// All views to strings previously stored in the map are invalidated.
 		/// @par Complexity
-		/// At most linear with respect to `size()`.
+		/// At most linear time with respect to the size of the map.
 		/// @par Exception safety
 		/// If an exception is thrown, this function has no effect (strong exception guarantee).
 		void update(std::string_view key, std::string_view value);
@@ -208,7 +193,7 @@ namespace tr
 		/// @par Invalidation
 		/// All views to strings previously stored in the map are invalidated.
 		/// @par Complexity
-		/// At most O(n * m) with respect to `size()` and `[begin, end)`.
+		/// At most O(n * m) with respect to the size of the map and the size of `[begin, end)`.
 		/// @par Exception safety
 		/// If an exception is thrown other than from an iterator operation, this function has no effect (strong exception guarantee).
 		template <std::forward_iterator Iterator, std::sentinel_for<Iterator> Sentinel>
@@ -236,7 +221,7 @@ namespace tr
 				const std::string_view value_string{static_cast<std::string_view>(value)};
 
 				if (const decltype(m_keys)::const_iterator key_it{m_keys.find(key_string)}; key_it != m_keys.end()) {
-					erased_bytes += key_string.size() + std::ranges::distance(*std::ranges::next(*key_it)) + 2;
+					erased_bytes += key_string.size() + (*std::ranges::next(*key_it)).length() + 2;
 				}
 				else {
 					++new_size;
@@ -348,7 +333,7 @@ namespace tr
 		/// @par Invalidation
 		/// All views to strings previously stored in the map are invalidated unless the range is empty.
 		/// @par Complexity
-		/// At most linear with respect to `size()` and the size of `range`.
+		/// At most linear time with respect to `size()` and the size of `range`.
 		/// @par Exception safety
 		/// If `Range` models `std::ranges::forward_range` and an exception is thrown other than from an iterator operation, this function
 		/// has no effect (strong exception guarantee). Otherwise, `*this` is left in a valid, but unspecified state (basic exception
@@ -359,6 +344,28 @@ namespace tr
 		{
 			update(std::ranges::begin(range), std::ranges::end(range));
 		}
+
+		/// @}
+		/// @name Lookup
+		/// @{
+
+		/// @brief Checks whether a key has an associated value string in the map.
+		/// @param key Key string to check.
+		/// @return `true` if a value string associated with `key` exists in the map, `false` otherwise.
+		[[nodiscard]] bool contains(std::string_view key) const noexcept;
+
+		/// @brief Tries to return the value string associated with a key string.
+		/// @param key Key string to get the associated value string for.
+		/// @post The string backing `key` must stay valid after the function returns in case it's returned.
+		/// @return Value string associated with `key`, or `key` if one doesn't exist.
+		[[nodiscard]] std::string_view operator[](std::string_view key) const noexcept;
+
+		/// @brief Returns the value string associated with a key string or a default value if one doesn't exist.
+		/// @param key Key string to get the associated value string for.
+		/// @param default_value Default value string to return if there is no value string associated with `key` in the map.
+		/// @post The string backing `default_value` must stay valid after the function returns in case it's returned.
+		/// @return Value string associated with `key`, or `default_value` if one doesn't exist.
+		[[nodiscard]] std::string_view value_or(std::string_view key, std::string_view default_value) const noexcept;
 
 		/// @}
 
@@ -381,16 +388,16 @@ namespace tr
 
 			using std::equal_to<string_pool::iterator>::operator();
 
-			/// @brief Compares a string pool iterator with a string view.
+			/// @brief Checks a string pool iterator and a string view for equality.
 			/// @param lhs Iterator to compare.
 			/// @param rhs String view to compare.
-			/// @return Whether the string pointed to by the iterator and `rhs` are equal.
+			/// @return `true` if string pointed to by the iterator and `rhs` are equal, `false` otherwise.
 			[[nodiscard]] bool operator()(string_pool::iterator lhs, std::string_view rhs) const noexcept;
 
-			/// @brief Compares a string pool iterator with a string view.
+			/// @brief Checks a string pool iterator and a string view for equality.
 			/// @param lhs String view to compare.
 			/// @param rhs Iterator to compare.
-			/// @return Whether the string pointed to by the iterator and `lhs` are equal.
+			/// @return `true` if string pointed to by the iterator and `rhs` are equal, `false` otherwise.
 			[[nodiscard]] bool operator()(std::string_view lhs, string_pool::iterator rhs) const noexcept;
 		};
 

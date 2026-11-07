@@ -464,7 +464,7 @@ void tr::audio_source::play()
 
 void tr::audio_source::play(const std::lock_guard<std::mutex>&)
 {
-	if (opt_ref<buffered_stream> stream{m_data_source}; stream.has_value()) {
+	if (opt_ref<buffered_stream> stream{m_data_source}) {
 		if (state() == state::initial || state() == state::stopped) {
 			detach_buffer();
 			const inplace_vector<unsigned int, 4> filled_buffers{stream->try_refill_all()};
@@ -489,7 +489,7 @@ void tr::audio_source::stop()
 void tr::audio_source::stop(const std::lock_guard<std::mutex>&)
 {
 	context().al().source_stop(context().unwrap(), unwrap());
-	if (opt_ref<buffered_stream> stream{m_data_source}; stream.has_value()) {
+	if (opt_ref<buffered_stream> stream{m_data_source}) {
 		stream->seek(stream->loop_start());
 	}
 }
@@ -679,7 +679,7 @@ void tr::audio_source::detach_buffer() noexcept
 
 void tr::audio_source::refill_if_needed()
 {
-	if (opt_ref<buffered_stream> stream{m_data_source}; stream.has_value()) {
+	if (opt_ref<buffered_stream> stream{m_data_source}) {
 		ALint nbuffers;
 		context().al().get_source_property_i(context().unwrap(), unwrap(), AL_BUFFERS_PROCESSED, &nbuffers);
 		if (nbuffers == 0) {

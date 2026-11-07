@@ -24,7 +24,7 @@ namespace tr
 		/// Immutable iterator.
 		using iterator = const_pixel_iterator;
 
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Creates a bitmap view over contiguous pixel data.

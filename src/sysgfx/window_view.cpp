@@ -12,7 +12,7 @@
 tr::window_view::window_view(SDL_Window* ptr) noexcept
 	: m_ptr{ptr}
 {
-	TR_ASSERT(ptr != nullptr, "Tried to create a view to a window in an invalid state.");
+	TR_ASSERT(ptr, "Tried to create a view to a window in an invalid state.");
 }
 
 //

@@ -6,12 +6,12 @@
 
 //
 
-/// Test optional result type.
+/// @brief Test optional result type.
 using test_optional_result = tr::optional_result<tr::result_values<int, float>, tr::result_errors<char, std::string>>;
 
 //
 
-/// Tests identifying value and error alternative types for the test optional result type.
+/// @brief Tests identifying value and error alternative types for the test optional result type.
 TEST(OptionalResultTest, IdentifiesAlternativeTypes)
 {
 	static_assert(test_optional_result::is_value_type<int>);
@@ -25,7 +25,7 @@ TEST(OptionalResultTest, IdentifiesAlternativeTypes)
 	static_assert(!test_optional_result::is_error_type<float>);
 }
 
-/// Tests the empty state and resetting an optional result.
+/// @brief Tests the empty state and resetting an optional result.
 TEST(OptionalResultTest, IdentifiesEmptyState)
 {
 	test_optional_result result;
@@ -42,7 +42,7 @@ TEST(OptionalResultTest, IdentifiesEmptyState)
 	EXPECT_FALSE(result.is_error());
 }
 
-/// Tests identifying stored value alternatives in an optional result.
+/// @brief Tests identifying stored value alternatives in an optional result.
 TEST(OptionalResultTest, IdentifiesValues)
 {
 	const test_optional_result int_value{42};
@@ -56,7 +56,7 @@ TEST(OptionalResultTest, IdentifiesValues)
 	EXPECT_FALSE(float_value.is_error());
 }
 
-/// Tests identifying stored error alternatives in an optional result.
+/// @brief Tests identifying stored error alternatives in an optional result.
 TEST(OptionalResultTest, IdentifiesErrors)
 {
 	const test_optional_result char_error{'e'};

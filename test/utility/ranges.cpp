@@ -6,7 +6,7 @@
 
 //
 
-/// Tests span reinterpreting.
+/// @brief Tests span reinterpreting.
 TEST(RangesTest, ReinterpretsSpan)
 {
 	constexpr std::array<tr::u16, 2> data{0x4080, 0x4080};
@@ -18,7 +18,7 @@ TEST(RangesTest, ReinterpretsSpan)
 	EXPECT_EQ(reinterpreted[3], 0x40);
 }
 
-/// Tests `tr::as_object()` roundtripping.
+/// @brief Tests `tr::as_object()` roundtripping.
 TEST(RangesTest, ObjectBytesRoundTrips)
 {
 	std::pair<int, float> vs{1, 2.0f};
@@ -31,7 +31,7 @@ TEST(RangesTest, ObjectBytesRoundTrips)
 	EXPECT_EQ(vs.first, 5);
 }
 
-/// Tests `tr::range_bytes()` roundtripping.
+/// @brief Tests `tr::range_bytes()` roundtripping.
 TEST(RangesTest, RangeBytesRoundTrips)
 {
 	std::vector<int> vs{1, 2, 3, 4, 5};
@@ -44,7 +44,7 @@ TEST(RangesTest, RangeBytesRoundTrips)
 	EXPECT_EQ(vs[0], 10);
 }
 
-/// Tests finding the last matching value out of a set.
+/// @brief Tests finding the last matching value out of a set.
 TEST(RangesTest, FindsLastOf)
 {
 	const std::vector<int> vs{1, 1, 1, 1, 1, 2, 3, 4, 5, 1, 2, 3, 2, 4, 5, 4, 5, 4, 5};
@@ -53,7 +53,7 @@ TEST(RangesTest, FindsLastOf)
 	EXPECT_EQ(last_of_it, vs.begin() + 11);
 }
 
-/// Tests finding the first matching value not out of a set.
+/// @brief Tests finding the first matching value not out of a set.
 TEST(RangesTest, FindsFirstNotOf)
 {
 	const std::vector<int> vs{1, 1, 1, 1, 1, 2, 3, 4, 5, 1, 2, 3, 2, 4, 5, 4, 5, 4, 5};
@@ -62,7 +62,7 @@ TEST(RangesTest, FindsFirstNotOf)
 	EXPECT_EQ(first_not_of_it, vs.begin() + 5);
 }
 
-/// Tests finding the last matching value not out of a set.
+/// @brief Tests finding the last matching value not out of a set.
 TEST(RangesTest, FindsLastNotOf)
 {
 	const std::vector<int> vs{1, 1, 1, 1, 1, 2, 3, 4, 5, 1, 2, 3, 2, 4, 5, 4, 5, 4, 5};
@@ -71,7 +71,7 @@ TEST(RangesTest, FindsLastNotOf)
 	EXPECT_EQ(first_not_of_it, vs.begin() + 12);
 }
 
-/// Tests summing values.
+/// @brief Tests summing values.
 TEST(RangesTest, Sums)
 {
 	constexpr std::array<int, 5> vs{1, 2, 3, 4, 5};
@@ -79,7 +79,7 @@ TEST(RangesTest, Sums)
 	EXPECT_EQ(sum, 15);
 }
 
-/// Tests creating a dereference view.
+/// @brief Tests creating a dereference view.
 TEST(RangesTest, CreatesDereferenceView)
 {
 	std::array<std::unique_ptr<int>, 5> vs{std::make_unique<int>(1), std::make_unique<int>(2), std::make_unique<int>(3),
@@ -92,7 +92,7 @@ TEST(RangesTest, CreatesDereferenceView)
 	EXPECT_EQ(sum, 20);
 }
 
-/// Tests unstable erasing.
+/// @brief Tests unstable erasing.
 TEST(RangesTest, UnstableErases)
 {
 	std::vector<int> vs{1, 2, 3, 4, 5};

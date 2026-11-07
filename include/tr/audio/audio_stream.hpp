@@ -12,7 +12,7 @@ namespace tr
 	class audio_stream
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Initializes an audio stream.
@@ -22,7 +22,7 @@ namespace tr
 		virtual ~audio_stream() noexcept = default;
 
 		/// @}
-		/// @name Information
+		/// @name Observers
 		/// @{
 
 		/// Gets the length of the stream.

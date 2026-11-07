@@ -23,7 +23,7 @@ tr::audio_context::audio_context(audio_device& device)
 	: m_ptr{alcCreateContext(device.unwrap(), audio_context_attributes.data())}
 	, m_al{device.unwrap()}
 {
-	if (m_ptr == nullptr) {
+	if (!m_ptr) {
 		throw audio_context_init_error{device.unwrap()};
 	}
 

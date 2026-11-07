@@ -58,7 +58,7 @@ namespace tr
 	class event_view
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// @cond sdl_interop

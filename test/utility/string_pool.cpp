@@ -11,7 +11,7 @@ static_assert(std::bidirectional_iterator<tr::string_pool::iterator>);
 
 //
 
-/// Tests whether a default-constructed string pool is empty.
+/// @brief Tests whether a default-constructed string pool is empty.
 TEST(StringPoolTest, DefaultConstructsEmpty)
 {
 	const tr::string_pool pool;
@@ -22,7 +22,7 @@ TEST(StringPoolTest, DefaultConstructsEmpty)
 	EXPECT_EQ(std::ranges::distance(pool), 0);
 }
 
-/// Tests appending strings to a string pool.
+/// @brief Tests appending strings to a string pool.
 TEST(StringPoolTest, AppendsStrings)
 {
 	tr::string_pool pool;
@@ -37,7 +37,7 @@ TEST(StringPoolTest, AppendsStrings)
 	EXPECT_EQ(*third, "third");
 }
 
-/// Tests iterating forwards through a string pool.
+/// @brief Tests iterating forwards through a string pool.
 TEST(StringPoolTest, IteratesForwards)
 {
 	tr::string_pool pool;
@@ -52,7 +52,7 @@ TEST(StringPoolTest, IteratesForwards)
 	EXPECT_EQ(it, pool.end());
 }
 
-/// Tests iterating backwards through a string pool.
+/// @brief Tests iterating backwards through a string pool.
 TEST(StringPoolTest, IteratesBackwards)
 {
 	tr::string_pool pool;
@@ -67,7 +67,7 @@ TEST(StringPoolTest, IteratesBackwards)
 	EXPECT_EQ(it, pool.begin());
 }
 
-/// Tests reserving capacity in a string pool.
+/// @brief Tests reserving capacity in a string pool.
 TEST(StringPoolTest, ReservesCapacity)
 {
 	tr::string_pool pool;
@@ -75,7 +75,7 @@ TEST(StringPoolTest, ReservesCapacity)
 	EXPECT_GE(pool.capacity_bytes(), 64);
 }
 
-/// Tests clearing a string pool.
+/// @brief Tests clearing a string pool.
 TEST(StringPoolTest, ClearsStrings)
 {
 	tr::string_pool pool;
@@ -85,7 +85,7 @@ TEST(StringPoolTest, ClearsStrings)
 	EXPECT_EQ(pool.begin(), pool.end());
 }
 
-/// Tests that a string pool string builder builds a string.
+/// @brief Tests that a string pool string builder builds a string.
 TEST(StringPoolTest, StringBuilderBuildsString)
 {
 	tr::string_pool pool;
@@ -102,7 +102,7 @@ TEST(StringPoolTest, StringBuilderBuildsString)
 	EXPECT_EQ(*it++, "after");
 }
 
-/// Tests erasing a string from a string pool.
+/// @brief Tests erasing a string from a string pool.
 TEST(StringPoolTest, ErasesString)
 {
 	tr::string_pool pool;
@@ -117,7 +117,7 @@ TEST(StringPoolTest, ErasesString)
 	EXPECT_EQ(*pool.begin(), "first");
 }
 
-/// Tests erasing a range of strings from a string pool.
+/// @brief Tests erasing a range of strings from a string pool.
 TEST(StringPoolTest, ErasesStringRange)
 {
 	tr::string_pool pool;

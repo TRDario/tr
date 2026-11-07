@@ -9,176 +9,196 @@
 
 namespace tr
 {
-	/// Token type enumerator.
+	/// @ingroup localization
+	/// @defgroup localization_script_error Localization script errors
+	/// @brief Contains localization script errors.
+
+	/// @ingroup localization_script_error
+	/// @brief Token type enumerator.
 	enum class localization_token_type
 	{
-		/// Lack of a token.
+		/// @brief Lack of a token.
 		none,
 
-		/// Symbol token.
+		/// @brief Symbol token.
 		symbol,
 
-		/// String token.
+		/// @brief String token.
 		string,
 
-		/// Equals token.
+		/// @brief Equals token.
 		equals,
 
-		/// Opening brace token.
+		/// @brief Opening brace token.
 		opening_brace,
 
-		/// Closing brace token.
+		/// @brief Closing brace token.
 		closing_brace
 	};
 
 	//
 
-	/// Localization script unexpected backslash error.
+	/// @ingroup localization_script_error
+	/// @brief Localization script unexpected backslash error.
 	struct localization_script_unexpected_backslash
 	{
-		/// Chunk the error occurred in.
+		/// @brief Chunk the error occurred in.
 		std::string chunk;
 
-		/// Line the error occurred on.
+		/// @brief Line the error occurred on.
 		int line;
 	};
 
-	/// Localization script unexpected slash error.
+	/// @ingroup localization_script_error
+	/// @brief Localization script unexpected slash error.
 	struct localization_script_unexpected_slash
 	{
-		/// Chunk the error occurred in.
+		/// @brief Chunk the error occurred in.
 		std::string chunk;
 
-		/// Line the error occurred on.
+		/// @brief Line the error occurred on.
 		int line;
 	};
 
-	/// Localization script unknown escape sequence error.
+	/// @ingroup localization_script_error
+	/// @brief Localization script unknown escape sequence error.
 	struct localization_script_unknown_escape_sequence
 	{
-		/// Chunk the error occurred in.
+		/// @brief Chunk the error occurred in.
 		std::string chunk;
 
-		/// Line the error occurred on.
+		/// @brief Line the error occurred on.
 		int line;
 
-		/// Escaped character.
+		/// @brief Escaped character.
 		char character;
 	};
 
-	/// Localization script unterminated multiline comment error.
+	/// @ingroup localization_script_error
+	/// @brief Localization script unterminated multiline comment error.
 	struct localization_script_unterminated_multiline_comment
 	{
-		/// Chunk the error occurred in.
+		/// @brief Chunk the error occurred in.
 		std::string chunk;
 
-		/// Line the error occurred on.
+		/// @brief Line the error occurred on.
 		int line;
 	};
 
-	/// Localization script unterminated string error.
+	/// @ingroup localization_script_error
+	/// @brief Localization script unterminated string error.
 	struct localization_script_unterminated_string
 	{
-		/// Chunk the error occurred in.
+		/// @brief Chunk the error occurred in.
 		std::string chunk;
 
-		/// Line the error occurred on.
+		/// @brief Line the error occurred on.
 		int line;
 	};
 
-	/// Localization script expected symbol error.
+	/// @ingroup localization_script_error
+	/// @brief Localization script expected symbol error.
 	struct localization_script_expected_symbol
 	{
-		/// Chunk the error occurred in.
+		/// @brief Chunk the error occurred in.
 		std::string chunk;
 
-		/// Line the error occurred on.
+		/// @brief Line the error occurred on.
 		int line;
 
-		/// Actual parsed token type, if any.
+		/// @brief Actual parsed token type, if any.
 		localization_token_type actual_type;
 	};
 
-	/// Localization script expected closing brace error.
+	/// @ingroup localization_script_error
+	/// @brief Localization script expected closing brace error.
 	struct localization_script_expected_closing_brace
 	{
-		/// Chunk the error occurred in.
+		/// @brief Chunk the error occurred in.
 		std::string chunk;
 
-		/// Line the error occurred on.
+		/// @brief Line the error occurred on.
 		int line;
 
-		/// Line the opening brace is on.
+		/// @brief Line the opening brace is on.
 		int opening_brace_line;
 	};
 
-	/// Localization script extraneous closing brace error.
+	/// @ingroup localization_script_error
+	/// @brief Localization script extraneous closing brace error.
 	struct localization_script_extraneous_closing_brace
 	{
-		/// Chunk the error occurred in.
+		/// @brief Chunk the error occurred in.
 		std::string chunk;
 
-		/// Line the error occurred on.
+		/// @brief Line the error occurred on.
 		int line;
 	};
 
-	/// Localization script expected symbol or closing brace error.
+	/// @ingroup localization_script_error
+	/// @brief Localization script expected symbol or closing brace error.
 	struct localization_script_expected_symbol_or_closing_brace
 	{
-		/// Chunk the error occurred in.
+		/// @brief Chunk the error occurred in.
 		std::string chunk;
 
-		/// Line the error occurred on.
+		/// @brief Line the error occurred on.
 		int line;
 
-		/// Actual parsed token type, if any.
+		/// @brief Actual parsed token type, if any.
 		localization_token_type actual_type;
 	};
 
-	/// Localization script expected equals or opening brace error.
+	/// @ingroup localization_script_error
+	/// @brief Localization script expected equals or opening brace error.
 	struct localization_script_expected_equals_or_opening_brace
 	{
-		/// Chunk the error occurred in.
+		/// @brief Chunk the error occurred in.
 		std::string chunk;
 
-		/// Line the error occurred on.
+		/// @brief Line the error occurred on.
 		int line;
 
-		/// Actual parsed token type, if any.
+		/// @brief Actual parsed token type, if any.
 		localization_token_type actual_type;
 	};
 
-	/// Localization script expected string error.
+	/// @ingroup localization_script_error
+	/// @brief Localization script expected string error.
 	struct localization_script_expected_string
 	{
-		/// Chunk the error occurred in.
+		/// @brief Chunk the error occurred in.
 		std::string chunk;
 
-		/// Line the error occurred on.
+		/// @brief Line the error occurred on.
 		int line;
 
-		/// Actual parsed token type, if any.
+		/// @brief Actual parsed token type, if any.
 		localization_token_type actual_type;
 	};
 
-	/// Localization script duplicate key error.
+	/// @ingroup localization_script_error
+	/// @brief Localization script duplicate key error.
 	struct localization_script_duplicate_key
 	{
-		/// Chunk the error occurred in.
+		/// @brief Chunk the error occurred in.
 		std::string chunk;
 
-		/// Line the error occurred on.
+		/// @brief Line the error occurred on.
 		int line;
 
-		/// Line the original key declaration is on.
+		/// @brief Line the original key declaration is on.
 		int original_line;
 
-		/// Duplicate key name.
+		/// @brief Duplicate key name.
 		std::string key;
 	};
 
+	//
+
 	// clang-format off
-	/// Generic localization script error.
+	/// @ingroup localization_script_error
+	/// @brief Generic localization script error.
 	using localization_script_error = variant<
 		localization_script_unexpected_backslash,
 		localization_script_unexpected_slash,
@@ -200,14 +220,16 @@ namespace tr
 
 namespace tr
 {
-	/// Localization error formatter mixin.
+	/// @ingroup localization_script_error
+	/// @brief Localization error formatter mixin.
 	/// @tparam Error Error type being formatted.
-	/// @tparam Base Base formatter type. To qualify, a type must contain a method with the signature `FormatContext::iterator
-	/// format_message(const Error& error, FormatContext& context) const`.
+	/// @tparam Base Base formatter type.
+	/// @note To qualify, `Base` must contain a method with the signature `FormatContext::iterator format_message(const Error& error,
+	/// FormatContext& context) const`.
 	template <typename Error, typename Base = std::formatter<Error>>
 	struct localization_error_formatter
 	{
-		/// Parses the format specification.
+		/// @brief Parses the format specification.
 		/// @tparam ParseContext Parsing context type.
 		/// @param context Parsing context.
 		/// @return Iterator to the end of the parsed specification.
@@ -220,7 +242,7 @@ namespace tr
 			return context.begin();
 		}
 
-		/// Formats a localization error.
+		/// @brief Formats a localization error.
 		/// @tparam FormatContext Formatting context type.
 		/// @param error Error to format.
 		/// @param context Formatting context.
@@ -236,10 +258,12 @@ namespace tr
 	};
 } // namespace tr
 
+/// @ingroup localization_script_error
+/// @brief Localization token type formatter.
 template <>
 struct std::formatter<tr::localization_token_type>
 {
-	/// Parses the format specification.
+	/// @brief Parses the format specification.
 	/// @tparam ParseContext Parsing context type.
 	/// @param context Parsing context.
 	/// @return Iterator to the end of the parsed specification.
@@ -252,7 +276,7 @@ struct std::formatter<tr::localization_token_type>
 		return context.begin();
 	}
 
-	/// Formats a localization token type.
+	/// @brief Formats a localization token type.
 	/// @tparam FormatContext Formatting context type.
 	/// @param type Localization token type to format.
 	/// @param context Formatting context.
@@ -279,12 +303,13 @@ struct std::formatter<tr::localization_token_type>
 	}
 };
 
-/// Localization script unexpected backslash error formatter.
+/// @ingroup localization_script_error
+/// @brief Localization script unexpected backslash error formatter.
 template <>
 struct std::formatter<tr::localization_script_unexpected_backslash>
 	: tr::localization_error_formatter<tr::localization_script_unexpected_backslash>
 {
-	/// Formats a localization script unexpected backslash error message.
+	/// @brief Formats a localization script unexpected backslash error message.
 	/// @tparam FormatContext Formatting context type.
 	/// @param context Formatting context.
 	/// @return Iterator to the end of the output range.
@@ -295,11 +320,12 @@ struct std::formatter<tr::localization_script_unexpected_backslash>
 	}
 };
 
-/// Localization script unexpected slash error formatter.
+/// @ingroup localization_script_error
+/// @brief Localization script unexpected slash error formatter.
 template <>
 struct std::formatter<tr::localization_script_unexpected_slash> : tr::localization_error_formatter<tr::localization_script_unexpected_slash>
 {
-	/// Formats a localization script unexpected slash error message.
+	/// @brief Formats a localization script unexpected slash error message.
 	/// @tparam FormatContext Formatting context type.
 	/// @param context Formatting context.
 	/// @return Iterator to the end of the output range.
@@ -310,12 +336,13 @@ struct std::formatter<tr::localization_script_unexpected_slash> : tr::localizati
 	}
 };
 
-/// Localization script unexpected slash error formatter.
+/// @ingroup localization_script_error
+/// @brief Localization script unknown escape sequence error formatter.
 template <>
 struct std::formatter<tr::localization_script_unknown_escape_sequence>
 	: tr::localization_error_formatter<tr::localization_script_unknown_escape_sequence>
 {
-	/// Formats a localization script unknown escape sequence error message.
+	/// @brief Formats a localization script unknown escape sequence error message.
 	/// @tparam FormatContext Formatting context type.
 	/// @param error Error to format the error message for.
 	/// @param context Formatting context.
@@ -327,12 +354,13 @@ struct std::formatter<tr::localization_script_unknown_escape_sequence>
 	}
 };
 
-/// Localization script unterminated multiline comment error formatter.
+/// @ingroup localization_script_error
+/// @brief Localization script unterminated multiline comment error formatter.
 template <>
 struct std::formatter<tr::localization_script_unterminated_multiline_comment>
 	: tr::localization_error_formatter<tr::localization_script_unterminated_multiline_comment>
 {
-	/// Formats a localization script unterminated multiline comment error message.
+	/// @brief Formats a localization script unterminated multiline comment error message.
 	/// @tparam FormatContext Formatting context type.
 	/// @param context Formatting context.
 	/// @return Iterator to the end of the output range.
@@ -343,12 +371,13 @@ struct std::formatter<tr::localization_script_unterminated_multiline_comment>
 	}
 };
 
-/// Localization script unterminated string error formatter.
+/// @ingroup localization_script_error
+/// @brief Localization script unterminated string error formatter.
 template <>
 struct std::formatter<tr::localization_script_unterminated_string>
 	: tr::localization_error_formatter<tr::localization_script_unterminated_string>
 {
-	/// Formats a localization script unterminated string error message.
+	/// @brief Formats a localization script unterminated string error message.
 	/// @tparam FormatContext Formatting context type.
 	/// @param context Formatting context.
 	/// @return Iterator to the end of the output range.
@@ -359,11 +388,12 @@ struct std::formatter<tr::localization_script_unterminated_string>
 	}
 };
 
-/// Localization script expected symbol error formatter.
+/// @ingroup localization_script_error
+/// @brief Localization script expected symbol error formatter.
 template <>
 struct std::formatter<tr::localization_script_expected_symbol> : tr::localization_error_formatter<tr::localization_script_expected_symbol>
 {
-	/// Formats a localization script unterminated string error message.
+	/// @brief Formats a localization script expected symbol error message.
 	/// @tparam FormatContext Formatting context type.
 	/// @param error Error to format the error message for.
 	/// @param context Formatting context.
@@ -380,12 +410,13 @@ struct std::formatter<tr::localization_script_expected_symbol> : tr::localizatio
 	}
 };
 
-/// Localization script expected closing brace error formatter.
+/// @ingroup localization_script_error
+/// @brief Localization script expected closing brace error formatter.
 template <>
 struct std::formatter<tr::localization_script_expected_closing_brace>
 	: tr::localization_error_formatter<tr::localization_script_expected_closing_brace>
 {
-	/// Formats a localization script expected closing brace error message.
+	/// @brief Formats a localization script expected closing brace error message.
 	/// @tparam FormatContext Formatting context type.
 	/// @param error Error to format the error message for.
 	/// @param context Formatting context.
@@ -397,12 +428,13 @@ struct std::formatter<tr::localization_script_expected_closing_brace>
 	}
 };
 
-/// Localization script extraneous closing brace error formatter.
+/// @ingroup localization_script_error
+/// @brief Localization script extraneous closing brace error formatter.
 template <>
 struct std::formatter<tr::localization_script_extraneous_closing_brace>
 	: tr::localization_error_formatter<tr::localization_script_extraneous_closing_brace>
 {
-	/// Formats a localization script extraneous closing brace error message.
+	/// @brief Formats a localization script extraneous closing brace error message.
 	/// @tparam FormatContext Formatting context type.
 	/// @param context Formatting context.
 	/// @return Iterator to the end of the output range.
@@ -413,12 +445,13 @@ struct std::formatter<tr::localization_script_extraneous_closing_brace>
 	}
 };
 
-/// Localization script expected symbol or closing brace error formatter.
+/// @ingroup localization_script_error
+/// @brief Localization script expected symbol or closing brace error formatter.
 template <>
 struct std::formatter<tr::localization_script_expected_symbol_or_closing_brace>
 	: tr::localization_error_formatter<tr::localization_script_expected_symbol_or_closing_brace>
 {
-	/// Formats a localization script expected symbol or closing brace error message.
+	/// @brief Formats a localization script expected symbol or closing brace error message.
 	/// @tparam FormatContext Formatting context type.
 	/// @param error Error to format the error message for.
 	/// @param context Formatting context.
@@ -436,12 +469,13 @@ struct std::formatter<tr::localization_script_expected_symbol_or_closing_brace>
 	}
 };
 
-/// Localization script expected equals or opening brace error formatter.
+/// @ingroup localization_script_error
+/// @brief Localization script expected equals or opening brace error formatter.
 template <>
 struct std::formatter<tr::localization_script_expected_equals_or_opening_brace>
 	: tr::localization_error_formatter<tr::localization_script_expected_equals_or_opening_brace>
 {
-	/// Formats a localization script expected equals or opening brace error message.
+	/// @brief Formats a localization script expected equals or opening brace error message.
 	/// @tparam FormatContext Formatting context type.
 	/// @param error Error to format the error message for.
 	/// @param context Formatting context.
@@ -459,11 +493,12 @@ struct std::formatter<tr::localization_script_expected_equals_or_opening_brace>
 	}
 };
 
-/// Localization script expected string error formatter.
+/// @ingroup localization_script_error
+/// @brief Localization script expected string error formatter.
 template <>
 struct std::formatter<tr::localization_script_expected_string> : tr::localization_error_formatter<tr::localization_script_expected_string>
 {
-	/// Formats a localization script expected string error message.
+	/// @brief Formats a localization script expected string error message.
 	/// @tparam FormatContext Formatting context type.
 	/// @param error Error to format the error message for.
 	/// @param context Formatting context.
@@ -480,11 +515,12 @@ struct std::formatter<tr::localization_script_expected_string> : tr::localizatio
 	}
 };
 
-/// Localization script duplicate key error formatter.
+/// @ingroup localization_script_error
+/// @brief Localization script duplicate key error formatter.
 template <>
 struct std::formatter<tr::localization_script_duplicate_key> : tr::localization_error_formatter<tr::localization_script_duplicate_key>
 {
-	/// Formats a localization script duplicate key error message.
+	/// @brief Formats a localization script duplicate key error message.
 	/// @tparam FormatContext Formatting context type.
 	/// @param error Error to format the error message for.
 	/// @param context Formatting context.
@@ -496,11 +532,12 @@ struct std::formatter<tr::localization_script_duplicate_key> : tr::localization_
 	}
 };
 
-/// Localization script error formatter.
+/// @ingroup localization_script_error
+/// @brief Localization script error formatter.
 template <>
 struct std::formatter<tr::localization_script_error>
 {
-	/// Parses the format specification.
+	/// @brief Parses the format specification.
 	/// @tparam ParseContext Parsing context type.
 	/// @param context Parsing context.
 	/// @return Iterator to the end of the parsed specification.
@@ -513,7 +550,7 @@ struct std::formatter<tr::localization_script_error>
 		return context.begin();
 	}
 
-	/// Formats a localization token type.
+	/// @brief Formats a localization script error.
 	/// @tparam FormatContext Formatting context type.
 	/// @param error Localization script error to format.
 	/// @param context Formatting context.

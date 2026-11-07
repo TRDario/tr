@@ -17,7 +17,7 @@ namespace tr
 	class log_sink
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Destroys the sink.

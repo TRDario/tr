@@ -29,7 +29,7 @@ namespace tr
 	class static_index_buffer : private graphics_buffer
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Uploads index data into a static index buffer.

@@ -37,7 +37,7 @@ namespace tr
 	class untyped_dynamic_vertex_buffer : private graphics_buffer
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Creates an empty untyped dynamic index buffer.

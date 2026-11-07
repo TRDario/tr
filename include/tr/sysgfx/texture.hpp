@@ -106,7 +106,7 @@ namespace tr
 	class texture
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Creates an incomplete texture.

@@ -34,7 +34,7 @@ namespace tr
 	class untyped_uniform_buffer : private graphics_buffer
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Allocates an uninitialized uniform buffer.

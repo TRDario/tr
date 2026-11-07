@@ -29,7 +29,7 @@ namespace tr
 	class audio_buffer
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// @cond implementation_details

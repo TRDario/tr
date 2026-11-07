@@ -6,7 +6,7 @@
 
 //
 
-/// Tests the empty state and resetting an optional variant.
+/// @brief Tests the empty state and resetting an optional variant.
 TEST(OptionalVariantTest, IdentifiesEmptyState)
 {
 	tr::optional_variant<int, float> var;
@@ -22,7 +22,7 @@ TEST(OptionalVariantTest, IdentifiesEmptyState)
 	EXPECT_TRUE(var.is<tr::empty_variant_t>());
 }
 
-/// Tests storing and accessing alternatives in an optional variant.
+/// @brief Tests storing and accessing alternatives in an optional variant.
 TEST(OptionalVariantTest, StoresAlternatives)
 {
 	tr::optional_variant<int, float> int_var{42};

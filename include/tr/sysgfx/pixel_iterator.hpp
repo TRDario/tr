@@ -37,7 +37,7 @@ namespace tr
 		using iterator_concept = std::random_access_iterator_tag;
 
 		/// @cond implementation_details
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs a singular iterator.
@@ -155,7 +155,7 @@ namespace tr
 		using iterator_concept = std::random_access_iterator_tag;
 
 		/// @cond implementation_details
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs a singular iterator.

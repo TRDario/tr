@@ -8,6 +8,7 @@
 
 namespace tr
 {
+	/// @ingroup handle
 	/// @brief Wrapper over a smart handle for use in functions that output using a pointer, akin to `std::out_ptr`.
 	/// @tparam SmartHandle Smart handle type being wrapped.
 	template <typename SmartHandle>

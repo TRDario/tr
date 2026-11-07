@@ -1,87 +1,74 @@
 /// @file
 /// @brief Provides `tr::ref`.
 
+/// @ingroup wrappers
+/// @defgroup ref Reference wrapper
+/// @brief Contains `tr::ref` and related functionality.
+
 #pragma once
 
 //
 
 namespace tr
 {
-	/// Alternative reference wrapper.
+	/// @ingroup ref
+	/// @brief `std::reference_wrapper` alternative.
+	/// @details `tr::ref` implements a reference wrapper similar to `std::reference_wrapper` with a more ergonomic interface, allowing
+	/// dereferencing through the reference without needing to call `.get()` to unwrap it.
 	/// @tparam Value Type being referenced.
 	template <typename Value>
 	class ref
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Wraps a reference.
+		/// @brief Wraps a reference.
 		/// @param ref Reference to wrap.
 		[[nodiscard]] constexpr ref(Value& ref) noexcept
 			: m_base{std::addressof(ref)}
 		{
 		}
 
-		/// Wrapping an rvalue is not permitted.
+		/// @brief Creates a reference from a reference to a similar type.
+		/// @tparam ValueLike Type whose reference is convertible to `Value`.
+		/// @param ref Reference to convert.
+		template <typename ValueLike>
+			requires std::convertible_to<ValueLike&, Value&>
+		[[nodiscard]] constexpr ref(ref<ValueLike> ref) noexcept
+			: m_base{ref.as_ptr()}
+		{
+		}
+
+		/// @brief Wrapping an rvalue is not permitted.
 		constexpr ref(Value&&) = delete;
 
 		/// @}
-		/// @name Conversion operators
+		/// @name Observers
 		/// @{
 
-		/// Unwraps the reference.
-		/// @return Raw reference to the object.
-		[[nodiscard]] constexpr operator Value&() const noexcept
-		{
-			return *m_base;
-		}
-
-		/// Const-qualifies the reference.
-		/// @return Const-qualified version of the reference.
-		[[nodiscard]] constexpr operator ref<const Value>() const noexcept
-		{
-			return ref<const Value>{*m_base};
-		}
-
-		/// Converts the reference to a base class reference.
-		/// @tparam Base Base class of `Value`.
-		/// @return Reference to the base class.
-		template <typename Base>
-			requires std::convertible_to<Value&, Base&>
-		[[nodiscard]] constexpr operator ref<Base>() const noexcept
-		{
-			return static_cast<Base&>(**this);
-		}
-
-		/// @}
-		/// @name Comparison operators
-		/// @{
-
-		/// Compares whether two references point to the same object.
-		/// @param lhs, rhs References to compare.
-		/// @return Whether the references point to the same object.
-		[[nodiscard]] constexpr friend bool operator==(ref lhs, ref rhs) noexcept = default;
-
-		/// @}
-		/// @name Access
-		/// @{
-
-		/// Converts the reference into a pointer to the referenced object.
+		/// @brief Converts the reference into a pointer to the referenced object.
 		/// @return Pointer equivalent to the reference.
 		[[nodiscard]] constexpr Value* as_ptr() const noexcept
 		{
 			return m_base;
 		}
 
-		/// Dereferences the referenced object.
+		/// @brief Unwraps the reference.
+		/// @return Raw reference to the object.
+		[[nodiscard]] constexpr operator Value&() const noexcept
+		{
+			return *m_base;
+		}
+
+		/// @brief Dereferences the referenced object.
 		/// @return Raw pointer to the object.
 		[[nodiscard]] constexpr Value* operator->() const noexcept
 		{
 			return m_base;
 		}
 
-		/// Dereferences the referenced object.
+		/// @brief Dereferences the referenced object.
 		/// @return Raw reference to the object.
 		[[nodiscard]] constexpr Value& operator*() const noexcept
 		{
@@ -91,22 +78,33 @@ namespace tr
 		/// @}
 
 	  private:
-		/// Pointer to the referenced object.
+		/// @brief Pointer to the referenced object.
 		Value* m_base;
 	};
 
-	/// @name Overloaded operators
-	/// @{
+	//
 
-	/// Compares whether two references point to the same object.
+	/// @ingroup ref
+	/// @brief Checks whether two references point to the same object.
+	/// @details This is a shallow comparison of the addresses of the references, @em not a value comparison.
 	/// @tparam Value Type being referenced.
 	/// @param lhs, rhs References to compare.
-	/// @return Whether the references point to the same object.
+	/// @return `true` if the references point to the same object, `false` otherwise.
 	template <typename Value>
-	[[nodiscard]] constexpr bool operator==(const ref<Value>& lhs, const Value& rhs) noexcept
+	[[nodiscard]] constexpr bool operator==(ref<Value> lhs, std::type_identity_t<ref<Value>> rhs) noexcept
 	{
-		return lhs == ref{rhs};
+		return lhs.as_ptr() == rhs.as_ptr();
 	}
 
-	/// @}
+	/// @ingroup ref
+	/// @brief Checks whether two references point to the same object.
+	/// @details This is a shallow comparison of the addresses of the references, @em not a value comparison.
+	/// @tparam Value Referenced value type.
+	/// @param lhs, rhs References to compare.
+	/// @return `true` if the references point to the same object, `false` otherwise.
+	template <typename Value>
+	[[nodiscard]] constexpr bool operator==(ref<Value> lhs, const std::type_identity_t<Value>& rhs) noexcept
+	{
+		return lhs.as_ptr() == std::addressof(rhs);
+	}
 } // namespace tr

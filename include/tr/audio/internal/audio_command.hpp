@@ -51,7 +51,7 @@ namespace tr::internal
 			done
 		};
 
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs an audio command.

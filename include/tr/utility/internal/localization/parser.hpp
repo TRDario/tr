@@ -11,42 +11,44 @@
 
 namespace tr::internal::localization
 {
-	/// Key-value pair produced by the parser.
+	/// @brief Key-value pair produced by the parser.
 	struct key_value_pair
 	{
-		/// Localization key.
+		/// @brief Localization key.
 		std::string key;
 
-		/// Value associated with the localization key.
+		/// @brief Value associated with the localization key.
 		std::string value;
 
-		/// Line the key is located on.
+		/// @brief Line the key is located on.
 		int key_line;
 	};
 
-	/// Localization file parser.
+	/// @brief Localization file parser.
 	class parser
 	{
 	  public:
-		/// Result of `handle_token()`.
+		/// @brief Result of `handle_token()`.
 		using handle_token_result =
 			optional_result<result_values<key_value_pair>,
 							result_errors<extraneous_closing_brace, expected_symbol, expected_symbol_or_closing_brace, expected_string,
 										  expected_equals_or_opening_brace>>;
 
-		/// Result of handle_eof()`.
+		/// @brief Result of handle_eof()`.
 		using handle_eof_result = std::vector<variant<expected_closing_brace, expected_equals_or_opening_brace, expected_string>>;
 
 		//
 
-		/// Constructs a localization parser.
+		/// @brief Constructs a localization parser.
 		parser() noexcept = default;
 
 		//
 
-		/// Handles a token.
+		/// @brief Handles a token.
 		/// @tparam Token Localization token type.
 		/// @param token Token to handle.
+		/// @par Exception safety
+		/// If an exception is thrown, `*this` is left in a valid, but unspecified state (basic exception guarantee).
 		/// @return A key-value pair if matched successfully, a parser error if something went wrong, or nothing otherwise.
 		template <token Token>
 		[[nodiscard]] handle_token_result handle_token(Token token)
@@ -107,43 +109,43 @@ namespace tr::internal::localization
 			}
 		}
 
-		/// Handles EOF.
+		/// @brief Handles end-of-file.
 		/// @return A parser error if something went wrong, or nothing otherwise.
 		[[nodiscard]] handle_eof_result handle_eof() noexcept;
 
 	  private:
-		/// Parser states.
+		/// @brief Parser states.
 		enum class state
 		{
-			/// Expecting an expression symbol, or a closing brace if `!m_open_namespaces.empty()`.
+			/// @brief Expecting an expression symbol, or a closing brace if `!m_open_namespaces.empty()`.
 			expecting_symbol_or_closing_brace,
 
-			/// Expecting an expression continuation ('=' or '{').
+			/// @brief Expecting an expression continuation ('=' or '{').
 			expecting_equals_or_opening_brace,
 
-			/// Expecting a string.
+			/// @brief Expecting a string.
 			expecting_string,
 		};
 
-		/// Information about an open namespace.
+		/// @brief Information about an open namespace.
 		struct open_namespace
 		{
-			/// Name of the namespace.
+			/// @brief Name of the namespace.
 			std::string name;
 
-			/// Line the opening brace of the namespace is on.
+			/// @brief Line the opening brace of the namespace is on.
 			int opening_brace_line;
 		};
 
 		//
 
-		/// Current parser state.
+		/// @brief Current parser state.
 		state m_state{state::expecting_symbol_or_closing_brace};
 
-		/// Stack of opened namespaces.
+		/// @brief Stack of opened namespaces.
 		std::vector<open_namespace> m_open_namespaces;
 
-		/// Last parsed symbol token.
+		/// @brief Last parsed symbol token.
 		symbol_token m_last_symbol;
 	};
 } // namespace tr::internal::localization

@@ -9,31 +9,31 @@
 
 namespace tr::internal::localization
 {
-	/// Parser output visitor.
+	/// @brief Parser output visitor.
 	/// @tparam ErrorOut Error output iterator type.
 	template <std::output_iterator<localization_script_error> ErrorOut>
 	struct parser_output_visitor
 	{
-		/// Error output iterator
+		/// @brief Error output iterator
 		ErrorOut error_out;
 
-		/// Key-value pairs.
+		/// @brief Key-value pairs.
 		std::vector<key_value_pair>& pairs;
 
-		/// Name of the parsed chunk.
+		/// @brief Name of the parsed chunk.
 		std::string_view chunk_name;
 
 		//
 
-		/// Handles an empty output.
-		ErrorOut operator()(empty_variant_t) noexcept
+		/// @brief Handles an empty output.
+		[[nodiscard]] ErrorOut operator()(empty_variant_t) noexcept
 		{
 			return error_out;
 		}
 
-		/// Handles a key-value pair.
+		/// @brief Handles a key-value pair.
 		/// @param pair Key-value pair to handle.
-		ErrorOut operator()(key_value_pair pair)
+		[[nodiscard]] ErrorOut operator()(key_value_pair pair)
 		{
 			const auto duplicate_it{std::ranges::find_if(pairs, [&](const key_value_pair& old) { return old.key == pair.key; })};
 			if (duplicate_it != pairs.end()) {
@@ -47,123 +47,123 @@ namespace tr::internal::localization
 			}
 		}
 
-		/// Handles an expected symbol error.
+		/// @brief Handles an expected symbol error.
 		/// @param error Error to handle.
-		ErrorOut operator()(expected_symbol error)
+		[[nodiscard]] ErrorOut operator()(expected_symbol error)
 		{
 			*error_out++ = localization_script_expected_symbol{std::string{chunk_name}, error.line, error.actual_type};
 			return error_out;
 		}
 
-		/// Handles an expected closing brace error.
+		/// @brief Handles an expected closing brace error.
 		/// @param error Error to handle.
-		ErrorOut operator()(expected_closing_brace error)
+		[[nodiscard]] ErrorOut operator()(expected_closing_brace error)
 		{
 			*error_out++ = localization_script_expected_closing_brace{std::string{chunk_name}, EOF, error.opening_brace_line};
 			return error_out;
 		}
 
-		/// Handles an extraneous closing brace error.
+		/// @brief Handles an extraneous closing brace error.
 		/// @param error Error to handle.
-		ErrorOut operator()(extraneous_closing_brace error)
+		[[nodiscard]] ErrorOut operator()(extraneous_closing_brace error)
 		{
 			*error_out++ = localization_script_extraneous_closing_brace{std::string{chunk_name}, error.line};
 			return error_out;
 		}
 
-		/// Handles an expected symbol or closing brace error.
+		/// @brief Handles an expected symbol or closing brace error.
 		/// @param error Error to handle.
-		ErrorOut operator()(expected_symbol_or_closing_brace error)
+		[[nodiscard]] ErrorOut operator()(expected_symbol_or_closing_brace error)
 		{
 			*error_out++ = localization_script_expected_symbol_or_closing_brace{std::string{chunk_name}, error.line, error.actual_type};
 			return error_out;
 		}
 
-		/// Handles an expected equals or opening brace error.
+		/// @brief Handles an expected equals or opening brace error.
 		/// @param error Error to handle.
-		ErrorOut operator()(expected_equals_or_opening_brace error)
+		[[nodiscard]] ErrorOut operator()(expected_equals_or_opening_brace error)
 		{
 			*error_out++ = localization_script_expected_equals_or_opening_brace{std::string{chunk_name}, error.line, error.actual_type};
 			return error_out;
 		}
 
-		/// Handles an expected string error.
+		/// @brief Handles an expected string error.
 		/// @param error Error to handle.
-		ErrorOut operator()(expected_string error)
+		[[nodiscard]] ErrorOut operator()(expected_string error)
 		{
 			*error_out++ = localization_script_expected_string{std::string{chunk_name}, error.line, error.actual_type};
 			return error_out;
 		}
 	};
 
-	/// Lexer output visitor.
+	/// @brief Lexer output visitor.
 	/// @tparam ErrorOut Error output iterator type.
 	template <std::output_iterator<localization_script_error> ErrorOut>
 	struct lexer_output_visitor
 	{
-		/// Error output iterator
+		/// @brief Error output iterator
 		ErrorOut error_out;
 
-		/// Localization parser.
+		/// @brief Localization parser.
 		parser& parser;
 
-		/// Key-value pairs.
+		/// @brief Key-value pairs.
 		std::vector<key_value_pair>& pairs;
 
-		/// Name of the parsed chunk.
+		/// @brief Name of the parsed chunk.
 		std::string_view chunk_name;
 
 		//
 
-		/// Handles an empty output.
-		ErrorOut operator()(empty_variant_t) noexcept
+		/// @brief Handles an empty output.
+		[[nodiscard]] ErrorOut operator()(empty_variant_t) noexcept
 		{
 			return error_out;
 		}
 
-		/// Handles a token.
+		/// @brief Handles a token.
 		/// @tparam Token Token type.
 		/// @param token Token to handle.
-		ErrorOut operator()(token auto token)
+		[[nodiscard]] ErrorOut operator()(token auto token)
 		{
 			return parser.handle_token(token).visit(parser_output_visitor{error_out, pairs, chunk_name});
 		}
 
-		/// Handles an unexpected backslash error.
+		/// @brief Handles an unexpected backslash error.
 		/// @param error Error to handle.
-		ErrorOut operator()(unexpected_backslash error)
+		[[nodiscard]] ErrorOut operator()(unexpected_backslash error)
 		{
 			*error_out++ = localization_script_unexpected_backslash{std::string{chunk_name}, error.line};
 			return error_out;
 		}
 
-		/// Handles an unexpected slash error.
+		/// @brief Handles an unexpected slash error.
 		/// @param error Error to handle.
-		ErrorOut operator()(unexpected_slash error)
+		[[nodiscard]] ErrorOut operator()(unexpected_slash error)
 		{
 			*error_out++ = localization_script_unexpected_slash{std::string{chunk_name}, error.line};
 			return error_out;
 		}
 
-		/// Handles an unknown escape sequence error.
+		/// @brief Handles an unknown escape sequence error.
 		/// @param error Error to handle.
-		ErrorOut operator()(unknown_escape_sequence error)
+		[[nodiscard]] ErrorOut operator()(unknown_escape_sequence error)
 		{
 			*error_out++ = localization_script_unknown_escape_sequence{std::string{chunk_name}, error.line, error.character};
 			return error_out;
 		}
 
-		/// Handles an unterminated multiline comment error.
+		/// @brief Handles an unterminated multiline comment error.
 		/// @param error Error to handle.
-		ErrorOut operator()(unterminated_multiline_comment error)
+		[[nodiscard]] ErrorOut operator()(unterminated_multiline_comment error)
 		{
 			*error_out++ = localization_script_unterminated_multiline_comment{std::string{chunk_name}, error.line};
 			return error_out;
 		}
 
-		/// Handles an unterminated string error.
+		/// @brief Handles an unterminated string error.
 		/// @param error Error to handle.
-		ErrorOut operator()(unterminated_string error)
+		[[nodiscard]] ErrorOut operator()(unterminated_string error)
 		{
 			*error_out++ = localization_script_unterminated_string{std::string{chunk_name}, error.line};
 			return error_out;
@@ -172,19 +172,23 @@ namespace tr::internal::localization
 
 	//
 
-	/// Result of `tr::internal::parse_localization_script`.
+	/// @brief Result of `tr::internal::parse_localization_script`.
 	/// @tparam ErrorOut Error output iterator type.
 	template <std::output_iterator<localization_script_error> ErrorOut>
 	struct parse_localization_script_result
 	{
-		/// Key-value pairs.
+		/// @brief Key-value pairs.
 		std::vector<std::pair<std::string, std::string>> pairs;
 
-		/// Error output iterator.
+		/// @brief Error output iterator.
 		ErrorOut error_out;
 	};
 
-	/// Raw localization script parsing function.
+	/// @brief Parses localization script.
+	/// @details
+	/// For details on the localization script format see @ref tloc "the page on it".
+	///
+	/// Every iterator in `[begin, end)` is dereferenced exactly once.
 	/// @tparam ErrorOut Error output iterator type.
 	/// @tparam Iterator Character input iterator type.
 	/// @tparam Sentinel Sentinel type for `Iterator`.
@@ -192,6 +196,9 @@ namespace tr::internal::localization
 	/// @param begin Iterator to the beginning of the character range.
 	/// @param end Iterator to the end of the character range.
 	/// @param chunk_name Name of the parsed chunk.
+	/// @par Exception safety
+	/// If an exception is thrown, `error_out` is left in a valid, but unspecified state (basic exception guarantee). The function has no
+	/// other effects if an exception is thrown.
 	/// @return List of localization key-value pairs.
 	template <std::output_iterator<localization_script_error> ErrorOut, input_iterator_to<char> Iterator,
 			  std::sentinel_for<Iterator> Sentinel>

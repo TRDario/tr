@@ -1,5 +1,9 @@
 /// @file
-/// @brief Provides UTF-8-handling utilities
+/// @brief Provides UTF-8-handling utilities.
+
+/// @ingroup utility
+/// @defgroup utf8 UTF-8
+/// @brief Contains UTF-8-handling utilities.
 
 #pragma once
 #include <tr/utility/integer.hpp>
@@ -11,22 +15,29 @@
 
 namespace tr
 {
-	/// Datatype used for Unicode codepoints.
+	/// @ingroup utf8
+	/// @brief Datatype used for Unicode codepoints.
 	using codepoint = u32;
 } // namespace tr
 
-/// Namespace containing UTF-8-related functionality.
+/// @brief Namespace containing UTF-8-related functionality.
 namespace tr::utf8
 {
-	/// Supported input iterator type.
+	/// @ingroup utf8
+	/// @brief Concept checking for a valid UTF-8 input iterator type.
+	/// @tparam Target Type to check for being a valid UTF-8 input iterator type.
 	template <typename Target>
 	concept input_iterator = std::input_iterator<Target> && std::same_as<std::iter_value_t<Target>, char>;
 
-	/// Supported bidirectional input iterator type.
+	/// @ingroup utf8
+	/// @brief Concept checking for a valid UTF-8 bidirectional input iterator type.
+	/// @tparam Target Type to check for being a valid UTF-8 bidirectional input iterator type.
 	template <typename Target>
 	concept bidirectional_iterator = std::bidirectional_iterator<Target> && std::same_as<std::iter_value_t<Target>, char>;
 
-	/// Supported output string type.
+	/// @ingroup utf8
+	/// @brief Concept checking for a valid UTF-8 output string type.
+	/// @tparam Target Type to check for being a valid UTF-8 output string type.
 	template <typename Target>
 	concept output_string = requires(Target& str, Target::iterator it, const std::array<char, 4>& chars) {
 		{ str.empty() } -> std::same_as<bool>;
@@ -37,10 +48,10 @@ namespace tr::utf8
 		str.pop_back();
 	};
 
-	/// @name UTF-8 operations
-	/// @{
+	//
 
-	/// Converts a UTF-8 sequence to a Unicode codepoint.
+	/// @ingroup utf8
+	/// @brief Converts a UTF-8 sequence to a Unicode codepoint.
 	/// @tparam Iterator Input iterator type.
 	/// @param it Iterator to the UTF-8 sequence.
 	/// @return Codepoint representation of the sequence.
@@ -68,7 +79,8 @@ namespace tr::utf8
 		}
 	}
 
-	/// Gets an iterator to the next character.
+	/// @ingroup utf8
+	/// @brief Returns an iterator to the next character.
 	/// @tparam Iterator Input iterator type.
 	/// @param it Iterator to the current character.
 	/// @return Iterator to the beginning of the next character.
@@ -89,11 +101,14 @@ namespace tr::utf8
 		}
 	}
 
-	/// Gets an iterator to the nth next character.
+	/// @ingroup utf8
+	/// @brief Returns an iterator to the `n`th next character.
 	/// @tparam Iterator Input iterator type.
 	/// @param it Iterator to the current character.
 	/// @param n Number of steps to move forward by.
-	/// @return Iterator to the beginning of the nth next character.
+	/// @par Complexity
+	/// Linear time with respect to `n`.
+	/// @return Iterator to the beginning of the `n`th next character.
 	template <input_iterator Iterator>
 	[[nodiscard]] constexpr Iterator next(Iterator it, usize n) noexcept(noexcept(*++it))
 	{
@@ -103,7 +118,8 @@ namespace tr::utf8
 		return it;
 	}
 
-	/// Gets an iterator to the previous character.
+	/// @ingroup utf8
+	/// @brief Returns an iterator to the previous character.
 	/// @tparam Iterator Input iterator type.
 	/// @param it Iterator to the current character.
 	/// @return Iterator to the beginning of the previous character.
@@ -114,11 +130,14 @@ namespace tr::utf8
 		return it;
 	}
 
-	/// Gets an iterator to the nth previous character.
+	/// @ingroup utf8
+	/// @brief Returns an iterator to the `n`th previous character.
 	/// @tparam Iterator Input iterator type.
 	/// @param it Iterator to the current character.
 	/// @param n Number of steps to move backward by.
-	/// @return Iterator to the beginning of the nth previous character.
+	/// @par Complexity
+	/// Linear time with respect to `n`.
+	/// @return Iterator to the beginning of the `n`th previous character.
 	template <bidirectional_iterator Iterator>
 	[[nodiscard]] constexpr Iterator prev(Iterator it, usize n) noexcept(noexcept(*--it))
 	{
@@ -128,11 +147,14 @@ namespace tr::utf8
 		return it;
 	}
 
-	/// Inserts a character into a UTF-8-encoded string.
+	/// @ingroup utf8
+	/// @brief Inserts a character into a UTF-8-encoded string.
 	/// @tparam String Output string type.
 	/// @param str String to insert the UTF-8 sequence into.
 	/// @param where Location to insert the UTF-8 sequence.
 	/// @param cp Codepoint to insert as a UTF-8 sequence.
+	/// @par Exception safety
+	/// Directly inherited from `str.insert()`.
 	/// @return Iterator to the location where the sequence was inserted.
 	template <output_string String>
 	constexpr String::iterator insert(String& str, typename String::iterator where, codepoint cp)
@@ -166,13 +188,14 @@ namespace tr::utf8
 		}
 	}
 
-	/// Erases a character from a UTF-8-encoded string.
+	/// @ingroup utf8
+	/// @brief Erases a character from a UTF-8-encoded string.
 	/// @tparam String Output string type.
 	/// @param str String to erase a character from.
 	/// @param where Location to erase the character.
 	/// @return Iterator to the location where the character was erased.
 	template <output_string String>
-	constexpr String::iterator erase(String& str, typename String::iterator where)
+	constexpr String::iterator erase(String& str, typename String::iterator where) noexcept
 	{
 		if (static_cast<u8>(*where) < 0x80) {
 			return str.erase(where);
@@ -188,11 +211,12 @@ namespace tr::utf8
 		}
 	}
 
-	/// Pops back a character from a UTF-8 encoded string.
+	/// @ingroup utf8
+	/// @brief Pops back a character from a UTF-8 encoded string.
 	/// @tparam String Output string type.
 	/// @param str String to erase a character from.
 	template <output_string String>
-	constexpr void pop_back(String& str)
+	constexpr void pop_back(String& str) noexcept
 	{
 		if (!str.empty()) {
 			while (!str.empty() && (str.back() & 0xC0) == 0x80) {
@@ -202,90 +226,91 @@ namespace tr::utf8
 		}
 	}
 
-	/// @}
+	//
 
-	/// Unicode codepoint iterator for UTF-8 string views.
+	/// @ingroup utf8
+	/// @brief Unicode codepoint iterator for UTF-8 string views.
 	class iterator : public iterator_interface<iterator>
 	{
 	  public:
-		/// Value type used by the iterator.
-		using value_type = codepoint;
-
-		/// Difference type used by the iterator.
-		using difference_type = ssize;
-
-		/// Iterator category of the iterator.
-		using iterator_category = std::bidirectional_iterator_tag;
-
-		/// Iterator concept of the iterator.
-		using iterator_concept = std::bidirectional_iterator_tag;
-
-		/// @name Constructors and destructors
+		/// @name Iterator traits
 		/// @{
 
-		/// Default-constructs a codepoint iterator.
+		/// @brief Value type used by the iterator.
+		using value_type = codepoint;
+
+		/// @brief Difference type used by the iterator.
+		using difference_type = ssize;
+
+		/// @brief Iterator category of the iterator.
+		using iterator_category = std::bidirectional_iterator_tag;
+
+		/// @brief Iterator concept of the iterator.
+		using iterator_concept = std::bidirectional_iterator_tag;
+
+		/// @}
+		/// @name Constructors, destructors, and assignment operators
+		/// @{
+
+		/// @brief Constructs a singular codepoint iterator.
 		[[nodiscard]] constexpr iterator() noexcept = default;
 
-		/// Constructs a codepoint iterator.
+		/// @brief Constructs a codepoint iterator.
 		/// @param ptr Pointer to the beginning of a UTF-8 character sequence.
-		[[nodiscard]] constexpr iterator(const char* ptr) noexcept
+		[[nodiscard]] explicit constexpr iterator(const char* ptr) noexcept
 			: m_ptr{ptr}
 		{
-			TR_ASSERT(ptr != nullptr, "Tried to create UTF-8 iterator to nullptr.");
+			TR_ASSERT(ptr, "Tried to create UTF-8 iterator to nullptr.");
 		}
 
 		/// @}
-		/// @name Comparison operators
+		/// @name Operators
 		/// @{
 
-		/// Compares iterators.
+		/// @brief Compares iterators.
 		/// @param lhs, rhs Iterators to compare.
 		/// @return Ordering of the iterators.
 		[[nodiscard]] constexpr friend auto operator<=>(iterator lhs, iterator rhs) noexcept = default;
 
-		/// Compares iterators for equality.
+		/// @brief Checks iterators for equality.
 		/// @param lhs, rhs Iterators to compare.
-		/// @return Whether the iterators are equal.
+		/// @return `true` if the iterators point to the same codepoint, `false` otherwise.
 		[[nodiscard]] constexpr friend bool operator==(iterator lhs, iterator rhs) noexcept = default;
 
-		/// @}
-		/// @name Other operators
-		/// @{
-
-		/// Dereferences the iterator.
+		/// @brief Dereferences the iterator.
 		/// @return Codepoint representation of the sequence the iterator is pointing at.
 		[[nodiscard]] constexpr codepoint operator*() const noexcept
 		{
-			TR_ASSERT(m_ptr != nullptr, "Tried to dereference default-constructed UTF-8 iterator.");
+			TR_ASSERT(m_ptr, "Tried to dereference default-constructed UTF-8 iterator.");
 
 			return to_cp(m_ptr);
 		}
 
-		/// Increments the iterator.
+		/// @brief Increments the iterator.
 		/// @return Reference to `*this`.
 		constexpr iterator& operator++() noexcept
 		{
-			TR_ASSERT(m_ptr != nullptr, "Tried to increment default-constructed UTF-8 iterator.");
+			TR_ASSERT(m_ptr, "Tried to increment default-constructed UTF-8 iterator.");
 
 			m_ptr = next(m_ptr);
 			return *this;
 		}
 
-		/// Decrements the iterator.
+		/// @brief Decrements the iterator.
 		/// @return Reference to `*this`.
 		constexpr iterator& operator--() noexcept
 		{
-			TR_ASSERT(m_ptr != nullptr, "Tried to decrement default-constructed UTF-8 iterator.");
+			TR_ASSERT(m_ptr, "Tried to decrement default-constructed UTF-8 iterator.");
 
 			m_ptr = prev(m_ptr);
 			return *this;
 		}
 
 		/// @}
-		/// @name Unwrapping
+		/// @name Element access
 		/// @{
 
-		/// Gets a const char pointer to the beginning of the iterator's UTF-8 character.
+		/// @brief Returns a const char pointer to the beginning of the iterator's UTF-8 character.
 		/// @return Const char pointer to the beginning of the iterator's UTF-8 character.
 		[[nodiscard]] constexpr const char* base() const noexcept
 		{
@@ -295,58 +320,54 @@ namespace tr::utf8
 		/// @}
 
 	  private:
-		/// Pointer to a valid UTF-8 char sequence.
+		/// @brief Pointer to a valid UTF-8 char sequence.
 		const char* m_ptr{nullptr};
 	};
 
 	//
 
-	/// Indexed Unicode codepoint iterator for UTF-8 string views.
+	/// @ingroup utf8
+	/// @brief Indexed Unicode codepoint iterator for UTF-8 string views.
 	class indexed_iterator : public iterator_interface<indexed_iterator>
 	{
 	  public:
-		/// Value type used by the iterator.
-		using value_type = codepoint;
-
-		/// Difference type used by the iterator.
-		using difference_type = ssize;
-
-		/// Iterator category of the iterator.
-		using iterator_category = std::bidirectional_iterator_tag;
-
-		/// Iterator concept of the iterator.
-		using iterator_concept = std::bidirectional_iterator_tag;
-
-		/// @name Constructors and destructors
+		/// @name Iterator traits
 		/// @{
 
-		/// Default-constructs an indexed codepoint iterator.
+		/// @brief Value type used by the iterator.
+		using value_type = codepoint;
+
+		/// @brief Difference type used by the iterator.
+		using difference_type = ssize;
+
+		/// @brief Iterator category of the iterator.
+		using iterator_category = std::bidirectional_iterator_tag;
+
+		/// @brief Iterator concept of the iterator.
+		using iterator_concept = std::bidirectional_iterator_tag;
+
+		/// @}
+		/// @name Constructors, destructors, and assignment operators
+		/// @{
+
+		/// @brief Constructs a singular indexed codepoint iterator.
 		[[nodiscard]] constexpr indexed_iterator() noexcept = default;
 
-		/// Constructs an indexed codepoint iterator.
+		/// @brief Constructs an indexed codepoint iterator.
 		/// @param ptr Pointer to the beginning of a UTF-8 character sequence.
 		/// @param index Index of the iterator.
 		[[nodiscard]] constexpr indexed_iterator(const char* ptr, ssize index) noexcept
 			: m_ptr{ptr}
 			, m_index{index}
 		{
-			TR_ASSERT(ptr != nullptr, "Tried to create UTF-8 iterator to nullptr.");
+			TR_ASSERT(ptr, "Tried to create UTF-8 iterator to nullptr.");
 		}
 
 		/// @}
-		/// @name Conversion operators
+		/// @name Operators
 		/// @{
 
-		/// Converts the operator to an unindexed codepoint iterator.
-		/// @return Unindexed equivalent of `*this`.
-		[[nodiscard]] constexpr operator iterator() const noexcept
-		{
-			return m_ptr;
-		}
-
-		/// @}
-
-		/// Compares iterators.
+		/// @brief Compares iterators.
 		/// @param lhs, rhs Iterators to compare.
 		/// @return Ordering of the iterators.
 		[[nodiscard]] constexpr friend auto operator<=>(indexed_iterator lhs, indexed_iterator rhs) noexcept
@@ -354,31 +375,28 @@ namespace tr::utf8
 			return lhs.m_ptr <=> rhs.m_ptr;
 		}
 
-		/// Compares iterators for equality.
+		/// @brief Checks iterators for equality.
 		/// @param lhs, rhs Iterators to compare.
-		/// @return Whether the iterators are equal.
+		/// @return `true` if the iterators point to the same codepoint, `false` otherwise.
 		[[nodiscard]] constexpr friend bool operator==(indexed_iterator lhs, indexed_iterator rhs) noexcept
 		{
 			return lhs.m_ptr == rhs.m_ptr;
 		}
 
-		/// @name Other operators
-		/// @{
-
-		/// Dereferences the iterator.
+		/// @brief Dereferences the iterator.
 		/// @return Codepoint representation of the sequence the iterator is pointing at.
 		[[nodiscard]] constexpr codepoint operator*() const noexcept
 		{
-			TR_ASSERT(m_ptr != nullptr, "Tried to dereference default-constructed UTF-8 iterator.");
+			TR_ASSERT(m_ptr, "Tried to dereference default-constructed UTF-8 iterator.");
 
 			return to_cp(m_ptr);
 		}
 
-		/// Increments the iterator.
+		/// @brief Increments the iterator.
 		/// @return Reference to `*this`.
 		constexpr indexed_iterator& operator++() noexcept
 		{
-			TR_ASSERT(m_ptr != nullptr, "Tried to increment default-constructed UTF-8 iterator.");
+			TR_ASSERT(m_ptr, "Tried to increment default-constructed UTF-8 iterator.");
 
 			if (++m_index > 0) {
 				m_ptr = next(m_ptr);
@@ -386,11 +404,11 @@ namespace tr::utf8
 			return *this;
 		}
 
-		/// Decrements the iterator.
+		/// @brief Decrements the iterator.
 		/// @return Reference to `*this`.
 		constexpr indexed_iterator& operator--() noexcept
 		{
-			TR_ASSERT(m_ptr != nullptr, "Tried to decrement default-constructed UTF-8 iterator.");
+			TR_ASSERT(m_ptr, "Tried to decrement default-constructed UTF-8 iterator.");
 
 			if (--m_index >= 0) {
 				m_ptr = prev(m_ptr);
@@ -399,17 +417,24 @@ namespace tr::utf8
 		}
 
 		/// @}
-		/// @name Unwrapping
+		/// @name Element access
 		/// @{
 
-		/// Gets a const char pointer to the beginning of the iterator's UTF-8 character.
+		/// @brief Converts the operator to an unindexed codepoint iterator.
+		/// @return Unindexed equivalent of `*this`.
+		[[nodiscard]] constexpr operator iterator() const noexcept
+		{
+			return iterator{m_ptr};
+		}
+
+		/// @brief Returns a const char pointer to the beginning of the iterator's UTF-8 character.
 		/// @return Const char pointer to the beginning of the iterator's UTF-8 character.
 		[[nodiscard]] constexpr const char* base() const noexcept
 		{
 			return m_ptr;
 		}
 
-		/// Gets the index of the iterator.
+		/// @brief Returns the index of the iterator.
 		/// @return Index of the iterator.
 		[[nodiscard]] constexpr ssize index() const noexcept
 		{
@@ -419,17 +444,17 @@ namespace tr::utf8
 		/// @}
 
 	  private:
-		/// Pointer to a valid UTF-8 char sequence.
+		/// @brief Pointer to a valid UTF-8 char sequence.
 		const char* m_ptr{nullptr};
 
-		/// The index of the iterator.
+		/// @brief The index of the iterator.
 		ssize m_index{0};
 	};
 
-	/// @name UTF-8 iterators
-	/// @{
+	//
 
-	/// Creates a beginning codepoint iterator for a UTF-8 string view.
+	/// @ingroup utf8
+	/// @brief Returns a beginning codepoint iterator for a UTF-8 string view.
 	/// @param str String to get the iterator for.
 	/// @return Beginning codepoint iterator for `str`.
 	[[nodiscard]] constexpr iterator begin(std::string_view str) noexcept
@@ -440,7 +465,8 @@ namespace tr::utf8
 		return iterator{str.data()};
 	}
 
-	/// Creates an indexed beginning codepoint iterator for a UTF-8 string view.
+	/// @ingroup utf8
+	/// @brief Returns an indexed beginning codepoint iterator for a UTF-8 string view.
 	/// @param str String to get the iterator for.
 	/// @return Indexed beginning codepoint iterator for `str`.
 	[[nodiscard]] constexpr indexed_iterator ibegin(std::string_view str) noexcept
@@ -451,7 +477,8 @@ namespace tr::utf8
 		return indexed_iterator{str.data(), 0};
 	}
 
-	/// Creates an ending codepoint iterator for a UTF-8 string view.
+	/// @ingroup utf8
+	/// @brief Returns an ending codepoint iterator for a UTF-8 string view.
 	/// @param str String to get the iterator for.
 	/// @return Ending codepoint iterator for `str`.
 	[[nodiscard]] constexpr iterator end(std::string_view str) noexcept
@@ -462,18 +489,22 @@ namespace tr::utf8
 		return iterator{str.data() + str.size()};
 	}
 
-	/// Creates an indexed ending codepoint iterator for a UTF-8 string view.
+	/// @ingroup utf8
+	/// @brief Returns an indexed ending codepoint iterator for a UTF-8 string view.
 	/// @param str String to get the iterator for.
+	/// @par Complexity
+	/// Linear time with respect to `tr::utf8::length(str)`.
 	/// @return Indexed ending codepoint iterator for `str`.
 	[[nodiscard]] constexpr indexed_iterator iend(std::string_view str) noexcept
 	{
 		if (str.empty()) {
 			return indexed_iterator{};
 		}
-		return indexed_iterator{str.data() + str.size(), std::distance(utf8::begin(str), utf8::end(str))};
+		return indexed_iterator{str.data() + str.size(), std::ranges::distance(utf8::begin(str), utf8::end(str))};
 	}
 
-	/// Creates a codepoint iterator range pair for a UTF-8 string view.
+	/// @ingroup utf8
+	/// @brief Returns a codepoint iterator range pair for a UTF-8 string view.
 	/// @param str String to get the range for.
 	/// @return Codepoint iterator range over `str`.
 	[[nodiscard]] constexpr std::ranges::subrange<iterator> range(std::string_view str) noexcept
@@ -481,13 +512,14 @@ namespace tr::utf8
 		return std::ranges::subrange<iterator>{utf8::begin(str), utf8::end(str)};
 	}
 
-	/// Counts the number of unicode characters in a UTF-8 string view.
+	/// @ingroup utf8
+	/// @brief Returns the number of unicode characters in a UTF-8 string view.
 	/// @param str String to get the length for.
+	/// @par Complexity
+	/// Linear time with respect to `str.size()`.
 	/// @return Number of unicode characters in `str`.
 	[[nodiscard]] constexpr usize length(std::string_view str) noexcept
 	{
-		return std::distance(utf8::begin(str), utf8::end(str));
+		return std::ranges::distance(utf8::begin(str), utf8::end(str));
 	}
-
-	/// @}
 } // namespace tr::utf8

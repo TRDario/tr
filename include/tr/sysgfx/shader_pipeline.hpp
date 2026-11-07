@@ -47,7 +47,7 @@ namespace tr
 	class shader_pipeline
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs an incomplete shader pipeline.

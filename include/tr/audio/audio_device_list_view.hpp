@@ -39,7 +39,7 @@ namespace tr
 		/// Iterator concept of the iterator.
 		using iterator_concept = std::forward_iterator_tag;
 
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs an iterator.

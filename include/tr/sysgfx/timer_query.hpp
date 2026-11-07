@@ -29,7 +29,7 @@ namespace tr
 	class timer_query
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs a timer query.

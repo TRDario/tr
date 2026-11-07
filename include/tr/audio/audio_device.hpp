@@ -14,7 +14,7 @@ namespace tr
 	class audio_device
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Opens an audio device.
@@ -24,7 +24,7 @@ namespace tr
 		[[nodiscard]] audio_device(zstring_view name = {});
 
 		/// @}
-		/// @name Information
+		/// @name Observers
 		/// @{
 
 		/// Gets the name of the audio device.

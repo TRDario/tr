@@ -1,4 +1,6 @@
-# tr Localization File Format (.tloc)
+@ingroup localization
+
+# tr Localization File Format (.tloc) {#tloc}
 
 tr provides a file format for localization files (henceforth referred to as 'tloc').
 
@@ -46,7 +48,7 @@ whitespace character        = SP | LF | HT | VT | FF | CR ;
 
 (* Line comment *)
 line comment begin          = "//" ;
-line comment character      = char - LF ;
+line comment character      = character - LF ;
 line comment                = line comment begin , { line comment character } ;
 
 (* Multiline comment *)

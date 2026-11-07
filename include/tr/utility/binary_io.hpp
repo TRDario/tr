@@ -9,7 +9,7 @@
 
 namespace tr
 {
-	/// Interface for custom readers for use in read_binary.
+	/// @brief Interface for custom readers for use in read_binary.
 	/// @tparam Out Output type.
 	/// @note Any overloads to const or reference-qualified types will be ignored.
 	template <typename Out>
@@ -18,14 +18,14 @@ namespace tr
 		static_assert("binary_reader is not specialized for this type!");
 
 #ifdef TR_DOXYGEN
-		/// Reads a variable from a stream.
+		/// @brief Reads a variable from a stream.
 		/// @param is Input stream.
 		/// @param out Output parameter.
 		static void operator()(std::istream& is, Out& out);
 #endif
 	};
 
-	/// Interface for custom writers for use in write_binary.
+	/// @brief Interface for custom writers for use in write_binary.
 	/// @tparam In Input type.
 	/// @note Any overloads to const or reference-qualified types will be ignored.
 	template <typename In>
@@ -34,32 +34,37 @@ namespace tr
 		static_assert("binary_writer is not specialized for this type!");
 
 #ifdef TR_DOXYGEN
-		/// Writes a variable to a stream.
+		/// @brief Writes a variable to a stream.
 		/// @param os Output stream.
 		/// @param in Variable to write to the stream.
 		static void operator()(std::ostream& os, const In& in);
 #endif
 	};
 
-	//
+	/// @name Binary IO concepts
+	/// @{
 
-	/// Type able to be read with read_binary.
+	/// @brief Concept checking for a type able to be read with `tr::read_binary()`.
+	/// @tparam Target Type to check for being able to be read with `tr::read_binary()`.
 	template <typename Target>
 	concept binary_readable = requires(std::istream& is, Target& out) { tr::binary_reader<std::remove_cvref_t<Target>>{}(is, out); } ||
 							  specialization_of_tc<std::remove_cvref_t<Target>, std::span>;
 
-	/// Type able to be constructed with read_binary.
+	/// @brief Concept checking for a type able to be constructed with `tr::read_binary()`.
+	/// @tparam Target Type to check for being able to be constructed with `tr::read_binary()`.
 	template <typename Target>
 	concept binary_constructible = binary_readable<Target> && std::default_initializable<Target>;
 
-	/// Type able to be read with a stream write_binary.
+	/// @brief Concept checking for a type able to be written with `tr::write_binary()`.
+	/// @tparam Target Type to check for being able to be written with `tr::write_binary()`.
 	template <typename Target>
 	concept binary_writable = requires(std::ostream& os, const Target& in) { tr::binary_writer<std::remove_const_t<Target>>{}(os, in); };
 
+	/// @}
 	/// @name Binary IO
 	/// @{
 
-	/// Reads binary data from a stream.
+	/// @brief Reads binary data from a stream.
 	/// @tparam Out Binary-readable type.
 	/// @param is Input stream.
 	/// @param out Output variable.
@@ -69,7 +74,7 @@ namespace tr
 		binary_reader<Out>{}(is, out);
 	}
 
-	/// Reads binary data from a stream.
+	/// @brief Reads binary data from a stream.
 	/// @tparam Out Binary-readable type.
 	/// @tparam Size Size of the output span.
 	/// @param is Input stream.
@@ -87,7 +92,7 @@ namespace tr
 		}
 	}
 
-	/// Reads binary data from a stream.
+	/// @brief Reads binary data from a stream.
 	/// @tparam Outs Binary-readable types.
 	/// @param is Input stream.
 	/// @param outs Output variables.
@@ -98,7 +103,7 @@ namespace tr
 		(read_binary(is, outs), ...);
 	}
 
-	/// Reads binary data from a stream.
+	/// @brief Reads binary data from a stream.
 	/// @tparam Out Binary-readable type.
 	/// @param is Input stream.
 	/// @return Read variable.
@@ -110,7 +115,7 @@ namespace tr
 		return out;
 	}
 
-	/// Checks for magic bytes from a stream.
+	/// @brief Checks for magic bytes from a stream.
 	/// @param is Input stream.
 	/// @param magic Magic bytes to match.
 	/// @return `true` if the magic bytes were matched, `false` otherwise.
@@ -118,7 +123,7 @@ namespace tr
 
 	//
 
-	/// Flushes the rest of the stream into an output iterator.
+	/// @brief Flushes the rest of the stream into an output iterator.
 	/// @tparam Iterator Iterator to a character-like type.
 	/// @param is Input stream.
 	/// @param out Output iterator.
@@ -143,14 +148,14 @@ namespace tr
 		}
 	}
 
-	/// Flushes the rest of the stream into a vector of bytes.
+	/// @brief Flushes the rest of the stream into a vector of bytes.
 	/// @param is Input stream.
 	/// @return Vector containing the remaining contents of the stream.
 	[[nodiscard]] std::vector<std::byte> flush_binary(std::istream& is);
 
 	//
 
-	/// Writes binary data to a stream.
+	/// @brief Writes binary data to a stream.
 	/// @tparam In Binary-writable type.
 	/// @param os Output stream.
 	/// @param in Variable to write to the stream.
@@ -160,7 +165,7 @@ namespace tr
 		binary_writer<std::remove_const_t<In>>{}(os, in);
 	}
 
-	/// Writes binary data to a stream.
+	/// @brief Writes binary data to a stream.
 	/// @tparam Ins Binary-writable types.
 	/// @param os Output stream.
 	/// @param ins Variables to write to the stream.
@@ -171,7 +176,7 @@ namespace tr
 		(write_binary(os, ins), ...);
 	}
 
-	/// Writes magic bytes to a stream.
+	/// @brief Writes magic bytes to a stream.
 	/// @param os Output stream.
 	/// @param magic Magic bytes to write to the stream.
 	void write_binary_magic(std::ostream& os, std::string_view magic);

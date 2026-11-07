@@ -1,6 +1,10 @@
 /// @file
 /// @brief Provides integer utilities.
 
+/// @ingroup wrappers
+/// @defgroup integer Integers
+/// @brief Contains integer utilities.
+
 #pragma once
 #include <tr/utility/common.hpp>
 
@@ -10,37 +14,38 @@ namespace tr
 {
 	inline namespace aliases
 	{
-		/// Namespace containing integer aliases.
+		/// @ingroup integer
+		/// @brief Namespace containing integer aliases.
 		inline namespace integer_aliases
 		{
-			/// 8-bit unsigned integer.
+			/// @brief 8-bit unsigned integer.
 			using u8 = std::uint8_t;
 
-			/// 16-bit unsigned integer.
+			/// @brief 16-bit unsigned integer.
 			using u16 = std::uint16_t;
 
-			/// 32-bit unsigned integer.
+			/// @brief 32-bit unsigned integer.
 			using u32 = std::uint32_t;
 
-			/// 64-bit unsigned integer.
+			/// @brief 64-bit unsigned integer.
 			using u64 = std::uint64_t;
 
-			/// Unsigned size integer.
+			/// @brief Unsigned size integer.
 			using usize = std::size_t;
 
-			/// 8-bit signed integer.
+			/// @brief 8-bit signed integer.
 			using i8 = std::int8_t;
 
-			/// 16-bit signed integer.
+			/// @brief 16-bit signed integer.
 			using i16 = std::int16_t;
 
-			/// 32-bit signed integer.
+			/// @brief 32-bit signed integer.
 			using i32 = std::int32_t;
 
-			/// 64-bit signed integer.
+			/// @brief 64-bit signed integer.
 			using i64 = std::int64_t;
 
-			/// Signed size integer.
+			/// @brief Signed size integer.
 			using ssize = std::ptrdiff_t;
 		} // namespace integer_aliases
 	} // namespace aliases
@@ -49,10 +54,11 @@ namespace tr
 
 	inline namespace literals
 	{
-		/// Namespace contaning integer literals.
+		/// @ingroup integer
+		/// @brief Namespace contaning integer literals.
 		inline namespace integer_literals
 		{
-			/// 8-bit unsigned integer literal.
+			/// @brief Returns a 8-bit unsigned integer.
 			/// @param[in] v Integer in the range [0, UINT8_MAX].
 			/// @return An 8-bit unsigned integer.
 			[[nodiscard]] consteval u8 operator""_u8(unsigned long long v) noexcept
@@ -60,7 +66,7 @@ namespace tr
 				return static_cast<u8>(v);
 			}
 
-			/// 16-bit unsigned integer literal.
+			/// @brief Returns a 16-bit unsigned integer.
 			/// @param[in] v Integer in the range [0, UINT16_MAX].
 			/// @return A 16-bit unsigned integer.
 			[[nodiscard]] consteval u16 operator""_u16(unsigned long long v) noexcept
@@ -68,7 +74,7 @@ namespace tr
 				return static_cast<u16>(v);
 			}
 
-			/// 32-bit unsigned integer literal.
+			/// @brief Returns a 32-bit unsigned integer.
 			/// @param[in] v Integer in the range [0, UINT32_MAX].
 			/// @return A 32-bit unsigned integer.
 			[[nodiscard]] consteval u32 operator""_u32(unsigned long long v) noexcept
@@ -76,7 +82,7 @@ namespace tr
 				return static_cast<u32>(v);
 			}
 
-			/// 64-bit unsigned integer literal.
+			/// @brief Returns a 64-bit unsigned integer.
 			/// @param[in] v Integer in the range [0, UINT64_MAX].
 			/// @return A 64-bit unsigned integer.
 			[[nodiscard]] consteval u64 operator""_u64(unsigned long long v) noexcept
@@ -84,7 +90,7 @@ namespace tr
 				return static_cast<u64>(v);
 			}
 
-			/// 8-bit signed integer literal.
+			/// @brief Returns a 8-bit signed integer.
 			/// @param[in] v Integer in the range [0, INT8_MAX].
 			/// @return An 8-bit signed integer.
 			[[nodiscard]] consteval i8 operator""_i8(unsigned long long v) noexcept
@@ -92,7 +98,7 @@ namespace tr
 				return static_cast<i8>(v);
 			}
 
-			/// 16-bit signed integer literal.
+			/// @brief Returns a 16-bit signed integer.
 			/// @param[in] v Integer in the range [0, INT16_MAX].
 			/// @return A 16-bit signed integer.
 			[[nodiscard]] consteval i16 operator""_i16(unsigned long long v) noexcept
@@ -100,7 +106,7 @@ namespace tr
 				return static_cast<i16>(v);
 			}
 
-			/// 32-bit signed integer literal.
+			/// @brief Returns a 32-bit signed integer.
 			/// @param[in] v Integer in the range [0, INT32_MAX].
 			/// @return A 32-bit signed integer.
 			[[nodiscard]] consteval i32 operator""_i32(unsigned long long v) noexcept
@@ -108,7 +114,7 @@ namespace tr
 				return static_cast<i32>(v);
 			}
 
-			/// 64-bit signed integer literal.
+			/// @brief Returns a 64-bit signed integer.
 			/// @param[in] v Integer in the range [0, INT64_MAX].
 			/// @return A 64-bit signed integer.
 			[[nodiscard]] consteval i64 operator""_i64(unsigned long long v) noexcept
@@ -122,17 +128,19 @@ namespace tr
 
 	//
 
-	/// Stores the type that can store an integer in the range [0, `Max`] in `::type`.
+	/// @ingroup meta
+	/// @brief Type trait computing the smallest integer type that can store an integer in the range [0, `Max`] in `::type`.
 	/// @tparam Max Maximum value that needs to be stored.
 	template <usize Max>
 	struct size_type
 	{
-		/// Integer type that can store an integer in the range [0, `Max`].
+		/// @brief Integer type that can store an integer in the range [0, `Max`].
 		using type = std::conditional_t<Max <= UINT32_MAX,
 										std::conditional_t<Max <= UINT16_MAX, std::conditional_t<Max <= UINT8_MAX, u8, u16>, u32>, u64>;
 	};
 
-	/// Integer type that can store an integer in the range [0, `Max`].
+	/// @ingroup meta
+	/// @brief Returns the smallest integer type that can store an integer in the range [0, `Max`].
 	/// @tparam Max Maximum value that needs to be stored.
 	template <usize Max>
 	using size_type_t = size_type<Max>::type;

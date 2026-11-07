@@ -24,7 +24,7 @@ namespace tr
 	class mapped_graphics_buffer_object
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// @cond implementation_details

@@ -8,43 +8,57 @@
 
 namespace tr
 {
-	/// Empty variant tag type.
+	/// @ingroup variant
+	/// @brief Empty variant tag type.
 	struct empty_variant_t
 	{
 	};
 
-	/// Empty variant tag value.
+	/// @ingroup variant
+	/// @brief Empty variant tag value.
 	inline constexpr empty_variant_t empty_variant;
 
 	//
 
-	/// Variant that may be empty.
+	/// @ingroup variant
+	/// @brief Variant with a distinct 'empty' state.
 	/// @details The empty state is represented with `empty_variant_t` when visiting.
 	/// @tparam Alternatives Variant alternatives.
 	template <typename... Alternatives>
 	class optional_variant : public variant<empty_variant_t, Alternatives...>
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		using variant<empty_variant_t, Alternatives...>::variant;
 
 		/// @}
-		/// @name Value
+		/// @name Modifiers
 		/// @{
 
-		/// Gets if the variant holds a value.
+		/// @brief Resets the variant into an empty state.
+		void reset() noexcept
+		{
+			this->template emplace<empty_variant_t>();
+		}
+
+		/// @}
+		/// @name Observers
+		/// @{
+
+		/// @brief Checks whether the variant holds a value.
 		/// @return `true` if the variant holds a value, `false` otherwise.
-		[[nodiscard]] constexpr bool has_value() const noexcept
+		[[nodiscard]] constexpr operator bool() const noexcept
 		{
 			return !std::holds_alternative<empty_variant_t>(*this);
 		}
 
-		/// Resets the variant into an empty state.
-		void reset() noexcept
+		/// @brief Checks whether the variant holds a value.
+		/// @return `true` if the variant holds a value, `false` otherwise.
+		[[nodiscard]] constexpr bool has_value() const noexcept
 		{
-			this->template emplace<empty_variant_t>();
+			return !std::holds_alternative<empty_variant_t>(*this);
 		}
 
 		/// @}

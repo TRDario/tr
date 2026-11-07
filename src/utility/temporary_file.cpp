@@ -17,16 +17,6 @@ tr::temporary_file::temporary_file(temporary_file&& rhs) noexcept
 	rhs.m_path.clear();
 }
 
-tr::temporary_file::~temporary_file() noexcept
-{
-	if (!m_path.empty()) {
-		std::error_code error;
-		std::filesystem::remove(m_path, error);
-	}
-}
-
-//
-
 tr::temporary_file& tr::temporary_file::operator=(temporary_file&& rhs) noexcept
 {
 	if (!m_path.empty()) {
@@ -36,6 +26,14 @@ tr::temporary_file& tr::temporary_file::operator=(temporary_file&& rhs) noexcept
 	m_path = std::move(rhs.m_path);
 	rhs.m_path.clear();
 	return *this;
+}
+
+tr::temporary_file::~temporary_file() noexcept
+{
+	if (!m_path.empty()) {
+		std::error_code error;
+		std::filesystem::remove(m_path, error);
+	}
 }
 
 //

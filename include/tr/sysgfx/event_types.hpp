@@ -35,7 +35,7 @@ namespace tr
 		/// Bitmask of held modifiers when the key was pressed.
 		keymod mods;
 
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Converts a generic event into a key down event.

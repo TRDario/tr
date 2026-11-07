@@ -9,15 +9,15 @@ using namespace tr::literals;
 
 //
 
-/// Tests that a NUL-terminated string view is trivially copyable.
+/// @brief Tests that a NUL-terminated string view is trivially copyable.
 static_assert(std::is_trivially_copyable_v<tr::zstring_view>, "tr::zstring_view should be trivially copyable, but it is not!");
 
-/// Tests that a NUL-terminated string view is trivially destructible.
+/// @brief Tests that a NUL-terminated string view is trivially destructible.
 static_assert(std::is_trivially_destructible_v<tr::zstring_view>, "tr::zstring_view should be trivially destructible, but it is not!");
 
 //
 
-/// Tests that a NUL-terminated string view default constructs empty.
+/// @brief Tests that a NUL-terminated string view default constructs empty.
 TEST(ZstringViewTest, DefaultConstructsEmpty)
 {
 	const tr::zstring_view empty{};
@@ -27,46 +27,50 @@ TEST(ZstringViewTest, DefaultConstructsEmpty)
 	EXPECT_EQ(empty.c_str(), nullptr);
 }
 
-/// Tests constructing a NUL-terminated string view from a string literal.
+/// @brief Tests constructing a NUL-terminated string view from a string literal.
 TEST(ZstringViewTest, ConstructsFromStringLiteral)
 {
 	const tr::zstring_view literal{"literal"};
 	EXPECT_FALSE(literal.empty());
+	EXPECT_EQ(literal.length(), 7);
 	EXPECT_STREQ(literal.c_str(), "literal");
 }
 
-/// Tests constructing a NUL-terminated string view from a standard string.
+/// @brief Tests constructing a NUL-terminated string view from a standard string.
 TEST(ZstringViewTest, ConstructsFromString)
 {
 	const std::string source{"content"};
 	const tr::zstring_view string{source};
 	EXPECT_FALSE(string.empty());
+	EXPECT_EQ(string.length(), 7);
 	EXPECT_EQ(string.c_str(), source.c_str());
 }
 
+/// @brief Tests constructing a NUL-terminated string view from an iterator to another NUL-terminated string view.
 TEST(ZStringViewTest, ConstructsFromIterator)
 {
 	const tr::zstring_view source{"literal"};
 	const tr::zstring_view iterator{source.begin() + 3};
 	EXPECT_FALSE(iterator.empty());
+	EXPECT_EQ(iterator.length(), 4);
 	EXPECT_STREQ(iterator.c_str(), "eral");
 }
 
-/// Tests converting a NUL-terminated string view to a standard string view.
+/// @brief Tests converting a NUL-terminated string view to a standard string view.
 TEST(ZstringViewTest, ConvertsToStringView)
 {
 	const tr::zstring_view view{"test"};
 	EXPECT_EQ(std::string_view{view}, "test");
 }
 
-/// Tests converting a NUL-terminated string view to a path.
+/// @brief Tests converting a NUL-terminated string view to a path.
 TEST(ZstringViewTest, ConvertsToPath)
 {
 	const tr::zstring_view view{"/usr/bin/foo"};
 	EXPECT_EQ(std::filesystem::path{view}.string(), "/usr/bin/foo");
 }
 
-/// Tests comparing NUL-terminated string views.
+/// @brief Tests comparing NUL-terminated string views.
 TEST(ZstringViewTest, Compares)
 {
 	EXPECT_TRUE("test"_zsv == "test"_zsv);
@@ -81,7 +85,7 @@ TEST(ZstringViewTest, Compares)
 	EXPECT_TRUE("test"_zsv < "test1"_zsv);
 }
 
-/// Tests iterating through a NUL-terminated string view.
+/// @brief Tests iterating through a NUL-terminated string view.
 TEST(ZstringViewTest, Iterates)
 {
 	const tr::zstring_view view{"This is a test!"};
@@ -92,7 +96,7 @@ TEST(ZstringViewTest, Iterates)
 	EXPECT_EQ(std::ranges::distance(view), 15);
 }
 
-/// Tests checking whether a NUL-terminated string view is empty.
+/// @brief Tests checking whether a NUL-terminated string view is empty.
 TEST(ZstringViewTest, ChecksEmpty)
 {
 	EXPECT_TRUE(tr::zstring_view{}.empty());
@@ -100,13 +104,13 @@ TEST(ZstringViewTest, ChecksEmpty)
 	EXPECT_FALSE("test"_zsv.empty());
 }
 
-/// Tests creating a substring from a NUL-terminated string view.
+/// @brief Tests creating a substring from a NUL-terminated string view.
 TEST(ZstringViewTest, CreatesSubstring)
 {
 	EXPECT_EQ("testTEST"_zsv.substr(4), "TEST");
 }
 
-/// Tests removing a prefix from a NUL-terminated string view.
+/// @brief Tests removing a prefix from a NUL-terminated string view.
 TEST(ZstringViewTest, RemovesPrefix)
 {
 	tr::zstring_view view{"testTEST"};
@@ -114,7 +118,7 @@ TEST(ZstringViewTest, RemovesPrefix)
 	EXPECT_EQ(view, "TEST");
 }
 
-/// Tests outputting a NUL-terminated string view to a stream.
+/// @brief Tests outputting a NUL-terminated string view to a stream.
 TEST(ZstringViewTest, OutputsToStream)
 {
 	std::ostringstream stream;
@@ -122,7 +126,7 @@ TEST(ZstringViewTest, OutputsToStream)
 	EXPECT_EQ(stream.str(), "test");
 }
 
-/// Tests appending and concatenating NUL-terminated string views to a path.
+/// @brief Tests appending and concatenating NUL-terminated string views to a path.
 TEST(ZstringviewTest, AppendsAndConcatenatesToPath)
 {
 	const std::filesystem::path root{"a"};
@@ -134,13 +138,13 @@ TEST(ZstringviewTest, AppendsAndConcatenatesToPath)
 	EXPECT_EQ(path, root / "b" / "cd");
 }
 
-/// Tests formatting a NUL-terminated string view.
+/// @brief Tests formatting a NUL-terminated string view.
 TEST(ZstringViewTest, Formats)
 {
 	EXPECT_EQ(std::format("{}", "test"_zsv), "test");
 }
 
-/// Tests binary-writing a NUL-terminated string view.
+/// @brief Tests binary-writing a NUL-terminated string view.
 TEST(ZstringViewTest, WritesBinary)
 {
 	std::stringstream stream;

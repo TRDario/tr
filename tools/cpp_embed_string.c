@@ -69,7 +69,7 @@ int write_to_output(const char* input_path, FILE* input, const char* output_path
 		fprintf(stderr, "embed_cpp_string: %s: Error while writing file", output_path);
 		return 1;
 	}
-	while (fgets(buffer, sizeof(buffer), input) != NULL) {
+	while (fgets(buffer, sizeof(buffer), input)) {
 		if (fputs(buffer, output) == EOF) {
 			fprintf(stderr, "embed_cpp_string: %s: Error while writing file", output_path);
 			return 1;

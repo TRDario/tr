@@ -9,7 +9,7 @@ using namespace tr::matrix_operators;
 
 //
 
-/// Tests creating an orthogonal transformation.
+/// @brief Tests creating an orthogonal transformation.
 TEST(MatrixTest, CreatesOrthogonalTransformation)
 {
 	const glm::mat4 transform{tr::ortho({{0, 0}, {500, 500}})};
@@ -23,7 +23,7 @@ TEST(MatrixTest, CreatesOrthogonalTransformation)
 	EXPECT_FLOAT_EQ(transformed1.y, -0.5f);
 }
 
-/// Tests creating a 2D scaling transformation centered on a point.
+/// @brief Tests creating a 2D scaling transformation centered on a point.
 TEST(MatrixTest, CreatesCentered2DScalingTransformation)
 {
 	const glm::mat4 transform{tr::scale_around(glm::mat4{1.0f}, {100, 100}, {2.0f, 3.0f})};
@@ -37,7 +37,7 @@ TEST(MatrixTest, CreatesCentered2DScalingTransformation)
 	EXPECT_FLOAT_EQ(transformed1.y, -50.0f);
 }
 
-/// Tests creating a 3D scaling transformation centered on a point.
+/// @brief Tests creating a 3D scaling transformation centered on a point.
 TEST(MatrixTest, CreatesCentered3DScalingTransformation)
 {
 	const glm::mat4 transform{tr::scale_around(glm::mat4{1.0f}, {50, 50, 50}, {2.0f, 3.0f, 1.5f})};
@@ -53,7 +53,7 @@ TEST(MatrixTest, CreatesCentered3DScalingTransformation)
 	EXPECT_FLOAT_EQ(transformed1.z, 50.0f);
 }
 
-/// Tests creating a 2D rotation transformation centered on a point.
+/// @brief Tests creating a 2D rotation transformation centered on a point.
 TEST(MatrixTest, CreatesCentered2DRotationTransformation)
 {
 	const glm::mat4 transform{tr::rotate_around(glm::mat4{1.0f}, {250, 250}, 90_degf)};
@@ -67,7 +67,7 @@ TEST(MatrixTest, CreatesCentered2DRotationTransformation)
 	EXPECT_FLOAT_EQ(transformed1.y, 250);
 }
 
-/// Tests creating a 3D rotation transformation centered on a point.
+/// @brief Tests creating a 3D rotation transformation centered on a point.
 TEST(MatrixTest, CreatesCentered3DRotationTransformation)
 {
 	const glm::mat4 transform{tr::rotate_around(glm::mat4{1.0f}, {100, 100, 100}, 180_degf, tr::x_axis)};
@@ -83,7 +83,7 @@ TEST(MatrixTest, CreatesCentered3DRotationTransformation)
 	EXPECT_FLOAT_EQ(transformed1.z, 100);
 }
 
-/// Tests multiplying matrices with vectors.
+/// @brief Tests multiplying matrices with vectors.
 TEST(MatrixTest, MultipliesVectors)
 {
 	const glm::mat4 transform{tr::rotate_around(glm::mat4{1.0f}, {100, 100, 100}, 45_degf, tr::y_axis)};

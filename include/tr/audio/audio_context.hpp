@@ -25,7 +25,7 @@ namespace tr
 	class audio_context
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Creates an audio context on an audio device.

@@ -18,7 +18,7 @@ namespace tr::internal
 	class graphics_object_id_handle
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Constructs a new graphics object ID handle.
@@ -37,7 +37,7 @@ namespace tr::internal
 		graphics_object_id_handle& operator=(graphics_object_id_handle&& rhs) noexcept;
 
 		/// @}
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Gets the base graphics object ID.

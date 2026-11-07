@@ -8,7 +8,7 @@
 
 namespace tr::internal
 {
-	/// Fixes alpha artifacts in transparent text.
+	/// @brief Fixes alpha artifacts in transparent text.
 	/// @param bitmap Rendered text bitmap.
 	/// @param max_alpah Maximum allowed alpha.
 	/// @return Bitmap with fixed alpha artifacts.
@@ -24,4 +24,4 @@ namespace tr::internal
 		}
 		return std::move(bitmap);
 	}
-}
+} // namespace tr::internal

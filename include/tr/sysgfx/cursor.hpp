@@ -62,7 +62,7 @@ namespace tr
 	class cursor
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Creates a default mouse cursor.

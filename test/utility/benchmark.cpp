@@ -8,7 +8,7 @@ using namespace std::chrono_literals;
 
 //
 
-/// Tests default-constructing an empty benchmark.
+/// @brief Tests default-constructing an empty benchmark.
 TEST(BenchmarkTest, DefaultConstructsEmpty)
 {
 	tr::benchmark benchmark;
@@ -20,7 +20,7 @@ TEST(BenchmarkTest, DefaultConstructsEmpty)
 	EXPECT_EQ(benchmark.fps(), 0);
 }
 
-/// Tests recording a measurement on a benchmark.
+/// @brief Tests recording a measurement on a benchmark.
 TEST(BenchmarkTest, RecordsMeasurement)
 {
 	tr::benchmark benchmark;
@@ -32,7 +32,7 @@ TEST(BenchmarkTest, RecordsMeasurement)
 	EXPECT_GE(benchmark.latest(), 25ms);
 }
 
-/// Tests aggregating multiple measurements on a benchmark.
+/// @brief Tests aggregating multiple measurements on a benchmark.
 TEST(BenchmarkTest, AggregatesMeasurements)
 {
 	tr::benchmark benchmark;
@@ -48,7 +48,7 @@ TEST(BenchmarkTest, AggregatesMeasurements)
 	EXPECT_GE(benchmark.min(), 10ms);
 }
 
-/// Tests clearing a benchmark to reset its measurements.
+/// @brief Tests clearing a benchmark to reset its measurements.
 TEST(BenchmarkTest, ClearResetsMeasurements)
 {
 	tr::benchmark benchmark;

@@ -3,6 +3,9 @@
 /// @details
 /// Using this module requires the option TR_BUILD_IMGUI to be turned on in CMake. TR_BUILD_IMGUI, in turn, depends on TR_BUILD_SYSGFX.
 
+/// @defgroup imgui Dear ImGui integration module
+/// @brief Contains functionality for integrating tr with Dear ImGui.
+
 #pragma once
 #include <imgui.h>                 // IWYU pragma: export
 #include <misc/cpp/imgui_stdlib.h> // IWYU pragma: export
@@ -19,12 +22,10 @@ namespace tr
 
 namespace tr
 {
-	/// Namespace containing functionality for integrating Dear ImGui with tr.
+	/// @ingroup imgui
+	/// @brief Namespace containing functionality for integrating Dear ImGui with tr.
 	namespace ImGui
 	{
-		/// @name Management
-		/// @{
-
 		/// Initializes the Dear ImGui backends needed to work with tr.
 		/// @note This function should be called once after `::ImGui::CreateContext`.
 		/// @param context Graphics context the ImGUI backend will be associated with.
@@ -39,9 +40,7 @@ namespace tr
 		/// @note This function should be called once before `::ImGui::DestroyContext`.
 		void Shutdown();
 
-		/// @}
-		/// @name Drawing
-		/// @{
+		//
 
 		/// Gets the Dear ImGui texture ID for a tr texture view.
 		/// @param texture Texture to get the ImGui ID of.
@@ -55,7 +54,5 @@ namespace tr
 		/// Draws a Dear ImGui frame.
 		/// @note This function should be called after `::ImGui::Render`.
 		void Draw();
-
-		/// @}
 	} // namespace ImGui
 } // namespace tr

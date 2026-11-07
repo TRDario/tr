@@ -1,5 +1,9 @@
 /// @file
-/// @brief Provides `tr::string_literal`.
+/// @brief Provides `tr::string_literal` and related functionality.
+
+/// @ingroup containers
+/// @defgroup string_literal String literals
+/// @brief Contains `tr::string_literal` and related functionality.
 
 #pragma once
 #include <tr/utility/integer.hpp>
@@ -8,40 +12,41 @@
 
 namespace tr
 {
-	/// Literal object holding a character array intended to allow passing string literals as non-type template parameters.
+	/// @ingroup string_literal
+	/// @brief Literal object holding a character array intended to allow passing string literals as non-type template parameters.
 	/// @tparam Size Number of characters in the literal + 1 for the NUL-terminator.
 	template <usize Size>
 	struct string_literal
 	{
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Constructs a template string literal from a real string literal.
-		/// @param[in] str Source string literal to copy.
-		[[nodiscard]] consteval string_literal(const char (&str)[Size]) noexcept
+		/// @brief Constructs a template string literal from a real string literal.
+		/// @param source Source string literal to copy.
+		[[nodiscard]] consteval string_literal(const char (&source)[Size]) noexcept
 		{
-			std::ranges::copy(str, data);
+			std::ranges::copy(source, data);
 		}
 
 		/// @}
 		/// @name Conversion operators
 		/// @{
 
-		/// Gets a C-string pointing to the string literal.
+		/// @brief Returns a C-string pointing to the string literal.
 		/// @return C-string pointing to the string literal.
 		[[nodiscard]] consteval operator const char*() const noexcept
 		{
 			return data;
 		}
 
-		/// Gets a string view to the string literal.
+		/// @brief Returns a string view to the string literal.
 		/// @return String view to the string literal.
 		[[nodiscard]] consteval operator std::string_view() const noexcept
 		{
 			return data;
 		}
 
-		/// Gets a format string view to the string literal.
+		/// @brief Returns a format string view to the string literal.
 		/// @tparam Args List of arguments to the formatting function.
 		/// @return Format string view to the string literal.
 		template <typename... Args>
@@ -54,11 +59,11 @@ namespace tr
 		/// @name Data
 		/// @{
 
-		/// Backing character array of the string.
+		/// @brief NUL-terminated backing character array of the string.
 		char data[Size];
 
-		/// Gets the length of the literal.
-		/// @return Length of the string literal.
+		/// @brief Returns the length of the literal.
+		/// @return Length of the literal in characters, excluding the NUL terminator.
 		[[nodiscard]] consteval static usize size() noexcept
 		{
 			return Size - 1;
@@ -69,7 +74,8 @@ namespace tr
 
 	//
 
-	/// Concatenates two or more string literals into a new string literal.
+	/// @ingroup string_literal
+	/// @brief Concatenates two or more string literals into a new string literal.
 	/// @tparam StringLiterals Types convertible to `tr::string_literal`.
 	/// @param literals String literals to concatenate.
 	/// @return New string literal stored in a `tr::string_literal` object.

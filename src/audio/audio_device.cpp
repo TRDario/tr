@@ -11,7 +11,7 @@
 tr::audio_device::audio_device(zstring_view name)
 	: m_ptr{alcOpenDevice(name.c_str())}
 {
-	if (m_ptr == nullptr) {
+	if (!m_ptr) {
 		throw audio_device_open_error{};
 	}
 }

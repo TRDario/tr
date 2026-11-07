@@ -70,7 +70,7 @@ namespace tr
 			stencil = 36128,
 		};
 
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Creates an empty framebuffer.

@@ -5,8 +5,8 @@
 
 //
 
-/// Checks `tr::arithmetic` in the positive case.
+/// @brief Checks `tr::arithmetic` in the positive case.
 static_assert(tr::arithmetic<int>, "int should fulfill tr::arithmetic, but does not!");
 
-/// Checks `tr::arithmetic` in the negative case.
+/// @brief Checks `tr::arithmetic` in the negative case.
 static_assert(!tr::arithmetic<std::vector<int>>, "std::vector<int> should not fulfill tr::arithmetic, but does!");

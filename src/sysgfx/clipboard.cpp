@@ -14,11 +14,11 @@ bool tr::clipboard_empty() noexcept
 
 std::string tr::clipboard_text()
 {
-	char* const raw{SDL_GetClipboardText()};
+	char* const raw_result{SDL_GetClipboardText()};
 	std::string result;
-	if (raw != nullptr) {
-		result = raw;
-		SDL_free(raw);
+	if (raw_result) {
+		result = raw_result;
+		SDL_free(raw_result);
 	}
 	return result;
 }

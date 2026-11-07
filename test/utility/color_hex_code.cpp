@@ -8,7 +8,7 @@ using namespace tr::color_literals;
 
 //
 
-/// Tests parsing RGB and RGBA hex codes.
+/// @brief Tests parsing RGB and RGBA hex codes.
 TEST(ColorHexCodeTest, ParsesRgbAndRgba)
 {
 	EXPECT_EQ(tr::from_hex_code<tr::rgb<tr::u8>>("#12aBcF"), (tr::rgb<tr::u8>{0x12, 0xAB, 0xCF}));
@@ -17,7 +17,7 @@ TEST(ColorHexCodeTest, ParsesRgbAndRgba)
 	EXPECT_FLOAT_EQ(tr::from_hex_code<tr::rgb<float>>("#FF8000").g, 128.0f / 255.0f);
 }
 
-/// Tests rejecting malformed hex codes.
+/// @brief Tests rejecting malformed hex codes.
 TEST(ColorHexCodeTest, RejectsInvalidCodes)
 {
 	EXPECT_THROW((void)tr::from_hex_code("#12345"), tr::invalid_hex_code);
@@ -26,7 +26,7 @@ TEST(ColorHexCodeTest, RejectsInvalidCodes)
 	EXPECT_THROW((void)tr::from_hex_code("#1234567Z"), tr::invalid_hex_code);
 }
 
-/// Tests the supported RGB and RGBA hex code literals.
+/// @brief Tests the supported RGB and RGBA hex code literals.
 TEST(ColorHexCodeTest, ConstructsFromLiterals)
 {
 	EXPECT_EQ("#123456"_rgb8, (tr::rgb<tr::u8>{0x12, 0x34, 0x56}));

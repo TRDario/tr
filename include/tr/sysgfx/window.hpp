@@ -71,7 +71,7 @@ namespace tr
 	class window
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// Opens a window.

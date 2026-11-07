@@ -9,22 +9,25 @@
 
 namespace tr::internal
 {
-	/// Ogg audio file backend.
+	/// @brief Ogg audio file backend.
 	class ogg_audio_stream final : public audio_stream
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Loads an Ogg stream from file.
+		/// @brief Loads an Ogg stream from file.
 		/// @param path Path to the Ogg file.
+		/// @exception audio_file_open_error If opening the Ogg file failed.
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
 		[[nodiscard]] ogg_audio_stream(const std::filesystem::path& path);
 
-		/// Closes the Ogg stream.
+		/// @brief Closes the Ogg stream.
 		~ogg_audio_stream() noexcept override;
 
 		/// @}
-		/// @name Information
+		/// @name Observers
 		/// @{
 
 		[[nodiscard]] usize length() const override;
@@ -34,7 +37,7 @@ namespace tr::internal
 		[[nodiscard]] int sample_rate() const override;
 
 		/// @}
-		/// @name IO
+		/// @name Operations
 		/// @{
 
 		[[nodiscard]] usize tell() const override;
@@ -47,7 +50,7 @@ namespace tr::internal
 		void raw_read(std::span<i16> buffer) override;
 
 	  private:
-		/// Handle to the Ogg file.
+		/// @brief Handle to the Ogg file.
 		mutable OggVorbis_File m_file{};
 	};
 } // namespace tr::internal

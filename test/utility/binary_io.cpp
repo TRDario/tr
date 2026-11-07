@@ -8,7 +8,7 @@
 
 //
 
-/// Helper template that checks for a binary round-trip of a value.
+/// @brief Helper template that checks for a binary round-trip of a value.
 /// @tparam Value Type to round-trip.
 /// @param expected Value to round-trip.
 template <typename Value>
@@ -19,7 +19,7 @@ void expect_binary_round_trip(const Value& expected)
 	EXPECT_EQ(tr::read_binary<Value>(stream), expected);
 }
 
-/// Helper template that checks for a binary round-trip of an unordered container.
+/// @brief Helper template that checks for a binary round-trip of an unordered container.
 /// @tparam Container Type to round-trip.
 /// @param expected Value to round-trip.
 template <typename Container>
@@ -36,7 +36,7 @@ void expect_unordered_container_binary_round_trip(const Container& expected)
 
 //
 
-/// Tests binary IO round-tripping of primitives.
+/// @brief Tests binary IO round-tripping of primitives.
 TEST(BinaryIoTest, RoundTripsPrimitives)
 {
 	using namespace tr::integer_literals;
@@ -66,7 +66,7 @@ TEST(BinaryIoTest, RoundTripsPrimitives)
 	expect_binary_round_trip(test_enum::yes);
 }
 
-/// Tests binary IO round-tripping of strings.
+/// @brief Tests binary IO round-tripping of strings.
 TEST(BinaryIoTest, RoundTripsStrings)
 {
 	const char* cstr1{"test1"};
@@ -86,7 +86,7 @@ TEST(BinaryIoTest, RoundTripsStrings)
 	EXPECT_EQ(tr::read_binary<std::string>(ios), with_nul);
 }
 
-/// Tests binary IO round-tripping of containers.
+/// @brief Tests binary IO round-tripping of containers.
 TEST(BinaryIoTest, RoundTripsContainers)
 {
 	expect_binary_round_trip(std::array<int, 5>{1, 2, 3, 4, 5});
@@ -101,7 +101,7 @@ TEST(BinaryIoTest, RoundTripsContainers)
 	expect_unordered_container_binary_round_trip(boost::unordered_node_map<int, std::string>{{1, "a"}, {2, "b"}, {3, "c"}});
 }
 
-/// Tests binary IO round-tripping of magic bytes.
+/// @brief Tests binary IO round-tripping of magic bytes.
 TEST(BinaryIoTest, RoundTripsMagic)
 {
 	std::stringstream ios;
@@ -109,7 +109,7 @@ TEST(BinaryIoTest, RoundTripsMagic)
 	EXPECT_TRUE(tr::read_binary_magic(ios, "tr"));
 }
 
-/// Tests the detection of invalid magic bytes.
+/// @brief Tests the detection of invalid magic bytes.
 TEST(BinaryIoTest, DetectsInvalidMagic)
 {
 	std::stringstream ios;
@@ -117,7 +117,7 @@ TEST(BinaryIoTest, DetectsInvalidMagic)
 	EXPECT_FALSE(tr::read_binary_magic(ios, "tr"));
 }
 
-/// Tests flushing the contents of a stream as binary data.
+/// @brief Tests flushing the contents of a stream as binary data.
 TEST(BinaryIoTest, FlushesBinary)
 {
 	std::stringstream ios;

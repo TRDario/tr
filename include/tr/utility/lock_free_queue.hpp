@@ -9,25 +9,22 @@
 
 namespace tr
 {
-	/// Lock-free inplace queue intended for use in multi-threaded, high-performance environments.
-	/// @details
-	/// `tr::lock_free_queue` provides a circular buffer queue stored inplace and designed to be safely used in a multithreaded environment
-	/// without the use of locks. Specifically, it implements Dmitry Vyukov's MPMC bounded queue design.
-	///
-	/// Instances of `tr::lock_free_queue` are not copyable nor movable.
-	///
-	/// @note Smaller objects may have a significant amount of memory overhead comparative to their size.
+	/// @ingroup containers
+	/// @brief Lock-free inplace queue intended for use in multi-threaded, high-performance environments.
+	/// @details `tr::lock_free_queue` provides a circular buffer queue stored inplace and designed to be safely used in a multithreaded
+	/// environment without the use of locks. Specifically, it implements Dmitry Vyukov's MPMC bounded queue design.
 	/// @tparam Element Type of the elements of the queue.
 	/// @tparam Capacity Maximum capacity of the queue. Due to underlying implementation details may only be in powers of two.
+	/// @note Smaller objects may have a significant amount of memory overhead comparative to their size.
 	template <typename Element, usize Capacity>
 		requires std::is_nothrow_destructible_v<Element> && (std::has_single_bit(Capacity))
 	class lock_free_queue
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Creates an empty queue.
+		/// @brief Constructs an empty queue.
 		[[nodiscard]] lock_free_queue() noexcept
 			: m_write_position{0}
 			, m_read_position{0}
@@ -37,13 +34,19 @@ namespace tr
 			}
 		}
 
-		/// Lock-free queues are not copyable.
+		/// @brief Lock-free queues are not copyable.
 		lock_free_queue(const lock_free_queue&) = delete;
 
-		/// Lock-free queues are not movable.
+		/// @brief Lock-free queues are not copyable.
+		lock_free_queue& operator=(const lock_free_queue&) = delete;
+
+		/// @brief Lock-free queues are not movable.
 		lock_free_queue(lock_free_queue&&) = delete;
 
-		/// Destroys the queue.
+		/// @brief Lock-free queues are not movable.
+		lock_free_queue& operator=(lock_free_queue&&) = delete;
+
+		/// @brief Destroys the queue and all remaining elements in it.
 		~lock_free_queue() noexcept
 		{
 			if constexpr (!std::is_trivially_destructible_v<Element>) {
@@ -59,26 +62,16 @@ namespace tr
 		}
 
 		/// @}
-		/// @name Assignment operators
-		/// @{
-
-		/// Lock-free queues are not copyable.
-		lock_free_queue& operator=(const lock_free_queue&) = delete;
-
-		/// Lock-free queues are not movable.
-		lock_free_queue& operator=(lock_free_queue&&) = delete;
-
-		/// @}
 		/// @name Access
 		/// @{
 
-		/// Attempts to emplace an element into the back of the queue.
+		/// @brief Attempts to emplace an element into the back of the queue.
 		/// @tparam Args Types of the arguments to the constructor of a value.
 		/// @param args Arguments to the constructor of a value.
 		/// @return `true` if the element was successfully emplaced, `false` otherwise.
 		template <typename... Args>
-			requires std::constructible_from<Element, Args...>
-		bool try_emplace_back(Args&&... args) noexcept(std::is_nothrow_constructible_v<Element, Args...>)
+			requires std::is_nothrow_constructible_v<Element, Args...>
+		bool try_emplace_back(Args&&... args) noexcept
 		{
 			slot* slot{nullptr};
 			std::size_t position{m_write_position.load(std::memory_order_relaxed)};
@@ -111,11 +104,11 @@ namespace tr
 			return true;
 		}
 
-		/// Attempts to pop a value from the front of the queue.
-		/// @param[out] out Value to write the output to.
+		/// @brief Attempts to pop a value from the front of the queue.
+		/// @param out Value to write the output to.
 		/// @return `true` if a value was popped from the queue, `false` otherwise.
-		bool try_pop_front(Element& out) noexcept(std::is_nothrow_move_assignable_v<Element>)
-			requires std::is_move_assignable_v<Element>
+		bool try_pop_front(Element& out) noexcept
+			requires std::is_nothrow_move_assignable_v<Element>
 		{
 			slot* slot{nullptr};
 			std::size_t position{m_read_position.load(std::memory_order_relaxed)};
@@ -150,9 +143,10 @@ namespace tr
 			return true;
 		}
 
-		/// Attempts to pop a value from the front of the queue.
+		/// @brief Attempts to pop a value from the front of the queue.
 		/// @return The popped value, or an empty optional is the buffer is empty.
-		[[nodiscard]] std::optional<Element> try_pop_front() noexcept(std::is_nothrow_move_constructible_v<Element>)
+		[[nodiscard]] std::optional<Element> try_pop_front() noexcept
+			requires std::is_nothrow_move_constructible_v<Element>
 		{
 			slot* slot{nullptr};
 			std::size_t position{m_read_position.load(std::memory_order_relaxed)};
@@ -177,7 +171,7 @@ namespace tr
 				}
 			}
 
-			/// Move value out and destroy it.
+			// Move value out and destroy it.
 			Element& slot_value{slot->element()};
 			std::optional<Element> value{std::in_place, std::move(slot_value)};
 			slot_value.~Element();
@@ -190,18 +184,18 @@ namespace tr
 		/// @}
 
 	  private:
-		/// Slot where an element is stored.
+		/// @brief Slot where an element is stored.
 		struct slot
 		{
-			/// Sequence number of the slot.
+			/// @brief Sequence number of the slot.
 			std::atomic_size_t sequence;
 
-			/// Element storage.
+			/// @brief Element storage.
 			alignas(Element) std::byte storage[sizeof(Element)];
 
 			//
 
-			/// Gets a reference to the element contained within the slot.
+			/// @brief Returns a reference to the element contained within the slot.
 			/// @return Reference to the element contained within the slot.
 			[[nodiscard]] Element& element() noexcept
 			{
@@ -211,13 +205,13 @@ namespace tr
 
 		//
 
-		/// Slots of the queue.
+		/// @brief Slots of the queue.
 		alignas(64) std::array<slot, Capacity> m_slots;
 
-		/// Position of the write head.
+		/// @brief Position of the write head.
 		alignas(64) std::atomic_size_t m_write_position;
 
-		/// Position of the read head.
+		/// @brief Position of the read head.
 		alignas(64) std::atomic_size_t m_read_position;
 	};
 } // namespace tr

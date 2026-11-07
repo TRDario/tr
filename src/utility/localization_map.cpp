@@ -13,8 +13,6 @@ tr::localization_map::localization_map(const localization_map& rhs)
 	}
 }
 
-//
-
 tr::localization_map& tr::localization_map::operator=(const localization_map& rhs)
 {
 	try {
@@ -38,29 +36,6 @@ tr::usize tr::localization_map::size() const noexcept
 	return m_keys.size();
 }
 
-bool tr::localization_map::contains(std::string_view key) const noexcept
-{
-	return m_keys.contains(key);
-}
-
-std::string_view tr::localization_map::operator[](std::string_view key) const noexcept
-{
-	const decltype(m_keys)::const_iterator it{m_keys.find(key)};
-	if (it == m_keys.end()) {
-		return key;
-	}
-	return std::string_view{*std::ranges::next(*it)};
-}
-
-std::string_view tr::localization_map::value_or(std::string_view key, std::string_view default_value) const noexcept
-{
-	const decltype(m_keys)::const_iterator it{m_keys.find(key)};
-	if (it == m_keys.end()) {
-		return default_value;
-	}
-	return std::string_view{*std::ranges::next(*it)};
-}
-
 //
 
 void tr::localization_map::clear() noexcept
@@ -76,7 +51,7 @@ void tr::localization_map::update(std::string_view key, std::string_view value)
 	const bool replaced_key{key_it_it != m_keys.end()};
 	string_pool::iterator key_it{replaced_key ? *key_it_it : m_pool.end()};
 
-	const usize erased_bytes{replaced_key ? key.size() + std::ranges::distance(*std::ranges::next(key_it)) + 2uz : 0uz};
+	const usize erased_bytes{replaced_key ? key.size() + (*std::ranges::next(key_it)).length() + 2uz : 0uz};
 	const usize appended_bytes{key.size() + value.size() + 2};
 	const usize new_pool_size{m_pool.size_bytes() - erased_bytes + appended_bytes};
 	const bool reallocated_pool{m_pool.capacity_bytes() < new_pool_size};
@@ -106,6 +81,31 @@ void tr::localization_map::update(std::string_view key, std::string_view value)
 	else {
 		m_keys.insert(new_key_it);
 	}
+}
+
+//
+
+bool tr::localization_map::contains(std::string_view key) const noexcept
+{
+	return m_keys.contains(key);
+}
+
+std::string_view tr::localization_map::operator[](std::string_view key) const noexcept
+{
+	const decltype(m_keys)::const_iterator it{m_keys.find(key)};
+	if (it == m_keys.end()) {
+		return key;
+	}
+	return std::string_view{*std::ranges::next(*it)};
+}
+
+std::string_view tr::localization_map::value_or(std::string_view key, std::string_view default_value) const noexcept
+{
+	const decltype(m_keys)::const_iterator it{m_keys.find(key)};
+	if (it == m_keys.end()) {
+		return default_value;
+	}
+	return std::string_view{*std::ranges::next(*it)};
 }
 
 //

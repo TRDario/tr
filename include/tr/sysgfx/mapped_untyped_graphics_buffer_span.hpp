@@ -28,7 +28,7 @@ namespace tr
 	class mapped_untyped_graphics_buffer_span
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// @cond gl_interop

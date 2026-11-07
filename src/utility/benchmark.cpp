@@ -16,7 +16,7 @@ void tr::benchmark::start() noexcept
 	m_start = std::chrono::steady_clock::now();
 }
 
-void tr::benchmark::stop()
+void tr::benchmark::stop() noexcept
 {
 	TR_ASSERT(m_start != not_started, "Tried to stop a benchmark measurement before starting one.");
 
