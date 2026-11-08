@@ -2,6 +2,7 @@
 /// @brief Provides `tr::copy_qualifiers_t`.
 
 #pragma once
+#include <tr/utility/common.hpp>
 
 //
 

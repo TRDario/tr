@@ -2,7 +2,6 @@
 /// @brief Provides `tr::out_handle()`.
 
 #pragma once
-#include <tr/utility/unique_handle.hpp>
 
 //
 

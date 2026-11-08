@@ -2,7 +2,6 @@
 /// @brief Provides localization script parsing functions.
 
 #pragma once
-#include <tr/utility/internal/localization/parser.hpp>
 #include <tr/utility/internal/localization/script.hpp>
 #include <tr/utility/iostream.hpp>
 #include <tr/utility/localization_map.hpp>

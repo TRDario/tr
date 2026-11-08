@@ -6,6 +6,7 @@
 /// @brief Contains `tr::ref` and related functionality.
 
 #pragma once
+#include <tr/utility/common.hpp>
 
 //
 

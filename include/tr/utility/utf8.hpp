@@ -9,7 +9,6 @@
 #include <tr/utility/integer.hpp>
 #include <tr/utility/iterator_interface.hpp>
 #include <tr/utility/macro.hpp>
-#include <tr/utility/utf8.hpp>
 
 //
 

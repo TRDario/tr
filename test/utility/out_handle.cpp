@@ -3,6 +3,7 @@
 
 #include <gtest/gtest.h>
 #include <tr/utility/out_handle.hpp>
+#include <tr/utility/unique_handle.hpp>
 
 //
 
