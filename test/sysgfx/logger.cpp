@@ -8,45 +8,49 @@ using namespace std::chrono_literals;
 
 //
 
-/// Testing logging sink that collects messages dispatched to it.
-class test_sink final : public tr::log_sink
+namespace
 {
-  public:
-	/// Appends a message to the vector of collected messages.
-	void log(const tr::log_message& message) override
+	/// @brief Testing logging sink that collects messages dispatched to it.
+	class test_sink final : public tr::log_sink
 	{
-		m_messages.push_back(message);
-	}
+	  public:
+		/// @brief Appends a message to the vector of collected messages.
+		/// @param message Message to append to the vector of collected messages.
+		void log(const tr::log_message& message) override
+		{
+			m_messages.push_back(message);
+		}
 
-	/// No-op flush.
-	void flush() noexcept override {}
+		/// @brief No-op flush.
+		void flush() noexcept override {}
 
-	//
+		//
 
-	/// Gets the messages that the sink collected.
-	/// @return Reference to a vector of messages that the sink collected.
-	const std::vector<tr::log_message> collected_messages() const noexcept
-	{
-		return m_messages;
-	}
+		/// @brief Returns the messages that the sink collected.
+		/// @return Reference to a vector of messages that the sink collected.
+		const std::vector<tr::log_message> collected_messages() const noexcept
+		{
+			return m_messages;
+		}
 
-  private:
-	/// Collected messages.
-	std::vector<tr::log_message> m_messages;
-};
+	  private:
+		/// @brief List of collected messages.
+		std::vector<tr::log_message> m_messages;
+	};
+} // namespace
 
 //
 
-/// Logger testing fixture.
+/// @brief Logger testing fixture.
 class LoggerTest : public testing::Test
 {
   protected:
-	/// Testing sink.
+	/// @brief Testing sink.
 	std::shared_ptr<test_sink> sink;
 
 	//
 
-	/// Constructs and registers a testing sink to the logger.
+	/// @brief Constructs and registers a testing sink to the logger.
 	LoggerTest()
 		: sink{std::make_shared<test_sink>()}
 	{
@@ -60,7 +64,7 @@ class LoggerTest : public testing::Test
 
 //
 
-/// Tests logging messages to the logger.
+/// @brief Tests logging messages to the logger.
 TEST_F(LoggerTest, Logs)
 {
 	TR_LOG_INFO("test", "Foo");
@@ -79,7 +83,7 @@ TEST_F(LoggerTest, Logs)
 	EXPECT_EQ(sink->collected_messages()[3].string, "Qux");
 }
 
-/// Tests logger filtering.
+/// @brief Tests logger filtering.
 TEST_F(LoggerTest, Filters)
 {
 	tr::logger::instance().set_min_level(tr::log_level::error);
@@ -97,7 +101,7 @@ TEST_F(LoggerTest, Filters)
 	EXPECT_EQ(sink->collected_messages()[1].string, "Qux");
 }
 
-/// Tests multiple threads logging at once.
+/// @brief Tests multiple threads logging at once.
 TEST_F(LoggerTest, MultipleThreadsLogging)
 {
 	// thread_count * thread_messages < 4096 (logger queue capacity) to avoid dropped messages.

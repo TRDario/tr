@@ -6,11 +6,14 @@
 
 //
 
-/// @brief Iterator wrapping an integer pointer.
-struct test_pointer_iterator : tr::pointer_iterator<test_pointer_iterator, int*>
+namespace
 {
-	using pointer_iterator<test_pointer_iterator, int*>::pointer_iterator;
-};
+	/// @brief Iterator wrapping an integer pointer.
+	struct test_pointer_iterator : tr::pointer_iterator<test_pointer_iterator, int*>
+	{
+		using pointer_iterator<test_pointer_iterator, int*>::pointer_iterator;
+	};
+} // namespace
 
 //
 

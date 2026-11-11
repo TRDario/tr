@@ -6,61 +6,64 @@
 
 //
 
-/// @brief Tracked integer type used in the lock-free queue tests.
-class tracked_queue_int
+namespace
 {
-  public:
-	/// @brief Number of alive tracked integers.
-	inline static tr::usize alive{0};
-
-	//
-
-	/// @brief Constructs a tracked integer.
-	/// @param value Value of the integer.
-	[[nodiscard]] explicit tracked_queue_int(int value) noexcept
-		: m_value{value}
+	/// @brief Tracked integer type used in the lock-free queue tests.
+	class tracked_queue_int
 	{
-		++alive;
-	}
+	  public:
+		/// @brief Number of alive tracked integers.
+		inline static tr::usize alive{0};
 
-	/// @brief Copy-constructs a tracked integer.
-	/// @param rhs Integer to copy.
-	[[nodiscard]] tracked_queue_int(const tracked_queue_int& rhs) noexcept
-		: m_value{rhs.m_value}
-	{
-		++alive;
-	}
+		//
 
-	/// @brief Destroys a tracked integer.
-	~tracked_queue_int() noexcept
-	{
-		--alive;
-	}
+		/// @brief Constructs a tracked integer.
+		/// @param value Value of the integer.
+		[[nodiscard]] explicit tracked_queue_int(int value) noexcept
+			: m_value{value}
+		{
+			++alive;
+		}
 
-	//
+		/// @brief Copy-constructs a tracked integer.
+		/// @param rhs Integer to copy.
+		[[nodiscard]] tracked_queue_int(const tracked_queue_int& rhs) noexcept
+			: m_value{rhs.m_value}
+		{
+			++alive;
+		}
 
-	/// @brief Copy-assigns a tracked integer.
-	/// @param rhs Integer to copy.
-	/// @return Reference to `*this`.
-	tracked_queue_int& operator=(const tracked_queue_int& rhs) noexcept
-	{
-		m_value = rhs.m_value;
-		return *this;
-	}
+		/// @brief Destroys a tracked integer.
+		~tracked_queue_int() noexcept
+		{
+			--alive;
+		}
 
-	//
+		//
 
-	/// @brief Returns the value of the tracked integer.
-	/// @return Value of the tracked integer.
-	[[nodiscard]] int value() const noexcept
-	{
-		return m_value;
-	}
+		/// @brief Copy-assigns a tracked integer.
+		/// @param rhs Integer to copy.
+		/// @return Reference to `*this`.
+		tracked_queue_int& operator=(const tracked_queue_int& rhs) noexcept
+		{
+			m_value = rhs.m_value;
+			return *this;
+		}
 
-  private:
-	/// @brief Value of the tracked integer.
-	int m_value;
-};
+		//
+
+		/// @brief Returns the value of the tracked integer.
+		/// @return Value of the tracked integer.
+		[[nodiscard]] int value() const noexcept
+		{
+			return m_value;
+		}
+
+	  private:
+		/// @brief Value of the tracked integer.
+		int m_value;
+	};
+} // namespace
 
 //
 

@@ -5,12 +5,15 @@
 
 //
 
-/// @brief Dummy template with a constant and type parameter.
-/// @tparam A, B Dummy template parameters.
-template <int A, typename B>
-struct ct_template
+namespace
 {
-};
+	/// @brief Dummy template with a constant and type parameter.
+	/// @tparam A, B Dummy template parameters.
+	template <int A, typename B>
+	struct ct_template
+	{
+	};
+} // namespace
 
 //
 

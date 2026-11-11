@@ -9,46 +9,49 @@ using namespace std::chrono_literals;
 
 //
 
-/// @brief Incrementable counter used by the callback of the timer.
-class callback_counter
+namespace
 {
-  public:
-	/// @brief Increments the counter.
-	void increment()
+	/// @brief Incrementable counter used by the callback of the timer.
+	class callback_counter
 	{
-		/* Lock scope */ {
-			std::lock_guard lock{m_mutex};
-			m_timestamps.push_back(std::chrono::steady_clock::now());
+	  public:
+		/// @brief Increments the counter.
+		void increment()
+		{
+			/* Lock scope */ {
+				std::lock_guard lock{m_mutex};
+				m_timestamps.push_back(std::chrono::steady_clock::now());
+			}
+			m_cv.notify_one();
 		}
-		m_cv.notify_one();
-	}
 
-	/// @brief Waits for a minimum count.
-	/// @param minimum_count Minimum count to wait for.
-	/// @return `true` if the wait was successful, `false` otherwise.
-	[[nodiscard]] bool wait_for(tr::usize minimum_count)
-	{
-		std::unique_lock lock{m_mutex};
-		return m_cv.wait_for(lock, 2s, [&] { return m_timestamps.size() >= minimum_count; });
-	}
+		/// @brief Waits for a minimum count.
+		/// @param minimum_count Minimum count to wait for.
+		/// @return `true` if the wait was successful, `false` otherwise.
+		[[nodiscard]] bool wait_for(tr::usize minimum_count)
+		{
+			std::unique_lock lock{m_mutex};
+			return m_cv.wait_for(lock, 2s, [&] { return m_timestamps.size() >= minimum_count; });
+		}
 
-	/// @brief Returns the list of timestamps.
-	/// @return Reference to the list of timestamps.
-	[[nodiscard]] const std::vector<std::chrono::steady_clock::time_point>& timestamps() const noexcept
-	{
-		return m_timestamps;
-	}
+		/// @brief Returns the list of timestamps.
+		/// @return Reference to the list of timestamps.
+		[[nodiscard]] const std::vector<std::chrono::steady_clock::time_point>& timestamps() const noexcept
+		{
+			return m_timestamps;
+		}
 
-  private:
-	/// @brief Callback counter mutex.
-	std::mutex m_mutex;
+	  private:
+		/// @brief Callback counter mutex.
+		std::mutex m_mutex;
 
-	/// @brief Callback counter condition variable.
-	std::condition_variable m_cv;
+		/// @brief Callback counter condition variable.
+		std::condition_variable m_cv;
 
-	/// @brief List of callback timestamps.
-	std::vector<std::chrono::steady_clock::time_point> m_timestamps;
-};
+		/// @brief List of callback timestamps.
+		std::vector<std::chrono::steady_clock::time_point> m_timestamps;
+	};
+} // namespace
 
 //
 

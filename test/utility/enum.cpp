@@ -6,19 +6,22 @@
 
 //
 
-/// @brief Test bitmask enum.
-enum class test_enum : tr::u8
+namespace
 {
-	a = 1,
-	b = 2,
-	c = 4,
-	ab = 3,
-	ac = 5,
-	bc = 6,
-	na = 254
-};
+	/// @brief Test bitmask enum.
+	enum class test_enum : tr::u8
+	{
+		a = 1,
+		b = 2,
+		c = 4,
+		ab = 3,
+		ac = 5,
+		bc = 6,
+		na = 254
+	};
 
-TR_DEFINE_ENUM_BITMASK_OPERATORS(test_enum);
+	TR_DEFINE_ENUM_BITMASK_OPERATORS(test_enum);
+} // namespace
 
 //
 

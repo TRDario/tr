@@ -6,77 +6,80 @@
 
 //
 
-/// @brief Downgrades an iterator to a strictly input iterator.
-/// @tparam Base Base iterator type.
-template <std::input_iterator Base>
-class strict_input_iterator
+namespace
 {
-  public:
-	/// @brief Value type used by the iterator.
-	using value_type = std::iterator_traits<Base>::value_type;
-
-	/// @brief Difference type used by the iterator.
-	using difference_type = std::iterator_traits<Base>::difference_type;
-
-	/// @brief Reference type used by the iterator.
-	using reference = std::iterator_traits<Base>::reference;
-
-	/// @brief Category of the iterator.
-	using iterator_category = std::input_iterator_tag;
-
-	/// @brief Concept of the iterator.
-	using iterator_concept = std::input_iterator_tag;
-
-	/// @name Constructors, destructors, and assignment operators
-	/// @{
-
-	/// @brief Constructs a singular iterator.
-	[[nodiscard]] explicit strict_input_iterator() noexcept = default;
-
-	/// @brief Wraps an input iterator.
-	/// @param base Base iterator
-	[[nodiscard]] explicit strict_input_iterator(Base base) noexcept
-		: m_base{base}
+	/// @brief Downgrades an iterator to a strictly input iterator.
+	/// @tparam Base Base iterator type.
+	template <std::input_iterator Base>
+	class strict_input_iterator
 	{
-	}
+	  public:
+		/// @brief Value type used by the iterator.
+		using value_type = std::iterator_traits<Base>::value_type;
 
-	/// @}
-	/// @name Operators
-	/// @{
+		/// @brief Difference type used by the iterator.
+		using difference_type = std::iterator_traits<Base>::difference_type;
 
-	/// @brief Compares two iterators for equality.
-	/// @param a, b Iterators to compare.
-	/// @return `true` if the iterators are equal, `false` otherwise.
-	[[nodiscard]] friend bool operator==(strict_input_iterator a, strict_input_iterator b) noexcept = default;
+		/// @brief Reference type used by the iterator.
+		using reference = std::iterator_traits<Base>::reference;
 
-	/// @brief Dereferences the iterator.
-	/// @return Dereferenced iterator value.
-	[[nodiscard]] reference operator*() const noexcept
-	{
-		return *m_base;
-	}
+		/// @brief Category of the iterator.
+		using iterator_category = std::input_iterator_tag;
 
-	/// @brief Increments the iterator.
-	/// @return Reference to `*this`.
-	strict_input_iterator& operator++() noexcept
-	{
-		++m_base;
-		return *this;
-	}
+		/// @brief Concept of the iterator.
+		using iterator_concept = std::input_iterator_tag;
 
-	/// @brief Increments the iterator.
-	/// @return Previous value of `*this`.
-	[[nodiscard]] strict_input_iterator operator++(int) noexcept
-	{
-		strict_input_iterator prev{*this};
-		++m_base;
-		return prev;
-	}
+		/// @name Constructors, destructors, and assignment operators
+		/// @{
 
-  private:
-	/// @brief Base iterator value.
-	Base m_base;
-};
+		/// @brief Constructs a singular iterator.
+		[[nodiscard]] explicit strict_input_iterator() noexcept = default;
+
+		/// @brief Wraps an input iterator.
+		/// @param base Base iterator
+		[[nodiscard]] explicit strict_input_iterator(Base base) noexcept
+			: m_base{base}
+		{
+		}
+
+		/// @}
+		/// @name Operators
+		/// @{
+
+		/// @brief Compares two iterators for equality.
+		/// @param a, b Iterators to compare.
+		/// @return `true` if the iterators are equal, `false` otherwise.
+		[[nodiscard]] friend bool operator==(strict_input_iterator a, strict_input_iterator b) noexcept = default;
+
+		/// @brief Dereferences the iterator.
+		/// @return Dereferenced iterator value.
+		[[nodiscard]] reference operator*() const noexcept
+		{
+			return *m_base;
+		}
+
+		/// @brief Increments the iterator.
+		/// @return Reference to `*this`.
+		strict_input_iterator& operator++() noexcept
+		{
+			++m_base;
+			return *this;
+		}
+
+		/// @brief Increments the iterator.
+		/// @return Previous value of `*this`.
+		[[nodiscard]] strict_input_iterator operator++(int) noexcept
+		{
+			strict_input_iterator prev{*this};
+			++m_base;
+			return prev;
+		}
+
+	  private:
+		/// @brief Base iterator value.
+		Base m_base;
+	};
+} // namespace
 
 //
 

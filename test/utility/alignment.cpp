@@ -6,34 +6,37 @@
 
 //
 
-/// @brief Data about an alignment case.
-struct alignment_case
+namespace
 {
-	/// @brief Vertical alignment.
-	tr::valign valign;
+	/// @brief Data about an alignment case.
+	struct alignment_case
+	{
+		/// @brief Vertical alignment.
+		tr::valign valign;
 
-	/// @brief Horizontal alignment.
-	tr::halign halign;
+		/// @brief Horizontal alignment.
+		tr::halign halign;
 
-	/// @brief Combined alignment.
-	tr::align align;
+		/// @brief Combined alignment.
+		tr::align align;
 
-	/// @brief Position of the top-left corner with origin=(20, 50), size=(30, 10).
-	glm::vec2 tl;
-};
+		/// @brief Position of the top-left corner with origin=(20, 50), size=(30, 10).
+		glm::vec2 tl;
+	};
 
-/// @brief List of alignment cases.
-constexpr std::array<alignment_case, 9> alignment_cases{
-	alignment_case{tr::valign::top, tr::halign::left, tr::align::tl, {20, 50}},
-	alignment_case{tr::valign::top, tr::halign::center, tr::align::tc, {5, 50}},
-	alignment_case{tr::valign::top, tr::halign::right, tr::align::tr, {-10, 50}},
-	alignment_case{tr::valign::center, tr::halign::left, tr::align::cl, {20, 45}},
-	alignment_case{tr::valign::center, tr::halign::center, tr::align::cc, {5, 45}},
-	alignment_case{tr::valign::center, tr::halign::right, tr::align::cr, {-10, 45}},
-	alignment_case{tr::valign::bottom, tr::halign::left, tr::align::bl, {20, 40}},
-	alignment_case{tr::valign::bottom, tr::halign::center, tr::align::bc, {5, 40}},
-	alignment_case{tr::valign::bottom, tr::halign::right, tr::align::br, {-10, 40}},
-};
+	/// @brief List of alignment cases.
+	constexpr std::array<alignment_case, 9> alignment_cases{
+		alignment_case{tr::valign::top, tr::halign::left, tr::align::tl, {20, 50}},
+		alignment_case{tr::valign::top, tr::halign::center, tr::align::tc, {5, 50}},
+		alignment_case{tr::valign::top, tr::halign::right, tr::align::tr, {-10, 50}},
+		alignment_case{tr::valign::center, tr::halign::left, tr::align::cl, {20, 45}},
+		alignment_case{tr::valign::center, tr::halign::center, tr::align::cc, {5, 45}},
+		alignment_case{tr::valign::center, tr::halign::right, tr::align::cr, {-10, 45}},
+		alignment_case{tr::valign::bottom, tr::halign::left, tr::align::bl, {20, 40}},
+		alignment_case{tr::valign::bottom, tr::halign::center, tr::align::bc, {5, 40}},
+		alignment_case{tr::valign::bottom, tr::halign::right, tr::align::br, {-10, 40}},
+	};
+} // namespace
 
 //
 

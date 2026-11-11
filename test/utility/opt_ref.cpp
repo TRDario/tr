@@ -7,17 +7,20 @@
 
 //
 
-/// @brief Dummy base class.
-struct base
+namespace
 {
-	/// @brief Dummy virtual destructor.
-	virtual ~base() = default;
-};
+	/// @brief Dummy base class.
+	struct base
+	{
+		/// @brief Dummy virtual destructor.
+		virtual ~base() = default;
+	};
 
-/// @brief Dummy derived class.
-struct derived : base
-{
-};
+	/// @brief Dummy derived class.
+	struct derived : base
+	{
+	};
+} // namespace
 
 //
 

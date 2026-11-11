@@ -8,14 +8,17 @@
 
 //
 
-/// @brief Sample UTF-8-encoded string.
-constexpr tr::inplace_string<10> characters{"ač東😳"};
+namespace
+{
+	/// @brief Sample UTF-8-encoded string.
+	constexpr tr::inplace_string<10> characters{"ač東😳"};
 
-/// @brief List of codepoints in `characters`.
-constexpr std::array<tr::codepoint, 4> codepoints{0x61, 0x10D, 0x6771, 0x1F633};
+	/// @brief List of codepoints in `characters`.
+	constexpr std::array<tr::codepoint, 4> codepoints{0x61, 0x10D, 0x6771, 0x1F633};
 
-/// @brief List of offsets to the beginnings of the character sequences in `characters`.
-constexpr std::array<tr::usize, 5> offsets{0, 1, 3, 6, 10};
+	/// @brief List of offsets to the beginnings of the character sequences in `characters`.
+	constexpr std::array<tr::usize, 5> offsets{0, 1, 3, 6, 10};
+} // namespace
 
 //
 

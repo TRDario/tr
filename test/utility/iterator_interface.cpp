@@ -6,143 +6,146 @@
 
 //
 
-/// @brief Iterator used to exercise the operators synthesized by iterator_interface.
-struct synthesized_iterator : tr::iterator_interface<synthesized_iterator>
+namespace
 {
-	/// @brief Position pointer of the iterator.
-	int* ptr;
+	/// @brief Iterator used to exercise the operators synthesized by iterator_interface.
+	struct synthesized_iterator : tr::iterator_interface<synthesized_iterator>
+	{
+		/// @brief Position pointer of the iterator.
+		int* ptr;
+
+		//
+
+		/// @brief Constructs an iterator.
+		/// @param ptr Position pointer of the iterator.
+		[[nodiscard]] constexpr explicit synthesized_iterator(int* ptr) noexcept
+			: ptr{ptr}
+		{
+		}
+
+		//
+
+		/// @brief Dereferences the iterator.
+		/// @return Reference to the pointed-to value.
+		[[nodiscard]] constexpr int& operator*() const noexcept
+		{
+			return *ptr;
+		}
+
+		/// @brief Increments the iterator.
+		/// @return Reference to `*this`.
+		constexpr synthesized_iterator& operator++() noexcept
+		{
+			++ptr;
+			return *this;
+		}
+
+		/// @brief Decrements the iterator.
+		/// @return Reference to `*this`.
+		constexpr synthesized_iterator& operator--() noexcept
+		{
+			--ptr;
+			return *this;
+		}
+
+		/// @brief Advances the iterator.
+		/// @param difference Amount to advance the iterator by.
+		/// @return Reference to `*this`.
+		constexpr synthesized_iterator& operator+=(std::ptrdiff_t difference) noexcept
+		{
+			ptr += difference;
+			return *this;
+		}
+	};
+
+	/// @brief Iterator exposing only dereferencing, used to check unavailable operations.
+	struct dereference_only_iterator : tr::iterator_interface<dereference_only_iterator>
+	{
+		/// @brief Position pointer of the iterator.
+		int* ptr;
+
+		//
+
+		/// @brief Constructs an iterator.
+		/// @param ptr Position pointer of the iterator.
+		[[nodiscard]] constexpr explicit dereference_only_iterator(int* ptr) noexcept
+			: ptr{ptr}
+		{
+		}
+
+		//
+
+		/// @brief Dereferences the iterator.
+		/// @return Reference to the pointed-to value.
+		[[nodiscard]] constexpr int& operator*() const noexcept
+		{
+			return *ptr;
+		}
+	};
+
+	/// @brief Iterator whose dereference returns a value rather than a reference.
+	struct value_dereference_only_iterator : tr::iterator_interface<value_dereference_only_iterator>
+	{
+		/// @brief Value of the iterator.
+		int value;
+
+		//
+
+		/// @brief Constructs an iterator.
+		/// @param value Value of the iterator.
+		[[nodiscard]] constexpr explicit value_dereference_only_iterator(int value) noexcept
+			: value{value}
+		{
+		}
+
+		//
+
+		/// @brief Dereferences the iterator.
+		/// @return Value of the iterator.
+		[[nodiscard]] constexpr int operator*() const noexcept
+		{
+			return value;
+		}
+	};
 
 	//
 
-	/// @brief Constructs an iterator.
-	/// @param ptr Position pointer of the iterator.
-	[[nodiscard]] constexpr explicit synthesized_iterator(int* ptr) noexcept
-		: ptr{ptr}
-	{
-	}
+	/// @brief Concept checking for an iterator with defined post-incrementation.
+	/// @tparam Iterator Iterator type to check for post-increment.
+	template <typename Iterator>
+	concept has_post_increment = requires(Iterator& it) { it++; };
 
-	//
+	/// @brief Concept checking for an iterator with defined post-incrementation.
+	/// @tparam Iterator Iterator type to check for post-decrement.
+	template <typename Iterator>
+	concept has_post_decrement = requires(Iterator& it) { it--; };
 
-	/// @brief Dereferences the iterator.
-	/// @return Reference to the pointed-to value.
-	[[nodiscard]] constexpr int& operator*() const noexcept
-	{
-		return *ptr;
-	}
+	/// @brief Concept checking for an iterator with defined addition.
+	/// @tparam Iterator Iterator type to check for addition.
+	template <typename Iterator>
+	concept has_addition = requires(const Iterator& it) {
+		it + 2;
+		2 + it;
+	};
 
-	/// @brief Increments the iterator.
-	/// @return Reference to `*this`.
-	constexpr synthesized_iterator& operator++() noexcept
-	{
-		++ptr;
-		return *this;
-	}
+	/// @brief Concept checking for an iterator with defined subtraction.
+	/// @tparam Iterator Iterator type to check for subtraction.
+	template <typename Iterator>
+	concept has_subtraction = requires(Iterator& it) {
+		it -= 2;
+		it - 2;
+	};
 
-	/// @brief Decrements the iterator.
-	/// @return Reference to `*this`.
-	constexpr synthesized_iterator& operator--() noexcept
-	{
-		--ptr;
-		return *this;
-	}
+	/// @brief Concept checking for an iterator with defined subscript dereferencing.
+	/// @tparam Iterator Iterator type to check for subscript dereference.
+	template <typename Iterator>
+	concept has_subscript_dereference = requires(const Iterator& it) { it[2]; };
 
-	/// @brief Advances the iterator.
-	/// @param difference Amount to advance the iterator by.
-	/// @return Reference to `*this`.
-	constexpr synthesized_iterator& operator+=(std::ptrdiff_t difference) noexcept
-	{
-		ptr += difference;
-		return *this;
-	}
-};
-
-/// @brief Iterator exposing only dereferencing, used to check unavailable operations.
-struct dereference_only_iterator : tr::iterator_interface<dereference_only_iterator>
-{
-	/// @brief Position pointer of the iterator.
-	int* ptr;
-
-	//
-
-	/// @brief Constructs an iterator.
-	/// @param ptr Position pointer of the iterator.
-	[[nodiscard]] constexpr explicit dereference_only_iterator(int* ptr) noexcept
-		: ptr{ptr}
-	{
-	}
-
-	//
-
-	/// @brief Dereferences the iterator.
-	/// @return Reference to the pointed-to value.
-	[[nodiscard]] constexpr int& operator*() const noexcept
-	{
-		return *ptr;
-	}
-};
-
-/// @brief Iterator whose dereference returns a value rather than a reference.
-struct value_dereference_only_iterator : tr::iterator_interface<value_dereference_only_iterator>
-{
-	/// @brief Value of the iterator.
-	int value;
-
-	//
-
-	/// @brief Constructs an iterator.
-	/// @param value Value of the iterator.
-	[[nodiscard]] constexpr explicit value_dereference_only_iterator(int value) noexcept
-		: value{value}
-	{
-	}
-
-	//
-
-	/// @brief Dereferences the iterator.
-	/// @return Value of the iterator.
-	[[nodiscard]] constexpr int operator*() const noexcept
-	{
-		return value;
-	}
-};
-
-//
-
-/// @brief Concept checking for an iterator with defined post-incrementation.
-/// @tparam Iterator Iterator type to check for post-increment.
-template <typename Iterator>
-concept has_post_increment = requires(Iterator& it) { it++; };
-
-/// @brief Concept checking for an iterator with defined post-incrementation.
-/// @tparam Iterator Iterator type to check for post-decrement.
-template <typename Iterator>
-concept has_post_decrement = requires(Iterator& it) { it--; };
-
-/// @brief Concept checking for an iterator with defined addition.
-/// @tparam Iterator Iterator type to check for addition.
-template <typename Iterator>
-concept has_addition = requires(const Iterator& it) {
-	it + 2;
-	2 + it;
-};
-
-/// @brief Concept checking for an iterator with defined subtraction.
-/// @tparam Iterator Iterator type to check for subtraction.
-template <typename Iterator>
-concept has_subtraction = requires(Iterator& it) {
-	it -= 2;
-	it - 2;
-};
-
-/// @brief Concept checking for an iterator with defined subscript dereferencing.
-/// @tparam Iterator Iterator type to check for subscript dereference.
-template <typename Iterator>
-concept has_subscript_dereference = requires(const Iterator& it) { it[2]; };
-
-/// @brief Concept checking for an iterator with defined pointer dereferencing.
-/// @tparam Iterator Iterator type to check for pointer dereference.
-template <typename Iterator>
-concept has_pointer_dereference = requires(const Iterator& it) { it.operator->(); };
+	/// @brief Concept checking for an iterator with defined pointer dereferencing.
+	/// @tparam Iterator Iterator type to check for pointer dereference.
+	template <typename Iterator>
+	concept has_pointer_dereference = requires(const Iterator& it) { it.operator->(); };
+} // namespace
 
 //
 // clang-format off

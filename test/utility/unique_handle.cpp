@@ -4,51 +4,56 @@
 #include <gtest/gtest.h>
 #include <tr/utility/unique_handle.hpp>
 
-/// @brief Default-constructible, stateless deleter that keeps track of deletions.
-struct stateless_deleter
+//
+
+namespace
 {
-	/// @brief Number of tracked deletions.
-	inline static int deleted_count{0};
-
-	/// @brief Last deleted handle.
-	inline static int last_deleted_handle{0};
-
-	//
-
-	/// @brief Mock deletion.
-	/// @param handle Handle to "delete".
-	void operator()(int handle) const noexcept
+	/// @brief Default-constructible, stateless deleter that keeps track of deletions.
+	struct stateless_deleter
 	{
-		++deleted_count;
-		last_deleted_handle = handle;
-	}
-};
+		/// @brief Number of tracked deletions.
+		inline static int deleted_count{0};
 
-/// @brief Non-default-constructible deleter with an integer tag.
-struct tagged_deleter
-{
-	/// @brief Deleter tag.
-	int id;
+		/// @brief Last deleted handle.
+		inline static int last_deleted_handle{0};
 
-	//
+		//
 
-	/// @brief Constructs a deleter.
-	tagged_deleter(int id)
-		: id{id}
+		/// @brief Mock deletion.
+		/// @param handle Handle to "delete".
+		void operator()(int handle) const noexcept
+		{
+			++deleted_count;
+			last_deleted_handle = handle;
+		}
+	};
+
+	/// @brief Non-default-constructible deleter with an integer tag.
+	struct tagged_deleter
 	{
-	}
+		/// @brief Deleter tag.
+		int id;
 
-	//
+		//
 
-	/// @brief Mock deletion.
-	void operator()(int) const noexcept {}
-};
+		/// @brief Constructs a deleter.
+		tagged_deleter(int id)
+			: id{id}
+		{
+		}
 
-/// @brief Unique handle using a stateless deleter.
-using stateless_unique_handle = tr::unique_handle<int, 0, stateless_deleter>;
+		//
 
-/// @brief Unique handle using a tagged deleter.
-using tagged_unique_handle = tr::unique_handle<int, 0, tagged_deleter>;
+		/// @brief Mock deletion.
+		void operator()(int) const noexcept {}
+	};
+
+	/// @brief Unique handle using a stateless deleter.
+	using stateless_unique_handle = tr::unique_handle<int, 0, stateless_deleter>;
+
+	/// @brief Unique handle using a tagged deleter.
+	using tagged_unique_handle = tr::unique_handle<int, 0, tagged_deleter>;
+} // namespace
 
 //
 

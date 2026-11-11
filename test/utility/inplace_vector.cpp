@@ -6,96 +6,91 @@
 
 //
 
-/// @brief Tracked integer value.
-struct tracked_int
+namespace
 {
-	/// @brief Number of constructed tracked integers.
-	inline static int constructed{0};
-
-	/// @brief Number of copied tracked integers.
-	inline static int copy_constructed{0};
-
-	/// @brief Number of move-constructed tracked integers.
-	inline static int move_constructed{0};
-
-	/// @brief Number of destroyed tracked integers.
-	inline static int destroyed{0};
-
-	//
-
-	/// @brief Resets the tracked counts.
-	static void reset_counts() noexcept
+	/// @brief Tracked integer value.
+	struct tracked_int
 	{
-		constructed = 0;
-		copy_constructed = 0;
-		move_constructed = 0;
-		destroyed = 0;
-	}
+		/// @brief Number of constructed tracked integers.
+		inline static int constructed{0};
 
-	//
+		/// @brief Number of copied tracked integers.
+		inline static int copy_constructed{0};
 
-	/// @brief Base integer.
-	int value;
+		/// @brief Number of move-constructed tracked integers.
+		inline static int move_constructed{0};
 
-	//
+		/// @brief Number of destroyed tracked integers.
+		inline static int destroyed{0};
 
-	/// @brief Constructs a tracked integer.
-	/// @param value Value of the tracker integer.
-	[[nodiscard]] tracked_int(int value = 0) noexcept
-		: value{value}
-	{
-		++constructed;
-	}
+		//
 
-	/// @brief Copied a tracked integer.
-	/// @param copy Value to copy.
-	[[nodiscard]] tracked_int(const tracked_int& copy) noexcept
-		: value{copy.value}
-	{
-		++copy_constructed;
-	}
+		/// @brief Resets the tracked counts.
+		static void reset_counts() noexcept
+		{
+			constructed = 0;
+			copy_constructed = 0;
+			move_constructed = 0;
+			destroyed = 0;
+		}
 
-	/// @brief Moves a tracked integer.
-	/// @param move Value to move.
-	[[nodiscard]] tracked_int(tracked_int&& move) noexcept
-		: value{move.value}
-	{
-		++move_constructed;
-	}
+		//
 
-	/// @brief Destroys a tracked integer.
-	~tracked_int() noexcept
-	{
-		++destroyed;
-	}
+		/// @brief Base integer.
+		int value;
 
-	//
+		//
 
-	/// @brief Copies a tracked integer.
-	/// @param copy Value to copy.
-	/// @return Reference to `*this`.
-	tracked_int& operator=(const tracked_int& copy) = default;
+		/// @brief Constructs a tracked integer.
+		/// @param value Value of the tracker integer.
+		[[nodiscard]] tracked_int(int value = 0) noexcept
+			: value{value}
+		{
+			++constructed;
+		}
 
-	/// @brief Moves a tracked integer.
-	/// @param move Value to move.
-	/// @return Reference to `*this`.
-	tracked_int& operator=(tracked_int&& move) = default;
+		/// @brief Copied a tracked integer.
+		/// @param copy Value to copy.
+		[[nodiscard]] tracked_int(const tracked_int& copy) noexcept
+			: value{copy.value}
+		{
+			++copy_constructed;
+		}
 
-	//
+		/// @brief Moves a tracked integer.
+		/// @param move Value to move.
+		[[nodiscard]] tracked_int(tracked_int&& move) noexcept
+			: value{move.value}
+		{
+			++move_constructed;
+		}
 
-	/// @brief Compares two tracked integers for equality.
-	/// @param lhs, rhs Tracked integers to compare.
-	/// @return `true` if the integers are equal, `false` otherwise.
-	[[nodiscard]] friend bool operator==(const tracked_int& lhs, const tracked_int& rhs) noexcept = default;
+		/// @brief Destroys a tracked integer.
+		~tracked_int() noexcept
+		{
+			++destroyed;
+		}
 
-	/// @brief Compares a tracked integer with a regular integer for equality.
-	/// @param lhs, rhs Integers to compare.
-	/// @return `true` if the integers are equal, `false` otherwise.
-	[[nodiscard]] friend bool operator==(const tracked_int& lhs, int rhs) noexcept
-	{
-		return lhs.value == rhs;
-	}
-};
+		//
+
+		/// @brief Copies a tracked integer.
+		/// @param copy Value to copy.
+		/// @return Reference to `*this`.
+		tracked_int& operator=(const tracked_int& copy) = default;
+
+		/// @brief Moves a tracked integer.
+		/// @param move Value to move.
+		/// @return Reference to `*this`.
+		tracked_int& operator=(tracked_int&& move) = default;
+
+		//
+
+		/// @brief Compares two tracked integers for equality.
+		/// @param lhs, rhs Tracked integers to compare.
+		/// @return `true` if the integers are equal, `false` otherwise.
+		[[nodiscard]] friend bool operator==(const tracked_int& lhs, const tracked_int& rhs) noexcept = default;
+	};
+} // namespace
 
 //
 
