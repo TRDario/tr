@@ -9,7 +9,7 @@
 
 namespace tr
 {
-	/// Bitmap atlas structure.
+	/// @brief Bitmap atlas structure.
 	/// @tparam Key Atlas key type.
 	/// @tparam Value Atlas value type.
 	/// @tparam Hash Atlas key hasher.
@@ -18,21 +18,24 @@ namespace tr
 			  equality_predicate<Key> Pred = std::equal_to<Key>>
 	struct bitmap_atlas
 	{
-		/// Atlas bitmap.
+		/// @brief Atlas bitmap.
 		bitmap bitmap;
 
-		/// Atlas entries.
+		/// @brief Atlas entries.
 		atlas_entries<Key, Value, Hash, Pred> rectangles;
 	};
 
-	/// @name Bitmap atlas
-	/// @{
+	//
 
-	/// Builds a bitmap atlas from individual bitmaps.
+	/// @brief Builds a bitmap atlas from individual bitmaps.
 	/// @tparam Key Atlas key type.
 	/// @tparam Hash Atlas key hasher.
 	/// @tparam Pred Atlas key equality predicate.
 	/// @param bitmaps Map holding the bitmaps to stitch together.
+	/// @par Complexity
+	/// Linear time with respect to the number of bitmaps.
+	/// @par Exception safety
+	/// If an exception is thrown, this function has no effect (strong exception guarantee).
 	/// @return Bitmap atlas built from the individual bitmaps.
 	template <typename Key, hasher<Key> Hash = boost::hash<Key>, equality_predicate<Key> Pred = std::equal_to<Key>>
 	[[nodiscard]] bitmap_atlas<Key, void, Hash, Pred> build_bitmap_atlas(const boost::unordered_flat_map<Key, bitmap, Hash, Pred>& bitmaps)
@@ -60,6 +63,4 @@ namespace tr
 		}
 		return bitmap_atlas<Key, void, Hash, Pred>{std::move(bitmap), std::move(bitmaps)};
 	}
-
-	/// @}
 } // namespace tr

@@ -8,15 +8,15 @@
 
 namespace tr
 {
-	/// Static, immutable untyped vertex buffer.
+	/// @brief Owning container for a static immutable untyped vertex buffer.
 	/// @details
 	/// `tr::untyped_static_vertex_buffer` represents a graphics buffer used to store vertex data. Unlike
 	/// `tr::dynamic_untyped_vertex_buffer`, it represents a single, static allocation of immutable data, making it suitable for scenarios
 	/// where the vertex data is constant. `tr::untyped_static_vertex_buffer` does not enforce any specific data format and may be used when
 	/// flexibility is needed, while `tr::static_vertex_buffer` models a buffer holding vertices of a specific type.
 	///
-	/// Strictly speaking, instances of `tr::untyped_static_vertex_buffer` are only containers for these underlying buffer objects. This
-	/// means, for example, that setting a static vertex buffer on a graphics context does not set the literal
+	/// It's worth remembering that instances of `tr::untyped_static_vertex_buffer` are only containers for these underlying buffer objects.
+	/// This means, for example, that setting a static vertex buffer on a graphics context does not set the literal
 	/// `tr::untyped_static_vertex_buffer` object at a specific location in memory, but rather the value it contains. If the value is moved
 	/// to a different instance of `tr::untyped_static_vertex_buffer`, that value will still be set on the context. If the instance is
 	/// overriden with a new value, the old value is destroyed and the graphics context will no longer have a set vertex buffer.
@@ -25,7 +25,7 @@ namespace tr
 	///
 	/// Moved-from instances of `tr::untyped_static_vertex_buffer` are left in a special 'invalid' state. Invalid
 	/// `tr::untyped_static_vertex_buffer` instances may not be interacted with besides moving a new value into them and checking for
-	/// validity using `valid()`.
+	/// validity using `valid()` or `operator bool()`.
 	///
 	/// `tr::untyped_static_vertex_buffer` instances may be labeled and are formattable. Example format output: `"My vertex buffer" (ID: 3,
 	/// VBO: 5)`.
@@ -35,84 +35,79 @@ namespace tr
 		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Uploads vertex data into a static vertex buffer.
+		/// @brief Constructs an untyped static vertex buffer with vertex data.
 		/// @param context Graphics context to create the buffer on.
 		/// @param data Data to upload to the buffer.
 		/// @param label Label of the buffer.
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
 		[[nodiscard]] untyped_static_vertex_buffer(graphics_context& context, std::span<const std::byte> data, std::string_view label = {});
 
-		/// Untyped static vertex buffers are not copyable.
+		/// @brief Untyped static vertex buffers are not copyable.
 		untyped_static_vertex_buffer(const untyped_static_vertex_buffer&) = delete;
 
-		/// Moves an untyped static vertex buffer.
-		/// @details `rhs` is left in an invalid state after the move as per the class description.
-		/// @param rhs Untyped static vertex buffer to move.
-		[[nodiscard]] untyped_static_vertex_buffer(untyped_static_vertex_buffer&& rhs) noexcept = default;
-
-		/// @}
-		/// @name Assignment operators
-		/// @{
-
-		/// Untyped static vertex buffers are not copyable.
+		/// @brief Untyped static vertex buffers are not copyable.
 		untyped_static_vertex_buffer& operator=(const untyped_static_vertex_buffer&) = delete;
 
-		/// Moves an untyped static vertex buffer.
-		/// @details `rhs` is left in an invalid state after the move as per the class description.
-		/// @param rhs Untyped static vertex buffer to move.
+		/// @brief Constructs an untyped static vertex buffer by transferring ownership from another `tr::untyped_static_vertex_buffer`.
+		/// @param rhs Untyped static vertex buffer to move from.
+		/// @par Invalidation
+		/// If the vertex buffer previously held by `rhs` is set on the associated graphics context, it stays set.
+		/// @post `rhs` is left in an invalid state after the move.
+		[[nodiscard]] untyped_static_vertex_buffer(untyped_static_vertex_buffer&& rhs) noexcept = default;
+
+		/// @brief Destroys the currently held untyped static vertex buffer and transfers ownership from another
+		/// `tr::untyped_static_vertex_buffer`.
+		/// @param rhs Untyped static vertex buffer to move from.
+		/// @par Invalidation
+		/// If the vertex buffer previously held by `*this` was set on the associated graphics context, it is unset.
+		///
+		/// If the vertex buffer previously held by `rhs` is set on the associated graphics context, it stays set.
+		/// @post `rhs` is left in an invalid state after the move.
 		/// @return Reference to `*this`.
 		untyped_static_vertex_buffer& operator=(untyped_static_vertex_buffer&& rhs) noexcept = default;
 
 		/// @}
-		/// @name Context
+		/// @name Modifiers
 		/// @{
-
-		using graphics_buffer::context;
-
-		/// @}
-		/// @name State
-		/// @{
-
-		using graphics_buffer::valid;
-
-		/// @}
-		/// @name Label
-		/// @{
-
-		using graphics_buffer::label;
 
 		using graphics_buffer::set_label;
 
 		/// @}
+		/// @name Observers
+		/// @{
+
+		using graphics_buffer::operator bool;
+
+		using graphics_buffer::valid;
+
+		using graphics_buffer::context;
+
+		using graphics_buffer::label;
+
 		/// @cond gl_interop
-		/// @name OpenGL interoperability
-		/// @{
-
-		using graphics_buffer::unwrap;
-
-		/// @}
+		using graphics_buffer::handle;
 		/// @endcond
+
 		/// @cond implementation_details
-		/// @name Implementation details
-		/// @{
-
 		using graphics_buffer::id;
+		/// @endcond
 
 		/// @}
-		/// @endcond
 
 	  private:
-		/// Size of the vertex buffer in bytes.
+		/// @brief Size of the vertex buffer in bytes.
 		ssize m_size;
 	};
 } // namespace tr
 
 //
 
-/// Untyped static vertex buffer formatter.
+/// @brief Untyped static vertex buffer formatter.
 template <>
 struct std::formatter<tr::untyped_static_vertex_buffer>
 {
-	/// Parses the format specification.
+	/// @brief Parses the format specification.
 	/// @tparam ParseContext Parsing context type.
 	/// @param context Parsing context.
 	/// @return Iterator to the end of the parsed specification.
@@ -125,7 +120,7 @@ struct std::formatter<tr::untyped_static_vertex_buffer>
 		return context.begin();
 	}
 
-	/// Formats an untyped static vertex buffer.
+	/// @brief Formats an untyped static vertex buffer.
 	/// @tparam FormatContext Formatting context type.
 	/// @param buffer Vertex buffer to format.
 	/// @param context Formatting context.
@@ -135,7 +130,7 @@ struct std::formatter<tr::untyped_static_vertex_buffer>
 	{
 		if (buffer.valid()) {
 			return std::format_to(context.out(), "\"{}\" (ID: {}, VBO: {})", buffer.label(), std::to_underlying(buffer.id()),
-								  buffer.unwrap());
+								  buffer.handle());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid untyped static vertex buffer at {}>", static_cast<const void*>(&buffer));

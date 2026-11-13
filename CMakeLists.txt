@@ -118,6 +118,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/pixel_iterator.cpp
 		src/sysgfx/pixel_proxy.cpp
 		src/sysgfx/render_target.cpp
+		src/sysgfx/sdl_surface_deleter.cpp
 		src/sysgfx/shader_pipeline.cpp
 		src/sysgfx/shader.cpp
 		src/sysgfx/static_index_buffer.cpp

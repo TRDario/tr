@@ -9,31 +9,31 @@
 
 namespace tr
 {
-	/// Structure containing logging message information.
+	/// @brief Structure containing logging message information.
 	struct log_message
 	{
-		/// Maximum log message length.
+		/// @brief Maximum log message length.
 		static constexpr usize max_length{255};
 
 		//
 
-		/// Timestamp of the message.
+		/// @brief Timestamp of the message.
 		std::tm timestamp;
 
-		/// Log level of the message.
+		/// @brief Log level of the message.
 		log_level level;
 
-		/// Name of the source of the message.
+		/// @brief Name of the source of the message.
 		std::string_view source;
 
-		/// Message string.
+		/// @brief Message string.
 		inplace_string<max_length> string;
 	};
 } // namespace tr
 
 //
 
-/// Logging message formatter.
+/// @brief Logging message formatter.
 /// @details
 /// By default, logging messages are outputted with the source of the message indicated in the message. This may be disabled with `{:n}`.
 ///
@@ -42,7 +42,7 @@ template <>
 class std::formatter<tr::log_message>
 {
   public:
-	/// Parses the format specification.
+	/// @brief Parses the format specification.
 	/// @tparam ParseContext Parsing context type.
 	/// @param context Parsing context.
 	/// @return Iterator to the end of the parsed specification.
@@ -65,7 +65,7 @@ class std::formatter<tr::log_message>
 		return context_it;
 	}
 
-	/// Formats a logging level.
+	/// @brief Formats a logging level.
 	/// @tparam FormatContext Formatting context type.
 	/// @param message Logging message to format.
 	/// @param context Formatting context.
@@ -86,16 +86,16 @@ class std::formatter<tr::log_message>
 	}
 
   private:
-	/// Message formats.
+	/// @brief Message formats.
 	enum class message_format : bool
 	{
-		/// Do not include the source of the message in the final string.
+		/// @brief Do not include the source of the message in the final string.
 		no_source,
 
-		/// Include the source of the message in the final string.
+		/// @brief Include the source of the message in the final string.
 		with_source
 	};
 
-	/// Output format.
+	/// @brief Output format.
 	message_format m_message_format{message_format::with_source};
 };

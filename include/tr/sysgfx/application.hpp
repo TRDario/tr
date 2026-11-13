@@ -20,113 +20,112 @@
 
 namespace tr
 {
-	/// Application metadata.
+	/// @brief Application metadata.
 	struct application_metadata
 	{
-		/// Supported application types.
+		/// @brief Supported application types.
 		enum class type
 		{
-			/// The application is a game.
+			/// @brief The application is a game.
 			game,
 
-			/// The application type is unspecified.
+			/// @brief The application type is unspecified.
 			application
 		};
 
 		//
 
-		/// Name of the application.
+		/// @brief Name of the application.
 		zstring_view name{};
 
-		/// Version of the application.
+		/// @brief Version of the application.
 		zstring_view version{};
 
-		/// Identifier of the application.
+		/// @brief Identifier of the application.
 		zstring_view identifier{};
 
-		/// Developer of the application.
+		/// @brief Developer of the application.
 		zstring_view developer{};
 
-		/// Short copyright notice.
+		/// @brief Short copyright notice.
 		zstring_view copyright{};
 
-		/// URL relevant to the application.
+		/// @brief URL relevant to the application.
 		zstring_view url{};
 
-		/// Application type.
+		/// @brief Application type.
 		type type{type::application};
 	};
 
-	/// Interface for an application run in the main loop of tr.
+	/// @brief Interface for an application run in the main loop of tr.
 	class application
 	{
 	  public:
-		/// Signals used for defining the control flow of the application callbacks.
+		/// @brief Signals used for defining the control flow of the application callbacks.
 		enum class signal
 		{
-			/// Continue execution.
+			/// @brief Continue execution.
 			proceed,
 
-			/// Regular exit.
+			/// @brief Regular exit.
 			exit,
 
-			/// Abnormal exit.
+			/// @brief Abnormal exit.
 			abort
 		};
 
 		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Constructs an application.
+		/// @brief Constructs an application.
 		[[nodiscard]] application() noexcept = default;
 
-		/// Applications are not copyable.
+		/// @brief Applications are not copyable.
 		application(const application&) = delete;
-
-		/// Applications are not movable.
-		application(application&&) = delete;
-
-		/// Destroys the application.
-		virtual ~application() noexcept = default;
-
-		/// @}
-		/// @name Assignment operators
-		/// @{
 
 		/// Applications are not copyable.
 		application& operator=(const application&) = delete;
 
+		/// @brief Applications are not movable.
+		application(application&&) = delete;
+
 		/// Applications are not movable.
 		application& operator=(application&&) = delete;
 
-		/// @}
+		/// @brief Destroys the application.
+		virtual ~application() noexcept = default;
 
-		/// Callback function called once at the beginning of execution after the initialization of systems.
+		/// @}
+		/// @name Callbacks
+		/// @{
+
+		/// @brief Callback function called once at the beginning of execution after the initialization of systems.
 		/// @details Uncaught exceptions from this function will display a dialog box and quit the application.
 		/// @param args Application command-line arguments.
 		/// @return Application state signal after initialization.
 		virtual signal initialize(zstring_view_zspan args);
 
-		/// Callback function called whenever an event needs to be handled. Not guaranteed to be called on the main thread.
+		/// @brief Callback function called whenever an event needs to be handled. Not guaranteed to be called on the main thread.
 		/// @details Uncaught exceptions from this function will display a dialog box and quit the application.
 		/// @param event Event to handle.
 		/// @return Application state signal after handling the event.
 		virtual signal handle_event(event_view event);
 
-		/// Primary update callback function.
+		/// @brief Primary update callback function.
 		/// @details Uncaught exceptions from this function will display a dialog box and quit the application.
 		/// @param delta Time since the last update.
 		/// @return Application state signal after updating.
 		virtual signal update(duration delta);
+
+		/// @}
 	};
 
-	/// Sentinel representing an uncapped update frequency (the default behavior).
+	/// @brief Sentinel representing an uncapped update frequency (the default behavior).
 	inline constexpr float uncapped_update_frequency{0};
 
-	/// @name Application
-	/// @{
+	//
 
-	/// Runs an application.
+	/// @brief Runs an application.
 	/// @tparam Application Application type fulfilling the `tr::application` interface.
 	/// @tparam Args Types of the arguments to the application constructor.
 	/// @param argc, argv Command-line arguments.
@@ -142,9 +141,7 @@ namespace tr
 		return internal::run_application(std::move(application), argc, argv);
 	}
 
-	/// Sets the frequency at which update() is called in the main loop (by default uncapped).
+	/// @brief Sets the frequency at which update() is called in the main loop (by default uncapped).
 	/// @param frequency Frequency at which update() should be called in the main loop, or `tr::uncapped_update_frequency`.
 	void set_update_frequency(float frequency) noexcept;
-
-	/// @}
 } // namespace tr

@@ -13,50 +13,59 @@ namespace tr
 
 namespace tr
 {
-	/// Interface for sinks recieving log messages.
+	/// @brief Interface for sinks recieving log messages.
 	class log_sink
 	{
 	  public:
 		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Destroys the sink.
+		/// @brief Destroys the sink.
 		virtual ~log_sink() noexcept = default;
 
 		/// @}
+		/// @name Logging sink interface
+		/// @{
 
-		//
-
-		/// Handles a log message.
+		/// @brief Handles a log message.
 		/// @param message Log message to handle.
 		virtual void log(const log_message& message) = 0;
 
-		/// Flushes the sink.
+		/// @brief Flushes the sink.
 		virtual void flush() = 0;
+
+		/// @}
 	};
 
 	//
 
-	/// Logging sink outputting to the standard output.
+	/// @brief Logging sink outputting to the standard output.
 	class stdout_log_sink final : public log_sink
 	{
 	  public:
-		/// Flushes the standard output.
+		/// @name Constructors, destructors, and assignment operators
+		/// @{
+
+		/// @brief Flushes the standard output.
 		~stdout_log_sink() noexcept override;
 
-		//
+		/// @}
+		/// @name Logging sink interface
+		/// @{
 
-		/// Outputs a logging message to the standard output.
+		/// @brief Outputs a logging message to the standard output.
 		/// @param message Log message to output.
 		void log(const log_message& message) override;
 
-		/// Flushes the standard output.
+		/// @brief Flushes the standard output.
 		void flush() override;
+
+		/// @}
 	};
 
 	//
 
-	/// Logging sink outputting to log files in a directory.
+	/// @brief Logging sink outputting to log files in a directory.
 	/// @details
 	/// The directory sink places every source in a separate log file titled after it.
 	///
@@ -64,22 +73,29 @@ namespace tr
 	class directory_log_sink final : public log_sink
 	{
 	  public:
+		/// @name Constructors, destructors, and assignment operators
+		/// @{
+
 		/// Creates a directory logging sink.
 		/// @details If the directory does not exist, it is created.
 		/// @param directory_path Path to the directory containing the log files.
 		directory_log_sink(std::filesystem::path directory_path);
 
-		//
+		/// @}
+		/// @name Logging sink interface
+		/// @{
 
-		/// Outputs a logging message to a log file.
+		/// @brief Outputs a logging message to a log file.
 		/// @param message Log message to output.
 		void log(const log_message& message) noexcept override;
 
-		/// Flushes the sink (no-op).
+		/// @brief Flushes the sink (no-op).
 		void flush() noexcept override {}
 
+		/// @}
+
 	  private:
-		/// Path to the directory containing the log files.
+		/// @brief Path to the directory containing the log files.
 		std::filesystem::path m_directory_path;
 	};
 } // namespace tr

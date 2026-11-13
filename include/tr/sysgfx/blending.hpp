@@ -7,106 +7,95 @@
 
 namespace tr
 {
-	/// Blending functions.
+	/// @brief Blending functions.
 	enum class blend_fn
 	{
-		/// The source and destination colors are added together.
+		/// @brief The source and destination colors are added together.
 		add = 0x8006,
 
-		/// The minimum channel values of the source and destination colors are selected.
+		/// @brief The minimum channel values of the source and destination colors are selected.
 		min,
 
-		/// The maximum channel values of the source and destination colors are selected.
+		/// @brief The maximum channel values of the source and destination colors are selected.
 		max,
 
-		/// The source and destination colors are subtracted in the form (src - dst).
+		/// @brief The source and destination colors are subtracted in the form (src - dst).
 		subtract = 0x800A,
 
-		/// The source and destination colors are subtracted in the form (dst - src).
+		/// @brief The source and destination colors are subtracted in the form (dst - src).
 		reverse_subtract
 	};
 
-	/// Blending parameter multipliers.
+	/// @brief Blending parameter multipliers.
 	enum class blend_multiplier
 	{
-		/// The parameter is multiplied by 0.
+		/// @brief The parameter is multiplied by 0.
 		zero,
 
-		/// The parameter is multiplied by 1.
+		/// @brief The parameter is multiplied by 1.
 		one,
 
-		/// The parameter is multiplied by the source color.
+		/// @brief The parameter is multiplied by the source color.
 		src_color = 0x300,
 
-		/// The parameter is multiplied by 1 - the source color.
+		/// @brief The parameter is multiplied by 1 - the source color.
 		one_minus_src_color,
 
-		/// The parameter is multiplied by the source alpha.
+		/// @brief The parameter is multiplied by the source alpha.
 		src_alpha,
 
-		/// The parameter is multiplied by 1 - the source alpha.
+		/// @brief The parameter is multiplied by 1 - the source alpha.
 		one_minus_src_alpha,
 
-		/// The parameter is multiplied by the destination alpha.
+		/// @brief The parameter is multiplied by the destination alpha.
 		dst_alpha,
 
-		/// The parameter is multiplied by 1 - the destination alpha.
+		/// @brief The parameter is multiplied by 1 - the destination alpha.
 		one_minus_dst_alpha,
 
-		/// The parameter is multiplied by the destination color.
+		/// @brief The parameter is multiplied by the destination color.
 		dst_color,
 
-		/// The parameter is multiplied by 1 - the destination color.
+		/// @brief The parameter is multiplied by 1 - the destination color.
 		one_minus_dst_color
 	};
 
-	/// Blending mode information.
+	/// @brief Blending mode information.
 	struct blend_mode
 	{
-		// Multiplier used for the source color.
+		/// @brief Multiplier used for the source color.
 		blend_multiplier rgb_src;
 
-		// Operation applied with the source and destination colors.
+		/// @brief Operation applied with the source and destination colors.
 		blend_fn rgb_fn;
 
-		// Multiplier used for the destination color.
+		/// @brief Multiplier used for the destination color.
 		blend_multiplier rgb_dst;
 
-		// Multiplier used for the source alpha.
+		/// @brief Multiplier used for the source alpha.
 		blend_multiplier alpha_src;
 
-		// Operation applied with the source and destination alpha.
+		/// @brief Operation applied with the source and destination alpha.
 		blend_fn alpha_fn;
 
-		// Multiplier used for the destination alpha.
+		/// @brief Multiplier used for the destination alpha.
 		blend_multiplier alpha_dst;
 
 		//
 
-		/// Compares two blending modes for equality.
-		/// @param lhs, rhs Blending mode to compare.
-		/// @return Whether the blending modes are equal.
+		/// @brief Checks two blending modes for equality.
+		/// @param lhs, rhs Blending modes to compare.
+		/// @return `true` if the blending modes are equal, `false` otherwise.
 		[[nodiscard]] friend bool operator==(const blend_mode& lhs, const blend_mode& rhs) noexcept = default;
 	};
 
-	/// @name Blending modes
-	/// @{
+	//
 
-	/// Alpha blending mode.
+	/// @brief Alpha blending mode.
 	inline constexpr blend_mode alpha_blending{blend_multiplier::src_alpha, blend_fn::add, blend_multiplier::one_minus_src_alpha,
 											   blend_multiplier::one,       blend_fn::add, blend_multiplier::one_minus_src_alpha};
 
-	/// Premultiplied alpha blending mode.
+	/// @brief Premultiplied alpha blending mode.
 	inline constexpr blend_mode premultiplied_alpha_blending{blend_multiplier::one, blend_fn::add, blend_multiplier::one_minus_src_alpha,
 															 blend_multiplier::one, blend_fn::add, blend_multiplier::one_minus_src_alpha};
-
-	/// Writes the maximum of two values into the buffer.
-	inline constexpr blend_mode max_blending{blend_multiplier::one, blend_fn::max, blend_multiplier::one,
-											 blend_multiplier::one, blend_fn::max, blend_multiplier::one};
-
-	/// Applied after MAX_BLENDING to achieve normal alpha blending.
-	inline constexpr blend_mode reverse_alpha_blending{blend_multiplier::one_minus_dst_alpha, blend_fn::add, blend_multiplier::dst_alpha,
-													   blend_multiplier::one_minus_dst_alpha, blend_fn::max, blend_multiplier::dst_alpha};
-
-	/// @}
 } // namespace tr

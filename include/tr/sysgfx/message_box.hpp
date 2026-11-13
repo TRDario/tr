@@ -8,52 +8,56 @@
 
 namespace tr
 {
-	/// Message box type.
+	/// @brief Message box type.
 	enum class message_box_type : unsigned int
 	{
-		/// Error message box.
+		/// @brief Error message box.
+		/// @hideinitializer
 		error = 16,
 
-		/// Warning message box.
+		/// @brief Warning message box.
+		/// @hideinitializer
 		warning = 32,
 
-		/// Information message box.
+		/// @brief Information message box.
+		/// @hideinitializer
 		info = 64
 	};
 
-	/// Message box button layout.
+	/// @brief Message box button layout.
 	enum class message_box_layout
 	{
-		/// Message box with a single "OK" button.
+		/// @brief Message box with a single "OK" button.
 		ok,
 
-		/// Message box with "Yes" and "No" buttons.
+		/// @brief Message box with "Yes" and "No" buttons.
 		yes_no,
 
-		/// Message box with "Yes", "No" and "Cancel" buttons.
+		/// @brief Message box with "Yes", "No" and "Cancel" buttons.
 		yes_no_cancel
 	};
 
-	/// Message box selection.
+	/// @brief Message box selection.
 	enum class message_box_button
 	{
-		/// User pressed "OK" or dismissed a `message_box_layout::ok` message box.
+		/// @brief User pressed "OK" or dismissed a `message_box_layout::ok` message box.
+		/// @hideinitializer
 		ok = 0,
 
-		/// User pressed "Yes".
+		/// @brief User pressed "Yes".
+		/// @hideinitializer
 		yes = 0,
 
-		/// User pressed "No" or dismissed a `message_box_layout::yes_no` message box.
+		/// @brief User pressed "No" or dismissed a `message_box_layout::yes_no` message box.
 		no,
 
-		/// User pressed "Cancel" or dismissed a `message_box_layout::yes_no_cancel` message box.
+		/// @brief User pressed "Cancel" or dismissed a `message_box_layout::yes_no_cancel` message box.
 		cancel
 	};
 
-	/// @name Message box
-	/// @{
+	//
 
-	/// Shows a message box.
+	/// @brief Shows a message box.
 	/// @param type Message box type.
 	/// @param layout Message box layout.
 	/// @param title Message box title.
@@ -61,6 +65,4 @@ namespace tr
 	/// @return Button the user pressed.
 	message_box_button show_message_box(message_box_type type, message_box_layout layout, zstring_view title,
 										zstring_view message) noexcept;
-
-	/// @}
 } // namespace tr

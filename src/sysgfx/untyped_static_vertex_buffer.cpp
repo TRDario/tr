@@ -14,7 +14,7 @@ tr::untyped_static_vertex_buffer::untyped_static_vertex_buffer(graphics_context&
 	, m_size{std::ssize(data)}
 {
 	const internal::opengl& gl{context.gl()};
-	gl.allocate_buffer_storage(unwrap(), m_size, data.data(), 0);
+	gl.allocate_buffer_storage(handle(), m_size, data.data(), 0);
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"allocation of vertex buffer {}", *this};
 	}

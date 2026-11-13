@@ -29,7 +29,7 @@ namespace tr
 
 namespace tr
 {
-	/// Base shader program class.
+	/// @brief Owning container for a shader program.
 	/// @details
 	/// Shader programs are small programs run on the GPU during a step of the graphics pipeline. tr allows the creation and use of custom
 	/// vertex and fragment shader programs written in the OpenGL shading language (GLSL).
@@ -45,7 +45,7 @@ namespace tr
 	/// Every shader object is associated with a graphics context and cannot outlive its parent context.
 	///
 	/// Moved-from instances of shader objects are left in a special 'invalid' state. Invalid shader objects may not be interacted with
-	/// besides moving a new value into them and checking for validity using `valid()`.
+	/// besides moving a new value into them and checking for validity using `valid()` or `operator bool()`.
 	///
 	/// Shader objects may be labeled and are formattable. Example format output: `"My %shader" (ID: 3, PO: 3)`.
 	class shader
@@ -623,11 +623,11 @@ namespace tr
 
 //
 
-/// Shader formatter.
+/// @brief Shader formatter.
 template <>
 struct std::formatter<tr::shader>
 {
-	/// Parses the format specification.
+	/// @brief Parses the format specification.
 	/// @tparam ParseContext Parsing context type.
 	/// @param context Parsing context.
 	/// @return Iterator to the end of the parsed specification.
@@ -640,7 +640,7 @@ struct std::formatter<tr::shader>
 		return context.begin();
 	}
 
-	/// Formats a shader.
+	/// @brief Formats a shader.
 	/// @tparam FormatContext Formatting context type.
 	/// @param shader Shader to format.
 	/// @param context Formatting context.
@@ -658,11 +658,11 @@ struct std::formatter<tr::shader>
 	}
 };
 
-/// Vertex shader formatter.
+/// @brief Vertex shader formatter.
 template <>
 struct std::formatter<tr::vertex_shader>
 {
-	/// Parses the format specification.
+	/// @brief Parses the format specification.
 	/// @tparam ParseContext Parsing context type.
 	/// @param context Parsing context.
 	/// @return Iterator to the end of the parsed specification.
@@ -675,7 +675,7 @@ struct std::formatter<tr::vertex_shader>
 		return context.begin();
 	}
 
-	/// Formats a vertex shader.
+	/// @brief Formats a vertex shader.
 	/// @tparam FormatContext Formatting context type.
 	/// @param shader Vertex shader to format.
 	/// @param context Formatting context.
@@ -693,11 +693,11 @@ struct std::formatter<tr::vertex_shader>
 	}
 };
 
-/// Fragment shader formatter.
+/// @brief Fragment shader formatter.
 template <>
 struct std::formatter<tr::fragment_shader>
 {
-	/// Parses the format specification.
+	/// @brief Parses the format specification.
 	/// @tparam ParseContext Parsing context type.
 	/// @param context Parsing context.
 	/// @return Iterator to the end of the parsed specification.
@@ -710,7 +710,7 @@ struct std::formatter<tr::fragment_shader>
 		return context.begin();
 	}
 
-	/// Formats a fragment shader.
+	/// @brief Formats a fragment shader.
 	/// @tparam FormatContext Formatting context type.
 	/// @param shader Fragment shader to format.
 	/// @param context Formatting context.
@@ -728,11 +728,11 @@ struct std::formatter<tr::fragment_shader>
 	}
 };
 
-/// Compute shader formatter.
+/// @brief Compute shader formatter.
 template <>
 struct std::formatter<tr::compute_shader>
 {
-	/// Parses the format specification.
+	/// @brief Parses the format specification.
 	/// @tparam ParseContext Parsing context type.
 	/// @param context Parsing context.
 	/// @return Iterator to the end of the parsed specification.
@@ -745,7 +745,7 @@ struct std::formatter<tr::compute_shader>
 		return context.begin();
 	}
 
-	/// Formats a compute shader.
+	/// @brief Formats a compute shader.
 	/// @tparam FormatContext Formatting context type.
 	/// @param shader Compute shader to format.
 	/// @param context Formatting context.

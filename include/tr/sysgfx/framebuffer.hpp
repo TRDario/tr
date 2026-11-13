@@ -16,183 +16,183 @@ namespace tr
 
 namespace tr
 {
-	/// Container for a framebuffer object.
+	/// @brief Owning container for a framebuffer object.
 	/// @details
 	/// A framebuffer is a collection of references to buffers used as a destination for rendering. The default framebuffer is used to
 	/// render to the screen, while instances of `tr::framebuffer` may have arbitrary textures attached to them as rendering targets.
 	///
-	/// Strictly speaking, instances of `tr::framebuffer` are only containers for these underlying framebuffers. This means, for example,
-	/// that setting a render target on a graphics context does not set a render target of a literal `tr::framebuffer` object at a specific
-	/// location in memory, but rather the value it contains. If the value is moved to a different instance of `tr::framebuffer`, that value
-	/// will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the graphics context
-	/// will no longer have a set render target.
+	/// It's worth remembering that instances of `tr::framebuffer` are only containers for these underlying framebuffers. This means, for
+	/// example, that setting a render target on a graphics context does not set a render target of a literal `tr::framebuffer` object at a
+	/// specific location in memory, but rather the value it contains. If the value is moved to a different instance of `tr::framebuffer`,
+	/// that value will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the
+	/// graphics context will no longer have a set render target.
 	///
 	/// Every instance of `tr::framebuffer` is associated with a graphics context and cannot outlive its parent context.
 	///
 	/// Moved-from instances of `tr::framebuffer` are left in a special 'invalid' state. Invalid `tr::framebuffer` instances may not be
-	/// interacted with besides moving a new value into them and checking for validity using `valid()`.
+	/// interacted with besides moving a new value into them and checking for validity using `valid()` or `operator bool()`.
 	///
 	/// `tr::framebuffer` instances may be labeled and are formattable. Example format output: `"My %framebuffer" (ID: 3, FBO: 5)`.
 	class framebuffer
 	{
 	  public:
-		/// Framebuffer attachments.
+		/// @brief Framebuffer attachment points.
 		enum class attachment
 		{
-			/// First color attachment.
+			/// @brief First color attachment.
+			/// @hideinitializer
 			color0 = 36064,
 
-			/// Second color attachment.
+			/// @brief Second color attachment.
 			color1,
 
-			/// Third color attachment.
+			/// @brief Third color attachment.
 			color2,
 
-			/// Fourth color attachment.
+			/// @brief Fourth color attachment.
 			color3,
 
-			/// Fifth color attachment.
+			/// @brief Fifth color attachment.
 			color4,
 
-			/// Sixth color attachment.
+			/// @brief Sixth color attachment.
 			color5,
 
-			/// Seventh color attachment.
+			/// @brief Seventh color attachment.
 			color6,
 
-			/// Eighth color attachment.
+			/// @brief Eighth color attachment.
 			color7,
 
-			/// Depth attachment.
+			/// @brief Depth attachment.
+			/// @hideinitializer
 			depth = 36096,
 
-			/// Stencil attachment.
+			/// @brief Stencil attachment.
+			/// @hideinitializer
 			stencil = 36128,
 		};
 
 		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Creates an empty framebuffer.
+		/// @brief Constructs an empty framebuffer.
 		/// @param context Graphics context to create the framebuffer on.
 		/// @param label Label of the framebuffer.
 		[[nodiscard]] explicit framebuffer(graphics_context& context, std::string_view label = {}) noexcept;
 
-		/// Framebuffers are not copyable.
+		/// @brief Framebuffers are not copyable.
 		framebuffer(const framebuffer&) = delete;
 
-		/// Moves a framebuffer.
-		/// @details `rhs` is left in an invalid state after the move as per the class description.
-		/// @param rhs Framebuffer to move.
-		[[nodiscard]] framebuffer(framebuffer&& rhs) noexcept = default;
-
-		/// @}
-		/// @name Assignment operators
-		/// @{
-
-		/// Framebuffers are not copyable.
+		/// @brief Framebuffers are not copyable.
 		framebuffer& operator=(const framebuffer&) = delete;
 
-		/// Moves a framebuffer.
-		/// @details `rhs` is left in an invalid state after the move as per the class description.
-		/// @param rhs Framebuffer to move.
+		/// @brief Constructs a framebuffer by transferring ownership from another `tr::framebuffer`.
+		/// @param rhs Framebuffer to move from.
+		/// @par Invalidation
+		/// If the framebuffer previously held by `rhs` is set on the associated graphics context, it stays set. Any render targets pointing
+		/// to the framebuffer now point to the framebuffer stored in `*this`.
+		/// @post `rhs` is left in an invalid state after the move.
+		[[nodiscard]] framebuffer(framebuffer&& rhs) noexcept = default;
+
+		/// @brief Destroys the currently held framebuffer and replaces it with one moved from another `tr::framebuffer`.
+		/// @param rhs Framebuffer to move from.
+		/// @par Invalidation
+		/// If the framebuffer previously held by `*this` was set on the associated graphics context, it is unset. Any render targets
+		/// pointing to the framebuffer are invalidated.
+		///
+		/// If the framebuffer previously held by `rhs` is set on the associated graphics context, it stays set. Any render targets pointing
+		/// to the framebuffer now point to the framebuffer stored in `*this`.
+		/// @post `rhs` is left in an invalid state after the move.
 		/// @return Reference to `*this`.
 		framebuffer& operator=(framebuffer&& rhs) noexcept = default;
 
 		/// @}
-		/// @name Context
+		/// @name Modifiers
 		/// @{
 
-		/// Gets a reference to the graphics context the framebuffer is on.
-		/// @return Reference to the graphics context the framebuffer is on.
-		[[nodiscard]] graphics_context& context() const noexcept;
-
-		/// @}
-		/// @name Attachments
-		/// @{
-
-		/// Attaches a texture to the framebuffer.
-		/// @param attachment Attachment to set.
+		/// @brief Attaches a texture to the framebuffer.
+		/// @param attachment Attachment point to set the texture on.
 		/// @param texture Texture to attach to the framebuffer.
 		void attach(attachment attachment, texture_view texture) noexcept;
 
-		/// Detaches whatever is on the specified attachment.
-		/// @param attachment Attachment to clear.
+		/// @brief Detaches whatever is on the specified attachment point.
+		/// @param attachment Attachment point to clear.
 		void detach(attachment attachment) noexcept;
 
+		/// @brief Sets the label of the framebuffer.
+		/// @param label Label of the framebuffer.
+		void set_label(std::string_view label) noexcept;
+
 		/// @}
-		/// @name State
+		/// @name Observers
 		/// @{
 
-		/// Gets whether the framebuffer is in a valid state.
+		/// @brief Checks whether the framebuffer is in a valid state.
+		/// @return `true` if the framebuffer is in a valid state, `false` if it is in an invalid state.
+		[[nodiscard]] explicit operator bool() const noexcept;
+
+		/// @brief Checks whether the framebuffer is in a valid state.
 		/// @return `true` if the framebuffer is in a valid state, `false` if it is in an invalid state.
 		[[nodiscard]] bool valid() const noexcept;
 
-		/// @}
-		/// @name Label
-		/// @{
+		/// @brief Returns a reference to the graphics context the framebuffer is on.
+		/// @pre The framebuffer must be in a valid state.
+		/// @return Reference to the graphics context the framebuffer is on.
+		[[nodiscard]] graphics_context& context() const noexcept;
 
-		/// Sets the debug label of the framebuffer.
-		/// @param label Debug label of the framebuffer.
-		void set_label(std::string_view label) noexcept;
-
-		/// Gets the debug label of the framebuffer.
-		/// @return Debug label of the framebuffer.
+		/// @brief Returns the label of the framebuffer.
+		/// @pre The framebuffer must be in a valid state.
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
+		/// @return Label of the framebuffer, or "<unnamed>".
 		[[nodiscard]] std::string label() const;
 
-		/// @}
 		/// @cond gl_interop
-		/// @name OpenGL interoperability
-		/// @{
-
-		/// Unwraps the OpenGL framebuffer.
-		/// @note This does not release the framebuffer.
-		/// @return OpenGL framebuffer ID.
-		[[nodiscard]] unsigned int unwrap() const noexcept;
-
-		/// @}
+		/// @brief Returns a handle to the underlying OpenGL framebuffer object.
+		/// @return Handle to the underlying OpenGL framebuffer object.
+		[[nodiscard]] unsigned int handle() const noexcept;
 		/// @endcond
+
 		/// @cond implementation_details
-		/// @name Implementation details
-
-		/// Gets the unique graphics object ID of the framebuffer.
-		/// @return Unique graphics object ID of the framebuffer.
+		/// @brief Returns ID uniquely identifying the framebuffer.
+		/// @return ID uniquely identifying the framebuffer.
 		[[nodiscard]] internal::graphics_object_id id() const noexcept;
+		/// @endcond
 
 		/// @}
-		/// @endcond
 
 	  private:
-		/// Framebuffer deleter.
-		struct deleter
+		/// @brief OpenGL framebuffer object deleter.
+		struct gl_framebuffer_object_deleter
 		{
-			/// Reference to the graphics context the framebuffer is on.
+			/// @brief Reference to the graphics context the framebuffer is on.
 			ref<graphics_context> context;
 
-			/// Handle to the unique graphics object ID of the framebuffer.
-			internal::graphics_object_id_handle id{};
+			/// @brief ID uniquely identifying the framebuffer.
+			unique_handle<internal::graphics_object_id, internal::graphics_object_id::invalid> id{internal::generate_graphics_object_id()};
 
 			//
 
-			/// Deletes a framebuffer.
-			/// @param fbo OpenGL framebuffer ID.
-			void operator()(unsigned int fbo) const noexcept;
+			/// @brief Destroys a framebuffer object.
+			/// @param handle OpenGL framebuffer object handle.
+			void operator()(unsigned int handle) const noexcept;
 		};
 
 		//
 
-		/// Handle to the OpenGL framebuffer.
-		unique_handle<unsigned int, 0, deleter> m_handle;
+		/// @brief Managed handle to an OpenGL framebuffer object.
+		unique_handle<unsigned int, 0, gl_framebuffer_object_deleter> m_handle;
 	};
 } // namespace tr
 
 //
 
-/// Framebuffer formatter.
+/// @brief Framebuffer formatter.
 template <>
 struct std::formatter<tr::framebuffer>
 {
-	/// Parses the format specification.
+	/// @brief Parses the format specification.
 	/// @tparam ParseContext Parsing context type.
 	/// @param context Parsing context.
 	/// @return Iterator to the end of the parsed specification.
@@ -205,7 +205,7 @@ struct std::formatter<tr::framebuffer>
 		return context.begin();
 	}
 
-	/// Formats a framebuffer.
+	/// @brief Formats a framebuffer.
 	/// @tparam FormatContext Formatting context type.
 	/// @param framebuffer Framebuffer to format.
 	/// @param context Formatting context.
@@ -215,7 +215,7 @@ struct std::formatter<tr::framebuffer>
 	{
 		if (framebuffer.valid()) {
 			return std::format_to(context.out(), "\"{}\" (ID: {}, FBO: {})", framebuffer.label(), std::to_underlying(framebuffer.id()),
-								  framebuffer.unwrap());
+								  framebuffer.handle());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid framebuffer at {}>", static_cast<const void*>(&framebuffer));

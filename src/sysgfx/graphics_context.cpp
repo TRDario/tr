@@ -206,7 +206,7 @@ void tr::graphics_context::set_shader_pipeline(const shader_pipeline& pipeline) 
 	}
 	if (internal::graphics_object_id id{pipeline.id()}; m_bound_shader_pipeline != id) {
 		TR_LOG_TRACE("gfx", "Setting shader pipeline {} on context.", pipeline);
-		gl.bind_program_pipeline(pipeline.unwrap());
+		gl.bind_program_pipeline(pipeline.handle());
 		m_bound_shader_pipeline = id;
 	}
 }
@@ -251,7 +251,7 @@ void tr::graphics_context::set_vertex_format(const vertex_format& format) noexce
 
 	if (internal::graphics_object_id id{format.id()}; m_bound_vertex_format != id) {
 		TR_LOG_TRACE("gfx", "Binding vertex format {} to context.", format);
-		gl().bind_vertex_array(format.unwrap());
+		gl().bind_vertex_array(format.handle());
 		m_bound_vertex_format = id;
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		m_bound_vertex_format_bindings = format.bindings();
@@ -296,7 +296,7 @@ void tr::graphics_context::set_vertex_buffer(const untyped_static_vertex_buffer&
 	if (internal::graphics_object_id id{buffer.id()};
 		bound_vertex_buffer.id != id || bound_vertex_buffer.offset != offset || bound_vertex_buffer.stride != stride) {
 		TR_LOG_TRACE("gfx", "Binding vertex buffer {} to context.", buffer);
-		gl().bind_vertex_buffer(slot, buffer.unwrap(), offset, stride);
+		gl().bind_vertex_buffer(slot, buffer.handle(), offset, stride);
 		bound_vertex_buffer.id = id;
 		bound_vertex_buffer.offset = offset;
 		bound_vertex_buffer.stride = stride;
@@ -319,7 +319,7 @@ void tr::graphics_context::set_vertex_buffer(const untyped_dynamic_vertex_buffer
 	if (internal::graphics_object_id id{buffer.id()};
 		bound_vertex_buffer.id != id || bound_vertex_buffer.offset != offset || bound_vertex_buffer.stride != stride) {
 		TR_LOG_TRACE("gfx", "Binding vertex buffer {} to context.", buffer);
-		gl().bind_vertex_buffer(slot, buffer.unwrap(), offset, stride);
+		gl().bind_vertex_buffer(slot, buffer.handle(), offset, stride);
 		bound_vertex_buffer.id = id;
 		bound_vertex_buffer.offset = offset;
 		bound_vertex_buffer.stride = stride;
@@ -336,7 +336,7 @@ void tr::graphics_context::set_index_buffer(const static_index_buffer& buffer) n
 
 	if (internal::graphics_object_id id{buffer.id()}; m_bound_index_buffer != id) {
 		TR_LOG_TRACE("gfx", "Binding index buffer {} to context.", buffer);
-		gl().bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.unwrap());
+		gl().bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.handle());
 		m_bound_index_buffer = id;
 	}
 }
@@ -348,7 +348,7 @@ void tr::graphics_context::set_index_buffer(const dynamic_index_buffer& buffer) 
 
 	if (internal::graphics_object_id id{buffer.id()}; m_bound_index_buffer != id) {
 		TR_LOG_TRACE("gfx", "Binding index buffer {} to context.", buffer);
-		gl().bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.unwrap());
+		gl().bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.handle());
 		m_bound_index_buffer = id;
 	}
 }
@@ -490,7 +490,7 @@ int tr::graphics_context::allocate_texture_unit() noexcept
 			return static_cast<int>(free_index);
 		}
 	}
-	TR_ASSERT(false, "Tried to allocate more than 80 texture units simultaneously.");
+	TR_ASSERT(false, "Tried to allocate more than 80 texture units simultaneously on a graphics context.");
 	TR_UNREACHABLE;
 }
 
@@ -511,7 +511,7 @@ unsigned int tr::graphics_context::allocate_image_unit() noexcept
 			return free_index;
 		}
 	}
-	TR_ASSERT(false, "Tried to allocate more than 80 image units simultaneously.");
+	TR_ASSERT(false, "Tried to allocate more than 80 image units simultaneously on a graphics context.");
 	TR_UNREACHABLE;
 }
 

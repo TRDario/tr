@@ -15,7 +15,7 @@ namespace tr
 
 namespace tr
 {
-	/// Base class for buffers living on a graphics context.
+	/// @brief Owning container for a generic graphics buffer object.
 	/// @details
 	/// @note `tr::graphics_buffer` isn't intended to be directly instanced, it is merely documented because some buffers inherit methods
 	/// from it.
@@ -23,113 +23,113 @@ namespace tr
 	/// Every instance of `tr::graphics_buffer` is associated with a graphics context and cannot outlive its parent context.
 	///
 	/// Moved-from instances of `tr::graphics_buffer` are left in a special 'invalid' state. Invalid `tr::graphics_buffer` instances may
-	/// not be interacted with besides moving a new value into them and checking for validity using `valid()`.
+	/// not be interacted with besides moving a new value into them and checking for validity using `valid()` or `operator bool()`.
 	class graphics_buffer
 	{
 	  public:
 		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Constructs an empty graphics buffer.
+		/// @brief Constructs an empty graphics buffer.
 		/// @param context Graphics context to create the buffer on.
 		/// @param label Label of the buffer.
 		[[nodiscard]] explicit graphics_buffer(graphics_context& context, std::string_view label = {}) noexcept;
 
-		/// Graphics buffers are not copyable.
+		/// @brief Graphics buffers are not copyable.
 		graphics_buffer(const graphics_buffer&) = delete;
 
-		/// Moves a graphics buffer.
-		/// @details `rhs` is left in an invalid state after the move as per the class description.
-		/// @param rhs Graphics buffer to move.
-		[[nodiscard]] graphics_buffer(graphics_buffer&& rhs) noexcept = default;
-
-		/// @}
-		/// @name Assignment operators
-		/// @{
-
-		/// Graphics buffers are not copyable.
+		/// @brief Graphics buffers are not copyable.
 		graphics_buffer& operator=(const graphics_buffer&) = delete;
 
-		/// Moves a graphics buffer.
-		/// @details `rhs` is left in an invalid state after the move as per the class description.
-		/// @param rhs Graphics buffer to move.
+		/// @brief Constructs a graphics buffer by transferring ownership from another `tr::graphics_buffer`.
+		/// @param rhs `tr::graphics_buffer` to move from.
+		/// @post `rhs` is left in an invalid state after the move.
+		[[nodiscard]] graphics_buffer(graphics_buffer&& rhs) noexcept = default;
+
+		/// @brief Destroys the currently held graphics buffer and replaces it with one moved from another `tr::graphics_buffer`.
+		/// @param rhs `tr::graphics_buffer` to move from.
+		/// @post `rhs` is left in an invalid state after the move.
 		/// @return Reference to `*this`.
 		graphics_buffer& operator=(graphics_buffer&& rhs) noexcept = default;
 
 		/// @}
-		/// @name Context
+		/// @name Observers
 		/// @{
 
-		/// Gets a reference to the graphics context the buffer is on.
-		/// @return Reference to the graphics context the buffer is on.
-		[[nodiscard]] graphics_context& context() const noexcept;
+		/// @brief Checks whether the buffer is in a valid state.
+		/// @return `true` if the buffer is in a valid state, `false` if it is in an invalid state.
+		[[nodiscard]] explicit operator bool() const noexcept;
 
-		/// @}
-		/// @name State
-		/// @{
-
-		/// Gets whether the buffer is in a valid state.
+		/// @brief Checks whether the buffer is in a valid state.
 		/// @return `true` if the buffer is in a valid state, `false` if it is in an invalid state.
 		[[nodiscard]] bool valid() const noexcept;
 
-		/// @}
-		/// @name Label
-		/// @{
+		/// @brief Returns a reference to the graphics context the buffer is on.
+		/// @pre The buffer must be in a valid state.
+		/// @return Reference to the graphics context the buffer is on.
+		[[nodiscard]] graphics_context& context() const noexcept;
 
-		/// Gets the label of the buffer.
+		/// @brief Checks whether the buffer is mapped.
+		/// @pre The buffer must be in a valid state.
+		/// @return `true` if the buffer is mapped, `false` otherwise.
+		[[nodiscard]] bool mapped() const noexcept;
+
+		/// @brief Returns the label of the buffer.
+		/// @pre The buffer must be in a valid state.
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
 		/// @return Label of the buffer, or "<unnamed>".
 		[[nodiscard]] std::string label() const;
 
-		/// Sets the label of the buffer.
+		/// @cond gl_interop
+		/// @brief Returns a handle to the underlying OpenGL buffer object.
+		/// @return Handle to the underlying OpenGL buffer object.
+		[[nodiscard]] unsigned int handle() const noexcept;
+		/// @endcond
+
+		/// @cond implementation_details
+		/// @brief Returns the ID uniquely identifying the buffer.
+		/// @return ID uniquely identifying the buffer.
+		[[nodiscard]] internal::graphics_object_id id() const noexcept;
+		/// @endcond
+
+		/// @}
+		/// @name Modifiers
+		/// @{
+
+		/// @brief Sets the label of the buffer.
+		/// @pre The buffer must be in a valid state.
 		/// @param label Label of the buffer.
 		void set_label(std::string_view label) noexcept;
 
-		/// @}
-		/// @cond gl_interop
-		/// @name OpenGL interoperability
-		/// @{
-
-		/// Unwraps the OpenGL buffer object.
-		/// @note This does not release the buffer object.
-		/// @return OpenGL buffer object ID.
-		[[nodiscard]] unsigned int unwrap() const noexcept;
-
-		/// @}
-		/// @endcond
 		/// @cond implementation_details
-		/// @name Implementation details
-		/// @{
-
-		/// Reallocates the buffer while preserving its label (if applicable).
-		void reallocate();
-
-		/// Gets the unique graphics object ID of the buffer.
-		/// @return Unique graphics object ID of the buffer.
-		[[nodiscard]] internal::graphics_object_id id() const noexcept;
+		/// @brief Replaces the buffer while preserving its label (if applicable).
+		/// @param buffer Buffer to transfer the contents of.
+		void replace_with(graphics_buffer&& buffer);
+		/// @endcond
 
 		/// @}
-		/// @endcond
 
 	  private:
-		/// Buffer deleter.
-		struct deleter
+		/// @brief OpenGL buffer object deleter.
+		struct gl_buffer_object_deleter
 		{
-			/// Reference to the context the buffer is on.
+			/// @brief Reference to the context the buffer is on.
 			ref<graphics_context> context;
 
-			/// Handle to the unique graphics object ID of the buffer.
-			internal::graphics_object_id_handle id{};
+			/// @brief ID uniquely identifying the buffer.
+			unique_handle<internal::graphics_object_id, internal::graphics_object_id::invalid> id{internal::generate_graphics_object_id()};
 
 			//
 
-			/// Deletes a buffer.
-			/// @param id OpenGL buffer ID.
-			void operator()(unsigned int bo) const noexcept;
+			/// @brief Destroys a buffer object.
+			/// @param handle OpenGL buffer object handle.
+			void operator()(unsigned int handle) const noexcept;
 		};
 
 		//
 
-		/// Handle to the OpenGL buffer.
-		unique_handle<unsigned int, 0, deleter> m_handle;
+		/// @brief Managed handle to an OpenGL buffer object.
+		unique_handle<unsigned int, 0, gl_buffer_object_deleter> m_handle;
 	};
 } // namespace tr

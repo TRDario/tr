@@ -35,12 +35,12 @@ tr::bitmap::bitmap(glm::ivec2 size, pixel_format format)
 }
 
 tr::bitmap::bitmap(const bitmap& bitmap, pixel_format format)
-	: tr::bitmap{SDL_ConvertSurface(bitmap.unwrap(), static_cast<SDL_PixelFormat>(format))}
+	: tr::bitmap{SDL_ConvertSurface(bitmap.pointer(), static_cast<SDL_PixelFormat>(format))}
 {
 }
 
 tr::bitmap::bitmap(const bitmap_view& view, pixel_format format)
-	: bitmap{SDL_ConvertSurface(view.unwrap(), static_cast<SDL_PixelFormat>(format))}
+	: bitmap{SDL_ConvertSurface(view.pointer(), static_cast<SDL_PixelFormat>(format))}
 {
 }
 
@@ -48,51 +48,6 @@ tr::bitmap::bitmap(sub_bitmap source, pixel_format format)
 	: bitmap{source.size(), format}
 {
 	blit({}, source);
-}
-
-void tr::bitmap::deleter::operator()(SDL_Surface* ptr) noexcept
-{
-	SDL_DestroySurface(ptr);
-}
-
-//
-
-tr::bitmap::operator tr::sub_bitmap() const noexcept
-{
-	return sub(rectangle<int>{size()});
-}
-
-tr::sub_bitmap tr::bitmap::sub(rectangle<int> region) const noexcept
-{
-	return sub_bitmap{*this, region};
-}
-
-//
-
-bool tr::bitmap::valid() const noexcept
-{
-	return static_cast<bool>(m_ptr);
-}
-
-glm::ivec2 tr::bitmap::size() const noexcept
-{
-	TR_ASSERT(valid(), "Tried to get the size of a bitmap in an invalid state.");
-
-	return glm::ivec2{m_ptr->w, m_ptr->h};
-}
-
-tr::pixel_format tr::bitmap::format() const noexcept
-{
-	TR_ASSERT(valid(), "Tried to get the format of a bitmap in an invalid state.");
-
-	return static_cast<pixel_format>(m_ptr->format);
-}
-
-int tr::bitmap::pitch() const noexcept
-{
-	TR_ASSERT(valid(), "Tried to get the pitch of a bitmap in an invalid state.");
-
-	return m_ptr->pitch;
 }
 
 //
@@ -129,6 +84,11 @@ const std::byte* tr::bitmap::data() const noexcept
 	TR_ASSERT(valid(), "Tried to get the data of a bitmap in an invalid state.");
 
 	return static_cast<const std::byte*>(m_ptr->pixels);
+}
+
+tr::bitmap::operator tr::sub_bitmap() const noexcept
+{
+	return sub(rectangle<int>{size()});
 }
 
 //
@@ -185,7 +145,7 @@ void tr::bitmap::blit(glm::ivec2 tl, sub_bitmap source) noexcept
 	const rectangle<int> source_region{source.region()};
 	const SDL_Rect sdl_source{source_region.tl.x, source_region.tl.y, source.size().x, source.size().y};
 	const SDL_Rect sdl_destination{tl.x, tl.y, source.size().x, source.size().y};
-	SDL_BlitSurface(source.unwrap(), &sdl_source, m_ptr.get(), &sdl_destination);
+	SDL_BlitSurface(source.pointer(), &sdl_source, m_ptr.get(), &sdl_destination);
 }
 
 void tr::bitmap::fill(rectangle<int> region, rgba<u8> color) noexcept
@@ -203,6 +163,49 @@ void tr::bitmap::fill(rectangle<int> region, rgba<u8> color) noexcept
 
 //
 
+tr::bitmap::operator bool() const noexcept
+{
+	return static_cast<bool>(m_ptr);
+}
+
+bool tr::bitmap::valid() const noexcept
+{
+	return static_cast<bool>(m_ptr);
+}
+
+glm::ivec2 tr::bitmap::size() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to get the size of a bitmap in an invalid state.");
+
+	return glm::ivec2{m_ptr->w, m_ptr->h};
+}
+
+tr::pixel_format tr::bitmap::format() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to get the format of a bitmap in an invalid state.");
+
+	return static_cast<pixel_format>(m_ptr->format);
+}
+
+int tr::bitmap::pitch() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to get the pitch of a bitmap in an invalid state.");
+
+	return m_ptr->pitch;
+}
+
+SDL_Surface* tr::bitmap::pointer() const noexcept
+{
+	return m_ptr.get();
+}
+
+//
+
+tr::sub_bitmap tr::bitmap::sub(rectangle<int> region) const noexcept
+{
+	return sub_bitmap{*this, region};
+}
+
 void tr::bitmap::save(const std::filesystem::path& path) const
 {
 	TR_ASSERT(valid(), "Tried to save a bitmap in an invalid state.");
@@ -210,13 +213,6 @@ void tr::bitmap::save(const std::filesystem::path& path) const
 	if (!IMG_SavePNG(m_ptr.get(), TR_PATH_CSTR(path))) {
 		throw bitmap_save_error{path.string(), SDL_GetError()};
 	}
-}
-
-//
-
-SDL_Surface* tr::bitmap::unwrap() const noexcept
-{
-	return m_ptr.get();
 }
 
 //

@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides a texture unit class.
+/// @brief Provides `tr::internal::texture_unit`.
 
 #pragma once
 #include <tr/utility/ref.hpp>
@@ -15,44 +15,53 @@ namespace tr
 
 namespace tr::internal
 {
-	/// Location a texture can bind to.
+	/// @brief Location a texture can be set to.
 	class texture_unit
 	{
 	  public:
 		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Allocates a texture unit on a graphics context.
-		/// @param context Context the texture unit belongs to.
+		/// @brief Allocates a texture unit on a graphics context.
+		/// @param context Context to allocate the texture unit on.
+		/// @pre `context` does not already have 80 allocated texture units.
 		[[nodiscard]] explicit texture_unit(graphics_context& context) noexcept;
 
 		/// @}
+		/// @name Modifiers
+		/// @{
 
-		/// Gets the ID of the texture unit.
-		/// @return ID of the texture unit.
-		[[nodiscard]] int id() const noexcept;
-
-		//
-
-		/// Sets the texture unit.
+		/// @brief Sets a texture to the texture unit.
 		/// @param texture Texture to set on the texture unit.
 		void set(texture_view texture) noexcept;
 
+		/// @}
+		/// @name Observers
+		/// @{
+
+		/// @return Returns the handle of the texture unit.
+		/// @return Handle of the texture unit.
+		[[nodiscard]] int handle() const noexcept;
+
+		/// @}
+
 	  private:
-		/// Texture unit freer.
-		struct deleter
+		/// @brief Graphics context texture unit freer.
+		struct graphics_context_texture_unit_freer
 		{
 			/// Reference to the graphics context the texture unit is on.
 			ref<graphics_context> context;
 
 			//
 
-			/// Frees the texture unit.
-			/// @param unit ID of the texture unit.
+			/// @brief Frees a texture unit.
+			/// @param unit Handle to a texture unit.
 			void operator()(int unit) const noexcept;
 		};
 
-		/// Handle to the texture unit.
-		unique_handle<int, -1, deleter> m_handle;
+		//
+
+		/// @brief Managed handle to a texture unit.
+		unique_handle<int, -1, graphics_context_texture_unit_freer> m_handle;
 	};
 } // namespace tr::internal

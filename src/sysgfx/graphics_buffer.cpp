@@ -9,7 +9,7 @@
 //
 
 tr::graphics_buffer::graphics_buffer(graphics_context& context, std::string_view label) noexcept
-	: m_handle{deleter{context}}
+	: m_handle{gl_buffer_object_deleter{context}}
 {
 	context.gl().create_buffers(1, out_handle{m_handle});
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
@@ -20,39 +20,53 @@ tr::graphics_buffer::graphics_buffer(graphics_context& context, std::string_view
 	}
 }
 
-void tr::graphics_buffer::deleter::operator()(unsigned int bo) const noexcept
+void tr::graphics_buffer::gl_buffer_object_deleter::operator()(unsigned int handle) const noexcept
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	context->registered_buffers().erase(id);
+	context->registered_buffers().erase(id.get());
 #endif
-	context->gl().delete_buffers(1, &bo);
+	context->gl().delete_buffers(1, &handle);
 }
 
 //
 
-tr::graphics_context& tr::graphics_buffer::context() const noexcept
+tr::graphics_buffer::operator bool() const noexcept
 {
-	return m_handle.get_deleter().context;
+	return static_cast<bool>(m_handle);
 }
-
-//
 
 bool tr::graphics_buffer::valid() const noexcept
 {
 	return static_cast<bool>(m_handle);
 }
 
-//
+tr::graphics_context& tr::graphics_buffer::context() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to get the context of an invalid graphics buffer.");
+
+	return m_handle.get_deleter().context;
+}
+
+bool tr::graphics_buffer::mapped() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to check whether an invalid graphics buffer is mapped.");
+
+	int mapped;
+	context().gl().get_buffer_parameter_iv(m_handle.get(), GL_BUFFER_MAPPED, &mapped);
+	return mapped;
+}
 
 std::string tr::graphics_buffer::label() const
 {
+	TR_ASSERT(valid(), "Tried to get the label of an invalid graphics buffer.");
+
 	const internal::opengl& gl{context().gl()};
 
 	int label_length;
-	gl.get_object_label(GL_BUFFER, unwrap(), 0, &label_length, nullptr);
+	gl.get_object_label(GL_BUFFER, m_handle.get(), 0, &label_length, nullptr);
 	if (label_length > 0) {
 		std::string label_string(label_length, '\0');
-		gl.get_object_label(GL_BUFFER, unwrap(), label_length + 1, nullptr, label_string.data());
+		gl.get_object_label(GL_BUFFER, m_handle.get(), label_length + 1, nullptr, label_string.data());
 		return label_string;
 	}
 	else {
@@ -60,27 +74,39 @@ std::string tr::graphics_buffer::label() const
 	}
 }
 
-void tr::graphics_buffer::set_label(std::string_view label) noexcept
-{
-	context().gl().set_object_label(GL_BUFFER, unwrap(), static_cast<int>(label.size()), label.data());
-}
-
-//
-
-unsigned int tr::graphics_buffer::unwrap() const noexcept
+unsigned int tr::graphics_buffer::handle() const noexcept
 {
 	return m_handle.get();
 }
 
-//
-
-void tr::graphics_buffer::reallocate()
-{
-	const graphics_buffer old_buffer{std::exchange(*this, graphics_buffer{context()})};
-	context().move_label(GL_BUFFER, old_buffer.unwrap(), unwrap());
-}
-
 tr::internal::graphics_object_id tr::graphics_buffer::id() const noexcept
 {
-	return m_handle.get_deleter().id;
+	return m_handle.get_deleter().id.get();
+}
+
+//
+
+void tr::graphics_buffer::set_label(std::string_view label) noexcept
+{
+	TR_ASSERT(valid(), "Tried to set the label of an invalid graphics buffer.");
+
+	context().gl().set_object_label(GL_BUFFER, m_handle.get(), static_cast<int>(label.size()), label.data());
+}
+
+void tr::graphics_buffer::replace_with(graphics_buffer&& buffer)
+{
+	TR_ASSERT(buffer.valid(), "Tried to replace a graphics buffer with an invalid graphics buffer.");
+
+	if (valid()) {
+		const internal::opengl& gl{context().gl()};
+		int label_length;
+		gl.get_object_label(GL_BUFFER, m_handle.get(), 0, &label_length, nullptr);
+		if (label_length > 0) {
+			std::string label(label_length, '\0');
+			gl.get_object_label(GL_BUFFER, m_handle.get(), label_length, &label_length, label.data());
+			gl.set_object_label(GL_BUFFER, buffer.m_handle.get(), static_cast<int>(label.size()), label.data());
+			gl.set_object_label(GL_BUFFER, m_handle.get(), 0, nullptr);
+		}
+	}
+	*this = std::move(buffer);
 }

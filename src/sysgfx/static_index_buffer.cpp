@@ -13,7 +13,7 @@ tr::static_index_buffer::static_index_buffer(graphics_context& context, std::spa
 	, m_size{std::ssize(data)}
 {
 	const internal::opengl& gl{context.gl()};
-	gl.allocate_buffer_storage(unwrap(), m_size * sizeof(u16), data.data(), 0);
+	gl.allocate_buffer_storage(handle(), m_size * sizeof(u16), data.data(), 0);
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"allocation of index buffer {}", *this};
 	}

@@ -3,30 +3,34 @@
 
 #pragma once
 #include <tr/utility/enum.hpp>
+#include <tr/utility/integer.hpp>
 
 //
 
 namespace tr
 {
-	/// Mouse buttons (may be ORed together).
+	/// @brief Mouse buttons (may be ORed together).
 	enum class mouse_button : u8
 	{
-		/// No mouse buttons.
-		none = 0x0,
+		/// @brief No mouse buttons.
+		none,
 
-		/// Left mouse button.
-		left = 0x1,
+		/// @brief Left mouse button.
+		left,
 
-		/// Middle mouse button.
-		middle = 0x2,
+		/// @brief Middle mouse button.
+		middle,
 
-		/// Right mouse button.
+		/// @brief Right mouse button.
+		/// @hideinitializer
 		right = 0x4,
 
-		/// First additional mouse button.
+		/// @brief First additional mouse button.
+		/// @hideinitializer
 		x1 = 0x8,
 
-		/// Second additional mouse button.
+		/// @brief Second additional mouse button.
+		/// @hideinitializer
 		x2 = 0x10
 	};
 
@@ -36,25 +40,13 @@ namespace tr
 
 	//
 
-	/// Mouse state.
-	struct mouse_state
-	{
-		// Current position of the mouse.
-		glm::vec2 pos;
-
-		// Currently-held mouse buttons.
-		mouse_button held_buttons;
-	};
-
-	//
-
-	/// Mouse modes.
+	/// @brief Mouse modes.
 	enum class mouse_mode : bool
 	{
-		/// Absolute mouse controls: normal operation.
+		/// @brief Absolute mouse controls: normal operation.
 		absolute,
 
-		/// Relative mouse controls: cursor is hidden, stuck to the center, and only reports deltas.
+		/// @brief Relative mouse controls: cursor is hidden, stuck to the center, and only reports deltas.
 		relative
 	};
 } // namespace tr

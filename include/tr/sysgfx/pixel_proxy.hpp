@@ -10,7 +10,7 @@
 
 namespace tr
 {
-	/// Read-only proxy to a bitmap pixel.
+	/// @brief Proxy object providing read-only access to a pixel of a bitmap.
 	class const_pixel_proxy
 	{
 	  public:
@@ -18,39 +18,43 @@ namespace tr
 		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Wraps a pointer to the pixel data.
-		/// @param data Pointer to the pixel data.
+		/// @brief Constructs a pixel proxy.
+		/// @param data Pointer to the data of the pixel.
 		/// @param pixel_format Format of the pixel.
 		[[nodiscard]] const_pixel_proxy(const std::byte* data, pixel_format format) noexcept;
 
 		/// @}
 		/// @endcond
-		/// @name Access
+		/// @name Element access
 		/// @{
 
-		/// Gets a pointer to the data of the pixel.
-		/// @return Pointer to the data of the pixel.
-		[[nodiscard]] const std::byte* data() const noexcept;
-
-		/// Gets the format of the pixel.
-		/// @return Format of the pixel.
-		[[nodiscard]] pixel_format format() const noexcept;
-
-		/// Gets the pixel's color value.
+		/// @brief Returns the color of the pixel.
 		/// @return Color of the pixel.
 		[[nodiscard]] operator rgba<u8>() const noexcept;
 
 		/// @}
+		/// @name Observers
+		/// @{
+
+		/// @brief Returns a pointer to the data of the pixel.
+		/// @return Pointer to the data of the pixel.
+		[[nodiscard]] const std::byte* data() const noexcept;
+
+		/// @brief Returns the format of the pixel.
+		/// @return Format of the pixel.
+		[[nodiscard]] pixel_format format() const noexcept;
+
+		/// @}
 
 	  private:
-		/// Pointer to the pixel data.
+		/// @brief Pointer to the data of the pixel.
 		const std::byte* m_data;
 
-		/// Format of the pixel.
+		/// @brief Format of the pixel.
 		pixel_format m_format;
 	};
 
-	/// Mutable proxy to a bitmap pixel.
+	/// @brief Proxy object providing read-write access to a pixel of a bitmap.
 	class pixel_proxy
 	{
 	  public:
@@ -58,40 +62,44 @@ namespace tr
 		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Wraps a pointer to the pixel data.
-		/// @param data Pointer to the pixel data.
+		/// @brief Constructs a pixel proxy.
+		/// @param data Pointer to the data of the pixel.
 		/// @param format Format of the pixel.
 		[[nodiscard]] pixel_proxy(std::byte* data, pixel_format format) noexcept;
 
 		/// @}
 		/// @endcond
-		/// @name Access
+		/// @name Element access
 		/// @{
 
-		/// Gets a pointer to the data of the pixel.
-		/// @return Pointer to the data of the pixel.
-		[[nodiscard]] std::byte* data() const noexcept;
-
-		/// Gets the format of the pixel.
-		/// @return Format of the pixel.
-		[[nodiscard]] pixel_format format() const noexcept;
-
-		/// Gets the pixel's color value.
+		/// @brief Returns the color of the pixel.
 		/// @return Color of the pixel.
 		[[nodiscard]] operator rgba<u8>() const noexcept;
 
-		/// Sets the pixel's color value.
+		/// @brief Sets the color of the pixel.
 		/// @param color Color to set.
-		/// @return Reference to the pixel proxy.
+		/// @return Reference to `*this`.
 		pixel_proxy& operator=(rgba<u8> color) noexcept;
+
+		/// @}
+		/// @name Observers
+		/// @{
+
+		/// @brief Returns a pointer to the data of the pixel.
+		/// @return Pointer to the data of the pixel.
+		[[nodiscard]] std::byte* data() const noexcept;
+
+		/// @brief Returns the format of the pixel.
+		/// @return Format of the pixel.
+		[[nodiscard]] pixel_format format() const noexcept;
 
 		/// @}
 
 	  private:
-		/// Pointer to the pixel data.
+		/// @brief Pointer to the data of the pixel.
 		std::byte* m_data;
 
-		/// Format of the pixel.
+		/// @brief Format of the pixel.
 		pixel_format m_format;
 	};
 } // namespace tr

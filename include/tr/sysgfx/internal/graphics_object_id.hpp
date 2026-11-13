@@ -1,53 +1,23 @@
 /// @file
-/// @brief Provides `tr::internal::graphics_object_id` and `tr::internal::graphics_object_id_handle`.
+/// @brief Provides `tr::internal::graphics_object_id`.
 
 #pragma once
+#include <tr/utility/unique_handle.hpp>
 
 //
 
 namespace tr::internal
 {
-	/// Opaque ID for graphics objects.
+	/// @brief ID uniquely identifying a graphics object.
 	enum class graphics_object_id : unsigned int
 	{
-		/// Sentinel value for an invalid graphics object ID.
+		/// @brief Sentinel value for an invalid graphics object ID.
 		invalid
 	};
 
-	/// Owning handle to a unique graphics object ID.
-	class graphics_object_id_handle
-	{
-	  public:
-		/// @name Constructors, destructors, and assignment operators
-		/// @{
+	//
 
-		/// Constructs a new graphics object ID handle.
-		[[nodiscard]] graphics_object_id_handle() noexcept;
-
-		/// Moves a graphics object ID handle.
-		/// @param rhs Handle to move.
-		[[nodiscard]] graphics_object_id_handle(graphics_object_id_handle&& rhs) noexcept;
-
-		/// @}
-		/// @name Assignment operators
-		/// @{
-
-		/// Moves a graphics object ID handle.
-		/// @param rhs Handle to move.
-		graphics_object_id_handle& operator=(graphics_object_id_handle&& rhs) noexcept;
-
-		/// @}
-		/// @name Constructors, destructors, and assignment operators
-		/// @{
-
-		/// Gets the base graphics object ID.
-		/// @return Base ID.
-		[[nodiscard]] operator graphics_object_id() const noexcept;
-
-		/// @}
-
-	  private:
-		/// Base ID.
-		graphics_object_id m_id;
-	};
+	/// @brief Generates a new graphics object ID.
+	/// @return ID uniquely identifying a new graphics object.
+	[[nodiscard]] graphics_object_id generate_graphics_object_id() noexcept;
 } // namespace tr::internal

@@ -2,12 +2,13 @@
 /// @brief Provides `tr::bitmap`.
 
 #pragma once
+#include <tr/sysgfx/internal/sdl_surface_deleter.hpp>
 #include <tr/sysgfx/pixel_format.hpp>
 #include <tr/utility/integer.hpp>
 #include <tr/utility/rectangle.hpp>
 #include <tr/utility/rgba.hpp>
+#include <tr/utility/zstring_view.hpp>
 
-struct SDL_Surface;
 namespace tr
 {
 	class bitmap_view;
@@ -22,234 +23,245 @@ namespace tr
 
 namespace tr
 {
-	///  Two-dimensional bitmap image.
+	/// @brief Owning container for a two-dimensional bitmap image.
 	/// @details
 	/// Moved-from instances of `tr::bitmap` are left in a special 'invalid' state. Invalid `tr::bitmap` instances may not be interacted
-	/// with besides moving a new value into them and checking for validity using `valid()`.
+	/// with besides moving a new value into them and checking for validity using `valid()` or `operator bool()`.
 	class bitmap
 	{
 	  public:
-		/// Reference type used by the bitmap.
+		/// @name Container traits
+		/// @{
+
+		/// @brief Reference type used by the bitmap.
 		using reference = pixel_proxy;
 
-		/// Constant reference type used by the bitmap.
+		/// @brief Constant reference type used by the bitmap.
 		using const_reference = const_pixel_proxy;
 
-		/// Iterator type used by the bitmap.
+		/// @brief Iterator type used by the bitmap.
 		using iterator = pixel_iterator;
 
-		/// Constant iterator type used by the bitmap.
+		/// @brief Constant iterator type used by the bitmap.
 		using const_iterator = const_pixel_iterator;
 
+		/// @}
 		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
 		/// @cond sdl_interop
 
-		/// Wraps an SDL surface pointer.
-		/// @param ptr SDL surface pointer to wrap.
+		/// @brief Constructs a bitmap by taking ownership of an SDL surface pointer.
+		/// @param ptr SDL surface pointer to take ownership of.
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
 		[[nodiscard]] explicit bitmap(SDL_Surface* ptr);
 
 		/// @endcond
 
-		/// Creates a blank bitmap.
+		/// @brief Constructs a blank bitmap.
 		/// @param size Size of the bitmap.
 		/// @param format Pixel format of the bitmap.
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
 		[[nodiscard]] explicit bitmap(glm::ivec2 size, pixel_format format = pixel_format::rgba32);
 
-		/// Clones a bitmap.
-		/// @param bitmap Source bitmap to copy.
+		/// @brief Constructs a bitmap by cloning another bitmap.
+		/// @param bitmap Source bitmap to copy from.
 		/// @param format Pixel format of the bitmap.
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
 		[[nodiscard]] explicit bitmap(const bitmap& bitmap, pixel_format format = pixel_format::rgba32);
 
-		/// Clones a bitmap view.
-		/// @param view Source bitmap view to copy.
+		/// @brief Constructs a bitmap by cloning a bitmap view.
+		/// @param view Source bitmap view to copy from.
 		/// @param format Pixel format of the bitmap.
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
 		[[nodiscard]] explicit bitmap(const bitmap_view& view, pixel_format format = pixel_format::rgba32);
 
-		/// Clones a sub-bitmap.
-		/// @param source Source sub-bitmap to copy.
+		/// @brief Constructs a bitmap by cloning a sub-bitmap.
+		/// @param source Source sub-bitmap to copy from.
 		/// @param format Pixel format of the bitmap.
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
 		[[nodiscard]] explicit bitmap(sub_bitmap source, pixel_format format = pixel_format::rgba32);
 
-		/// Bitmaps are not copyable.
+		/// @brief Bitmaps are not copyable.
 		bitmap(const bitmap&) = delete;
 
-		/// Moves a bitmap.
-		/// @details `rhs` is left in an invalid state after the move as per the class description.
-		/// @param rhs Bitmap to move.
-		[[nodiscard]] bitmap(bitmap&& rhs) noexcept = default;
-
-		/// @}
-		/// @name Assignment operators
-		/// @{
-
-		/// Bitmaps are not copyable.
+		/// @brief Bitmaps are not copyable.
 		bitmap& operator=(const bitmap&) = delete;
 
-		/// Moves a bitmap.
-		/// @details `rhs` is left in an invalid state after the move as per the class description.
-		/// @param rhs Bitmap to move.
+		/// @brief Constructs a bitmap by transferring ownership from another bitmap.
+		/// @param rhs Bitmap to move from.
+		/// @par Invalidation
+		/// All iterators and sub-bitmaps previously associated with `rhs` stay valid, but now point to `*this`.
+		/// @post `rhs` is left in an invalid state after the move.
+		[[nodiscard]] bitmap(bitmap&& rhs) noexcept = default;
+
+		/// @brief Destroys the currenly held bitmap and replaces it with one moved from another bitmap object.
+		/// @param rhs Bitmap to move from.
+		/// @par Invalidation
+		/// All iterators and sub-bitmaps previously associated with `*this` are invalidated.
+		///
+		/// All iterators and sub-bitmaps previously associated with `rhs` stay valid, but now point to `*this`.
+		/// @post `rhs` is left in an invalid state after the move.
 		/// @return Reference to `*this`.
 		bitmap& operator=(bitmap&& rhs) noexcept = default;
 
 		/// @}
-		/// @name Sub-bitmap
+		/// @name Element access
 		/// @{
 
-		/// Creates a sub-bitmap spanning the entire bitmap.
-		/// @return Sub-bitmap spanning the entire bitmap.
-		[[nodiscard]] operator sub_bitmap() const noexcept;
-
-		/// Creates a sub-bitmap of the bitmap.
-		/// @param region Region of the bitmap to create a sub-bitmap of.
-		/// @return Sub-bitmap spanning a region of the bitmap.
-		[[nodiscard]] sub_bitmap sub(rectangle<int> region) const noexcept;
-
-		/// @}
-		/// @name Information
-		/// @{
-
-		/// Gets whether the bitmap is in a valid state.
-		/// @return `true` if the bitmap is in a valid state, `false` otherwise.
-		[[nodiscard]] bool valid() const noexcept;
-
-		/// Gets the size of the bitmap.
-		/// @return Size of the bitmap.
-		[[nodiscard]] glm::ivec2 size() const noexcept;
-
-		/// Gets the format of the bitmap.
-		/// @return Format of the bitmap.
-		[[nodiscard]] pixel_format format() const noexcept;
-
-		/// Gets the pitch of the bitmap.
-		/// @return Pitch of the bitmap.
-		[[nodiscard]] int pitch() const noexcept;
-
-		/// @}
-		/// @name Access
-		/// @{
-
-		/// Gets mutable access to a pixel of the bitmap.
+		/// @brief Returns a mutable proxy to a pixel of the bitmap.
 		/// @param x, y Position of the pixel within the bitmap.
 		/// @return Reference to a pixel of the bitmap.
 		[[nodiscard]] reference operator[](int x, int y) noexcept;
 
-		/// Gets mutable access to a pixel of the bitmap.
+		/// @brief Returns a mutable proxy to a pixel of the bitmap.
 		/// @param pos Position of the pixel within the bitmap.
 		/// @return Reference to a pixel of the bitmap.
 		[[nodiscard]] reference operator[](glm::ivec2 pos) noexcept;
 
-		/// Gets immutable access to a pixel of the bitmap.
+		/// @brief Returns an immutable proxy to a pixel of the bitmap.
 		/// @param x, y Position of the bitmap within the bitmap.
 		/// @return Reference to a pixel of the bitmap.
 		[[nodiscard]] const_reference operator[](int x, int y) const noexcept;
 
-		/// Gets immutable access to a pixel of the bitmap.
+		/// @brief Returns an immutable proxy to a pixel of the bitmap.
 		/// @param pos Position of the pixel within the bitmap.
 		/// @return Reference to a pixel of the bitmap.
 		[[nodiscard]] const_reference operator[](glm::ivec2 pos) const noexcept;
 
-		/// Gets the raw data of the bitmap.
-		/// @return Pointer to the data of the bitmap.
+		/// @brief Returns a pointer to the raw data of the bitmap.
+		/// @return Pointer to the raw data of the bitmap.
 		[[nodiscard]] std::byte* data() noexcept;
 
-		/// Gets the raw data of the bitmap.
-		/// @return Pointer to the data of the bitmap.
+		/// @brief Returns a pointer to the raw data of the bitmap.
+		/// @return Pointer to the raw data of the bitmap.
 		[[nodiscard]] const std::byte* data() const noexcept;
+
+		/// @brief Returns a sub-bitmap spanning the entire bitmap.
+		/// @return Sub-bitmap spanning the entire bitmap.
+		[[nodiscard]] operator sub_bitmap() const noexcept;
 
 		/// @}
 		/// @name Iterators
 		/// @{
 
-		/// Gets a mutable iterator to the beginning of the bitmap.
+		/// @brief Returns a mutable iterator to the beginning of the bitmap.
 		/// @return Iterator to the beginning of the bitmap.
 		[[nodiscard]] iterator begin() noexcept;
 
-		/// Gets an immutable iterator to the beginning of the bitmap.
+		/// @brief Returns an immutable iterator to the beginning of the bitmap.
 		/// @return Iterator to the beginning of the bitmap.
 		[[nodiscard]] const_iterator begin() const noexcept;
 
-		/// Gets an immutable iterator to the beginning of the bitmap.
+		/// @brief Returns an immutable iterator to the beginning of the bitmap.
 		/// @return Iterator to the beginning of the bitmap.
 		[[nodiscard]] const_iterator cbegin() const noexcept;
 
-		/// Gets a mutable iterator to one past the end of the bitmap.
+		/// @brief Returns a mutable iterator to one past the end of the bitmap.
 		/// @return Iterator to the end of the bitmap.
 		[[nodiscard]] iterator end() noexcept;
 
-		/// Gets an immutable iterator to one past the end of the bitmap.
+		/// @brief Returns an immutable iterator to one past the end of the bitmap.
 		/// @return Iterator to the end of the bitmap.
 		[[nodiscard]] const_iterator end() const noexcept;
 
-		/// Gets an immutable iterator to one past the end of the bitmap.
+		/// @brief Returns an immutable iterator to one past the end of the bitmap.
 		/// @return Iterator to the end of the bitmap.
 		[[nodiscard]] const_iterator cend() const noexcept;
 
 		/// @}
-		/// @name Manipulation
+		/// @name Modifiers
 		/// @{
 
-		/// Blits a sub-bitmap to the bitmap.
+		/// @brief Blits a sub-bitmap to the bitmap.
 		/// @param tl Top-left corner of the target region.
 		/// @param source Source sub-bitmap to blit.
 		void blit(glm::ivec2 tl, sub_bitmap source) noexcept;
 
-		/// Fills a region of the bitmap with a solid color.
+		/// @brief Fills a region of the bitmap with a solid color.
 		/// @param region Region of the bitmap to fill.
 		/// @param color Color to fill the region with.
 		void fill(rectangle<int> region, rgba<u8> color) noexcept;
 
 		/// @}
-		/// @name Saving
+		/// @name Observers
 		/// @{
 
-		/// Saves the bitmap to a .png file.
+		/// @brief Checks whether the bitmap is in a valid state.
+		/// @return `true` if the bitmap is in a valid state, `false` otherwise.
+		[[nodiscard]] explicit operator bool() const noexcept;
+
+		/// @brief Checks whether the bitmap is in a valid state.
+		/// @return `true` if the bitmap is in a valid state, `false` otherwise.
+		[[nodiscard]] bool valid() const noexcept;
+
+		/// @brief Returns the size of the bitmap.
+		/// @return Size of the bitmap.
+		[[nodiscard]] glm::ivec2 size() const noexcept;
+
+		/// @brief Returns the format of the bitmap.
+		/// @return Format of the bitmap.
+		[[nodiscard]] pixel_format format() const noexcept;
+
+		/// @brief Returns the pitch of the bitmap.
+		/// @return Pitch of the bitmap.
+		[[nodiscard]] int pitch() const noexcept;
+
+		/// @cond sdl_interop
+		/// @brief Returns a pointer to the underlying SDL surface.
+		/// @return Pointer to the underlying SDL surface.
+		[[nodiscard]] SDL_Surface* pointer() const noexcept;
+		/// @endcond
+
+		/// @}
+		/// @name Operations
+		/// @{
+
+		/// @brief Returns a sub-bitmap of the bitmap.
+		/// @param region Region of the bitmap to create a sub-bitmap of.
+		/// @return Sub-bitmap spanning a region of the bitmap.
+		[[nodiscard]] sub_bitmap sub(rectangle<int> region) const noexcept;
+
+		/// @brief Saves the bitmap to a .png file.
+		/// @param path Path to the bitmap file.
 		/// @exception bitmap_save_error If saving the bitmap to file failed.
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
 		void save(const std::filesystem::path& path) const;
 
 		/// @}
-		/// @cond sdl_interop
-		/// @name SDL interoperability
-
-		/// Unwraps the SDL surface pointer.
-		/// @note This does not release the pointer.
-		/// @return Pointer to the SDL surface.
-		[[nodiscard]] SDL_Surface* unwrap() const noexcept;
-
-		/// @endcond
 
 	  private:
-		/// Bitmap deleter.
-		struct deleter
-		{
-			/// Destroys a bitmap.
-			/// @param ptr Pointer to an SDL surface.
-			static void operator()(SDL_Surface* ptr) noexcept;
-		};
-
-		//
-
-		/// Handle to the SDL surface.
-		std::unique_ptr<SDL_Surface, deleter> m_ptr;
+		/// @brief Managed pointer to an SDL surface.
+		std::unique_ptr<SDL_Surface, internal::sdl_surface_deleter> m_ptr;
 	};
 
-	/// @name Bitmap factories
-	/// @{
+	//
 
-	/// Creates a bitmap with the missing texture checkerboard pattern.
+	/// @brief Constructs a bitmap with the missing texture checkerboard pattern.
 	/// @param size Size of the bitmap.
+	/// @par Exception safety
+	/// If an exception is thrown, this function has no effect (strong exception guarantee).
 	/// @return Missing texture bitmap.
 	[[nodiscard]] bitmap create_checkerboard(glm::ivec2 size);
 
-	/// Loads an embedded bitmap file.
+	/// @brief Loads an embedded bitmap file.
 	/// @param data Bitmap data.
+	/// @par Exception safety
+	/// If an exception is thrown, this function has no effect (strong exception guarantee).
 	/// @return Loaded bitmap.
 	[[nodiscard]] bitmap load_embedded_bitmap(std::span<const std::byte> data);
 
-	/// Loads an embedded bitmap file.
+	/// @brief Loads an embedded bitmap file.
 	/// @tparam Range Bitmap data range type.
 	/// @param range Bitmap data range.
+	/// @par Exception safety
+	/// If an exception is thrown, this function has no effect (strong exception guarantee).
 	/// @return Loaded bitmap.
 	template <std::ranges::contiguous_range Range>
 	[[nodiscard]] bitmap load_embedded_bitmap(Range&& range)
@@ -257,12 +269,12 @@ namespace tr
 		return load_embedded_bitmap(std::span<const std::byte>{range_bytes(range)});
 	}
 
-	/// Loads a bitmap from file (BMP/PNG/QOI).
+	/// @brief Loads a bitmap from file (BMP/PNG/QOI).
 	/// @param path Path to the bitmap file.
 	/// @exception file_not_found If the bitmap was not found.
 	/// @exception bitmap_load_error If the bitmap loading failed.
+	/// @par Exception safety
+	/// If an exception is thrown, this function has no effect (strong exception guarantee).
 	/// @return Loaded bitmap.
 	[[nodiscard]] bitmap load_bitmap_file(const std::filesystem::path& path);
-
-	/// @}
 } // namespace tr

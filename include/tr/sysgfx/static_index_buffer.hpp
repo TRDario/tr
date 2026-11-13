@@ -8,21 +8,22 @@
 
 namespace tr
 {
-	/// Static, immutable index buffer.
+	/// @brief Owning container for a static and immutable index buffer.
 	/// @details
 	/// `tr::static_index_buffer` represents a graphics buffer used to store index data. Unlike `tr::dynamic_index_buffer`, it represents a
 	/// single, static allocation of immutable data, making it suitable for scenarios where the index data is constant.
 	///
-	/// Strictly speaking, instances of `tr::static_index_buffer` are only containers for these underlying buffer objects. This means, for
-	/// example, that setting a static index buffer on a graphics context does not set the literal `tr::static_index_buffer` object at a
-	/// specific location in memory, but rather the value it contains. If the value is moved to a different instance of
+	/// It's worth remembering that instances of `tr::static_index_buffer` are only containers for these underlying buffer objects. This
+	/// means, for example, that setting a static index buffer on a graphics context does not set the literal `tr::static_index_buffer`
+	/// object at a specific location in memory, but rather the value it contains. If the value is moved to a different instance of
 	/// `tr::static_index_buffer`, that value will still be set on the context. If the instance is overriden with a new value, the old
 	/// value is destroyed and the graphics context will no longer have a set index buffer.
 	///
 	/// Every instance of `tr::static_index_buffer` is associated with a graphics context and cannot outlive its parent context.
 	///
 	/// Moved-from instances of `tr::static_index_buffer` are left in a special 'invalid' state. Invalid `tr::static_index_buffer`
-	/// instances may not be interacted with besides moving a new value into them and checking for validity using `valid()`.
+	/// instances may not be interacted with besides moving a new value into them and checking for validity using `valid()` or `operator
+	/// bool()`.
 	///
 	/// `tr::static_index_buffer` instances may be labeled and are formattable. Example format output: `"My index buffer" (ID: 3, IBO:
 	/// 5)`.
@@ -32,84 +33,78 @@ namespace tr
 		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Uploads index data into a static index buffer.
+		/// @brief Constructs a static index buffer with index data.
 		/// @param context Graphics context to create the buffer on.
 		/// @param data Data to copy into the buffer.
 		/// @param label Label of the buffer.
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
 		[[nodiscard]] static_index_buffer(graphics_context& context, std::span<const u16> data, std::string_view label = {});
 
-		/// Static index buffers are not copyable.
+		/// @brief Static index buffers are not copyable.
 		static_index_buffer(const static_index_buffer&) = delete;
 
-		/// Moves a static index buffer.
-		/// @details `rhs` is left in an invalid state after the move as per the class description.
-		/// @param rhs Static index buffer to move from.
-		[[nodiscard]] static_index_buffer(static_index_buffer&& rhs) noexcept = default;
-
-		/// @}
-		/// @name Assignment operators
-		/// @{
-
-		/// Static index buffers are not copyable.
+		/// @brief Static index buffers are not copyable.
 		static_index_buffer& operator=(const static_index_buffer&) = delete;
 
-		/// Moves a static index buffer.
-		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @brief Constructs a static index buffer by transferring ownership from another `tr::static_index_buffer`.
 		/// @param rhs Static index buffer to move from.
+		/// @par Invalidation
+		/// If the index buffer previously held by `rhs` is set on the associated graphics context, it stays set.
+		/// @post `rhs` is left in an invalid state after the move.
+		[[nodiscard]] static_index_buffer(static_index_buffer&& rhs) noexcept = default;
+
+		/// @brief Destroys the currently held static index buffer and transfers ownership from another `tr::static_index_buffer`.
+		/// @param rhs Static index buffer to move from.
+		/// @par Invalidation
+		/// If the index buffer previously held by `*this` was set on the associated graphics context, it is unset.
+		///
+		/// If the index buffer previously held by `rhs` is set on the associated graphics context, it stays set.
+		/// @post `rhs` is left in an invalid state after the move.
 		/// @return Reference to `*this`.
 		static_index_buffer& operator=(static_index_buffer&& rhs) noexcept = default;
 
 		/// @}
-		/// @name Context
+		/// @name Modifiers
 		/// @{
-
-		using graphics_buffer::context;
-
-		/// @}
-		/// @name State
-		/// @{
-
-		using graphics_buffer::valid;
-
-		/// @}
-		/// @name Label
-		/// @{
-
-		using graphics_buffer::label;
 
 		using graphics_buffer::set_label;
 
 		/// @}
+		/// @name Observers
+		/// @{
+
+		using graphics_buffer::operator bool;
+
+		using graphics_buffer::valid;
+
+		using graphics_buffer::context;
+
+		using graphics_buffer::label;
+
 		/// @cond gl_interop
-		/// @name OpenGL interoperability
-		/// @{
-
-		using graphics_buffer::unwrap;
-
-		/// @}
+		using graphics_buffer::handle;
 		/// @endcond
+
 		/// @cond implementation_details
-		/// @name Implementation details
-		/// @{
-
 		using graphics_buffer::id;
+		/// @endcond
 
 		/// @}
-		/// @endcond
 
 	  private:
-		/// Size of the buffer in elements.
+		/// @brief Size of the buffer.
 		ssize m_size;
 	};
 } // namespace tr
 
 //
 
-/// Static index buffer formatter.
+/// @brief Static index buffer formatter.
 template <>
 struct std::formatter<tr::static_index_buffer>
 {
-	/// Parses the format specification.
+	/// @brief Parses the format specification.
 	/// @tparam ParseContext Parsing context type.
 	/// @param context Parsing context.
 	/// @return Iterator to the end of the parsed specification.
@@ -122,7 +117,7 @@ struct std::formatter<tr::static_index_buffer>
 		return context.begin();
 	}
 
-	/// Formats a static index buffer.
+	/// @brief Formats a static index buffer.
 	/// @tparam FormatContext Formatting context type.
 	/// @param buffer Static index buffer to format.
 	/// @param context Formatting context.
@@ -132,7 +127,7 @@ struct std::formatter<tr::static_index_buffer>
 	{
 		if (buffer.valid()) {
 			return std::format_to(context.out(), "\"{}\" (ID: {}, IBO: {})", buffer.label(), std::to_underlying(buffer.id()),
-								  buffer.unwrap());
+								  buffer.handle());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid static index buffer at {}>", static_cast<const void*>(&buffer));

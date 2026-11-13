@@ -12,7 +12,7 @@
 
 namespace tr
 {
-	/// Typed shader-accessible GPU buffer.
+	/// @brief Owning container for a typed shader-accessible GPU buffer.
 	/// @details
 	/// `tr::shader_buffer` represents the typed equivalent of `tr::untyped_shader_buffer`, a graphics buffer used to store data for
 	/// shader access. Shader buffers consist of a fixed-size header block and a resizable array block; the array block can be resized up to
@@ -20,8 +20,8 @@ namespace tr
 	/// or mapped for direct access by the CPU; the map type of any given buffer is specified during construction and cannot be changed
 	/// afterwards.
 	///
-	/// Strictly speaking, instances of `tr::shader_buffer` are only containers for these underlying buffer objects. This means, for
-	/// example, that setting a shader buffer on a shader does not set the literal `tr::shader_buffer` object at a specific location in
+	/// It's worth remembering that instances of `tr::shader_buffer` are only containers for these underlying buffer objects. This means,
+	/// for example, that setting a shader buffer on a shader does not set the literal `tr::shader_buffer` object at a specific location in
 	/// memory, but rather the value it contains. If the value is moved to a different instance of `tr::shader_buffer`, that value will
 	/// still be set on the shader. If the instance is overriden with a new value, the old value is destroyed and the shader will no longer
 	/// have a set buffer.
@@ -29,161 +29,168 @@ namespace tr
 	/// Every instance of `tr::shader_buffer` is associated with a graphics context and cannot outlive its parent context.
 	///
 	/// Moved-from instances of `tr::shader_buffer` are left in a special 'invalid' state. Invalid `tr::shader_buffer` instances may not be
-	/// interacted with besides moving a new value into them and checking for validity using `valid()`.
+	/// interacted with besides moving a new value into them and checking for validity using `valid()` or `operator bool()`.
 	///
 	/// `tr::shader_buffer` instances may be labeled and are formattable. Example format output: `"My buffer" (ID: 3, SSBO: 5)`.
 	/// @tparam Header Type of the header object stored at the front of the buffer.
 	/// @tparam ArrayElement Type of the buffer dynamic array elements.
 	template <typename Header, typename ArrayElement>
+		requires std::is_trivially_copyable_v<Header> && std::is_trivially_destructible_v<Header> &&
+				 std::is_trivially_copyable_v<ArrayElement> && std::is_trivially_destructible_v<ArrayElement>
 	class shader_buffer : private untyped_shader_buffer
 	{
 	  public:
 		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		// Allocates an uninitialized shader buffer.
+		/// Constructs an uninitialized shader buffer.
 		/// @param context Graphics context to create the buffer on.
 		/// @param capacity Maximum capacity of the buffer array in elements.
-		/// @param map_type Type of map to create when mapping the buffer.
+		/// @param map_access Buffer map access type.
 		/// @param label Label of the buffer.
-		[[nodiscard]] shader_buffer(graphics_context& context, usize capacity, access map_type = access::write_only,
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
+		[[nodiscard]] shader_buffer(graphics_context& context, usize capacity, access map_access = access::write_only,
 									std::string_view label = {})
-			: untyped_shader_buffer{context, sizeof(Header), capacity * sizeof(ArrayElement), map_type, label}
+			: untyped_shader_buffer{context, sizeof(Header), capacity * sizeof(ArrayElement), map_access, label}
 		{
 		}
 
-		/// Shader buffers are not copyable.
+		/// @brief Shader buffers are not copyable.
 		shader_buffer(const shader_buffer&) = delete;
 
-		/// Moves a shader buffer.
-		/// @details `rhs` is left in an invalid state after the move as per the class description.
-		/// @param rhs Shader buffer to move from.
-		[[nodiscard]] shader_buffer(shader_buffer&& rhs) noexcept = default;
-
-		/// @}
-		/// @name Assignment operators
-		/// @{
-
-		/// Shader buffers are not copyable.
+		/// @brief Shader buffers are not copyable.
 		shader_buffer& operator=(const shader_buffer&) = delete;
 
-		/// Moves a shader buffer.
-		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @brief Constructs a shader buffer by transferring ownership from another `tr::shader_buffer`.
 		/// @param rhs Shader buffer to move from.
+		/// @par Invalidation
+		/// If the shader buffer previously held by `rhs` is set on any shaders, it stays set.
+		/// @post `rhs` is left in an invalid state after the move.
+		[[nodiscard]] shader_buffer(shader_buffer&& rhs) noexcept = default;
+
+		/// @brief Destroys the currently held shader buffer and replaces it with one moved from another `tr::shader_buffer`.
+		/// @param rhs Shader buffer to move from.
+		/// @par Invalidation
+		/// If the shader buffer previously held by `*this` is set on any shaders, it is unset.
+		///
+		/// If the shader buffer previously held by `rhs` is set on any shaders, it stays set.
+		/// @post `rhs` is left in an invalid state after the move.
 		/// @return Reference to `*this`.
 		shader_buffer& operator=(shader_buffer&& rhs) noexcept = default;
 
 		/// @}
-		/// @name Context
+		/// @name Modifiers
 		/// @{
 
-		using untyped_shader_buffer::context;
-
-		/// @}
-		/// @name State
-		/// @{
-
-		using untyped_shader_buffer::valid;
-
-		/// @}
-		/// @name Size
-		/// @{
-
-		/// Gets the size of the dynamic array.
-		/// @return Size of the dynamic array in elements.
-		[[nodiscard]] usize array_size() const noexcept
-		{
-			return untyped_shader_buffer::array_size() / sizeof(ArrayElement);
-		}
-
-		/// Gets the maximum capacity of the dynamic array.
-		/// @return Maximum capacity of the dynamic array in elements.
-		[[nodiscard]] usize array_capacity() const noexcept
-		{
-			return untyped_shader_buffer::array_capacity() / sizeof(ArrayElement);
-		}
-
-		/// @}
-		/// @name Setting
-		/// @{
-
-		/// Sets the data of the header.
-		/// @param header Header object to copy into the buffer.
+		/// @brief Sets the data of the header.
+		/// @param header Head object to copy into the buffer.
+		/// @pre
+		/// The buffer must be in a valid state and must not be currently mapped.
+		///
+		/// `data` must be of the same size as the buffer's header.
 		void set_header(const Header& header) noexcept
 		{
 			untyped_shader_buffer::set_header(as_bytes(header));
 		}
 
-		/// Sets the data of the dynamic array.
-		/// @param data Data to set the dynamic array to.
+		/// @brief Sets the data of the dynamic array.
+		/// @param data Data to set the dynamic array with.
+		/// @pre
+		/// The buffer must be in a valid state and must not be currently mapped.
+		///
+		/// The size of `data` must be smaller than or equal to the capacity of the buffer's dynamic array.
+		/// @par Invalidation
+		/// If `*this` is set on any shaders, it is unset.
 		void set_array(std::span<const ArrayElement> data) noexcept
 		{
 			untyped_shader_buffer::set_array(std::as_bytes(data));
 		}
 
-		/// Resizes the dynamic array.
-		/// @param size Size of the array in elements.
-		/// @pre `size` must be less than or equal to the capacity of the array.
+		/// @brief Resizes the dynamic array.
+		/// @param size Size of the dynamic array.
+		/// @pre
+		/// The buffer must be in a valid state and must not be currently mapped.
+		///
+		/// `size` must be less than or equal to the capacity of the buffer's dynamic array.
+		/// @par Invalidation
+		/// If `*this` is set on any shaders, it is unset.
 		void resize_array(usize size) noexcept
 		{
 			untyped_shader_buffer::resize_array(size * sizeof(ArrayElement));
 		}
 
-		/// @}
-		/// @name Mapping
-		/// @{
-
-		using untyped_shader_buffer::mapped;
-
-		/// Maps the fixed header of the buffer.
+		/// @brief Maps the fixed header of the buffer.
+		/// @pre The buffer must be in a valid state and must not be currently mapped.
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
 		/// @return Map of the fixed header of the buffer.
 		[[nodiscard]] mapped_graphics_buffer_object<Header> map_header()
 		{
 			return mapped_graphics_buffer_object<Header>{untyped_shader_buffer::map_header()};
 		}
 
-		/// Maps the dynamic array of the buffer.
+		/// @brief Maps the dynamic array of the buffer.
+		/// @pre The buffer must be in a valid state and must not be currently mapped.
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
 		/// @return Map of the dynamic array of the buffer.
 		[[nodiscard]] mapped_graphics_buffer_span<ArrayElement> map_array()
 		{
 			return mapped_graphics_buffer_span<ArrayElement>{untyped_shader_buffer::map_array()};
 		}
 
-		/// @}
-		/// @name Label
-		/// @{
-
-		using untyped_shader_buffer::label;
-
 		using untyped_shader_buffer::set_label;
 
 		/// @}
+		/// @name Observers
+		/// @{
+
+		using untyped_shader_buffer::operator bool;
+
+		using untyped_shader_buffer::valid;
+
+		using untyped_shader_buffer::context;
+
+		/// @brief Returns the size of the dynamic array.
+		/// @pre The buffer must be in a valid state.
+		/// @return Size of the dynamic array.
+		[[nodiscard]] usize array_size() const noexcept
+		{
+			return untyped_shader_buffer::array_size() / sizeof(ArrayElement);
+		}
+
+		/// @brief Returns the maximum capacity of the dynamic array.
+		/// @pre The buffer must be in a valid state.
+		/// @return Maximum capacity of the dynamic array.
+		[[nodiscard]] usize array_capacity() const noexcept
+		{
+			return untyped_shader_buffer::array_capacity() / sizeof(ArrayElement);
+		}
+
+		using untyped_shader_buffer::mapped;
+
+		using untyped_shader_buffer::label;
+
 		/// @cond gl_interop
-		/// @name OpenGL interoperability
-		/// @{
-
-		using untyped_shader_buffer::unwrap;
-
-		/// @}
+		using untyped_shader_buffer::handle;
 		/// @endcond
+
 		/// @cond implementation_details
-		/// @name Implementation details
-		/// @{
-
 		using untyped_shader_buffer::id;
+		/// @endcond
 
 		/// @}
-		/// @endcond
 	};
 } // namespace tr
 
 //
 
-/// Shader buffer formatter.
+/// @brief Shader buffer formatter.
 template <typename Header, typename ArrayElement>
 struct std::formatter<tr::shader_buffer<Header, ArrayElement>>
 {
-	/// Parses the format specification.
+	/// @brief Parses the format specification.
 	/// @tparam ParseContext Parsing context type.
 	/// @param context Parsing context.
 	/// @return Iterator to the end of the parsed specification.
@@ -196,7 +203,7 @@ struct std::formatter<tr::shader_buffer<Header, ArrayElement>>
 		return context.begin();
 	}
 
-	/// Formats a shader buffer.
+	/// @brief Formats a shader buffer.
 	/// @tparam FormatContext Formatting context type.
 	/// @param buffer Shader buffer to format.
 	/// @param context Formatting context.

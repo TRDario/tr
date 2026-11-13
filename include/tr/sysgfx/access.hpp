@@ -8,16 +8,19 @@
 
 namespace tr
 {
-	/// Access types.
+	/// @brief Access types.
 	enum class access : u32
 	{
-		/// Read-only access.
+		/// @brief Read-only access.
+		/// @hideinitializer
 		read_only = 1,
 
-		/// Write-only access.
+		/// @brief Write-only access.
+		/// @hideinitializer
 		write_only = 2,
 
-		/// Read-write access.
+		/// @brief Read-write access.
+		/// @hideinitializer
 		read_write = 3
 	};
 }; // namespace tr

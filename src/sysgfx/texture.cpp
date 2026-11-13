@@ -15,7 +15,7 @@
 //
 
 tr::texture::texture(graphics_context& context, std::string_view label) noexcept
-	: m_handle{deleter{context}}
+	: m_handle{gl_texture_deleter{context}}
 	, m_format{}
 	, m_size{0, 0}
 {
@@ -26,7 +26,7 @@ tr::texture::texture(graphics_context& context, std::string_view label) noexcept
 }
 
 tr::texture::texture(graphics_context& context, unsigned int handle, pixel_format format, glm::ivec2 size) noexcept
-	: m_handle{handle, deleter{context}}
+	: m_handle{handle, gl_texture_deleter{context}}
 	, m_format{format}
 	, m_size{size}
 {
@@ -47,7 +47,7 @@ tr::texture::texture(graphics_context& context, sub_bitmap bitmap, mipmaps mipma
 					 std::string_view label)
 	: texture{context, bitmap.size(), mipmaps, format.value_or(bitmap.format()), label}
 {
-	set_region({0, 0}, bitmap);
+	set_region(glm::ivec2{0, 0}, bitmap);
 }
 
 tr::texture::texture(graphics_context& context, sub_bitmap bitmap, std::string_view label)
@@ -55,15 +55,46 @@ tr::texture::texture(graphics_context& context, sub_bitmap bitmap, std::string_v
 {
 }
 
-void tr::texture::deleter::operator()(unsigned int texture) const noexcept
+void tr::texture::gl_texture_deleter::operator()(unsigned int handle) const noexcept
 {
-	context->gl().delete_textures(1, &texture);
+	context->gl().delete_textures(1, &handle);
+}
+
+//
+
+tr::mutable_texture_view tr::texture::view() noexcept
+{
+	TR_ASSERT(valid(), "Tried to create a view over a texture in an invalid state.");
+
+	return mutable_texture_view{m_handle.get(), m_format};
+}
+
+tr::texture_view tr::texture::view() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to create a view over a texture in an invalid state.");
+
+	return texture_view{m_handle.get()};
+}
+
+tr::texture::operator tr::mutable_texture_view() noexcept
+{
+	TR_ASSERT(valid(), "Tried to create a view over a texture in an invalid state.");
+
+	return mutable_texture_view{m_handle.get(), m_format};
+}
+
+tr::texture::operator tr::texture_view() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to create a view over a texture in an invalid state.");
+
+	return texture_view{m_handle.get()};
 }
 
 //
 
 tr::texture tr::texture::allocate(glm::ivec2 size, mipmaps mipmaps, pixel_format format)
 {
+	TR_ASSERT(valid(), "Tried to allocate to a texture in an invalid state.");
 	TR_ASSERT(size.x > 0 && size.y > 0, "Tried to allocate a texture with an invalid size of {}x{}.", size.x, size.y);
 
 	graphics_context& context{this->context()};
@@ -113,75 +144,13 @@ tr::texture tr::texture::allocate(glm::ivec2 size, mipmaps mipmaps, pixel_format
 	const int levels{mipmaps == mipmaps::enabled ? floor_cast<int>(std::log2(std::max(size.x, size.y)) + 1) : 1};
 	gl.allocate_2d_texture_storage(m_handle.get(), levels, internal::opengl_texture_format(format), size.x, size.y);
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
+		m_handle.reset(old_handle);
 		throw out_of_memory{"allocation of texture {}", *this};
 	}
 	m_format = format;
 	m_size = size;
 
 	return texture{context, old_handle, old_format, old_size};
-}
-
-//
-
-tr::texture::operator tr::mutable_texture_view() noexcept
-{
-	return view();
-}
-
-tr::texture::operator tr::texture_view() const noexcept
-{
-	return view();
-}
-
-tr::mutable_texture_view tr::texture::view() noexcept
-{
-	TR_ASSERT(valid(), "Tried to create a view over a texture in an invalid state.");
-
-	return mutable_texture_view{m_handle.get(), m_format};
-}
-
-tr::texture_view tr::texture::view() const noexcept
-{
-	TR_ASSERT(valid(), "Tried to create a view over a texture in an invalid state.");
-
-	return texture_view{m_handle.get()};
-}
-
-//
-
-tr::graphics_context& tr::texture::context() const noexcept
-{
-	TR_ASSERT(valid(), "Tried to get context of a texture in an invalid state.");
-
-	return m_handle.get_deleter().context;
-}
-
-//
-
-bool tr::texture::valid() const noexcept
-{
-	return static_cast<bool>(m_handle);
-}
-
-bool tr::texture::complete() const noexcept
-{
-	TR_ASSERT(valid(), "Tried to check completeness of a texture in an invalid state.");
-
-	return m_size.x > 0;
-}
-
-glm::ivec2 tr::texture::size() const noexcept
-{
-	TR_ASSERT(valid(), "Tried to get the size of a texture in an invalid state.");
-
-	return m_size;
-}
-
-//
-
-tr::pixel_format tr::texture::format() const noexcept
-{
-	return m_format;
 }
 
 void tr::texture::set_filtering(min_filter min_filter, mag_filter mag_filter) noexcept
@@ -210,8 +179,6 @@ void tr::texture::set_border_color(rgba<float> color) noexcept
 
 	context().gl().set_texture_parameter_fv(m_handle.get(), GL_TEXTURE_BORDER_COLOR, &color.r);
 }
-
-//
 
 void tr::texture::clear(rgba<float> color) noexcept
 {
@@ -253,7 +220,52 @@ void tr::texture::set_region(glm::ivec2 tl, sub_bitmap bitmap) noexcept
 	gl.generate_texture_mipmap(m_handle.get());
 }
 
+void tr::texture::set_label(std::string_view label) noexcept
+{
+	TR_ASSERT(valid(), "Tried to set the label of a texture in an invalid state.");
+
+	context().gl().set_object_label(GL_TEXTURE, m_handle.get(), static_cast<int>(label.size()), label.data());
+}
+
 //
+
+tr::texture::operator bool() const noexcept
+{
+	return static_cast<bool>(m_handle);
+}
+
+bool tr::texture::valid() const noexcept
+{
+	return static_cast<bool>(m_handle);
+}
+
+tr::graphics_context& tr::texture::context() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to get context of a texture in an invalid state.");
+
+	return m_handle.get_deleter().context;
+}
+
+bool tr::texture::complete() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to check completeness of a texture in an invalid state.");
+
+	return m_size.x > 0;
+}
+
+glm::ivec2 tr::texture::size() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to get the size of a texture in an invalid state.");
+
+	return m_size;
+}
+
+tr::pixel_format tr::texture::format() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to get the format of a texture in an invalid state.");
+
+	return m_format;
+}
 
 std::string tr::texture::label() const
 {
@@ -272,16 +284,7 @@ std::string tr::texture::label() const
 	}
 }
 
-void tr::texture::set_label(std::string_view label) noexcept
-{
-	TR_ASSERT(valid(), "Tried to set the label of a texture in an invalid state.");
-
-	context().gl().set_object_label(GL_TEXTURE, m_handle.get(), static_cast<int>(label.size()), label.data());
-}
-
-//
-
-unsigned int tr::texture::unwrap() const noexcept
+unsigned int tr::texture::handle() const noexcept
 {
 	return m_handle.get();
 }

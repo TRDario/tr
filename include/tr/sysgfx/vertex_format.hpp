@@ -17,21 +17,21 @@ namespace tr
 
 namespace tr
 {
-	/// Container for a GPU vertex format.
+	/// @brief Owning container for a GPU vertex format.
 	/// @details
 	/// Vertex formats define the layout of vertex data passed to a drawing operation. This includes the type, attributes and divisor of the
 	/// data set to be held in one or more indexed vertex buffers. They can be considered the counterpart of vertex array objects in OpenGL.
 	///
-	/// Strictly speaking, instances of `tr::vertex_format` are only containers for these underlying vertex format objects. This means, for
-	/// example, that setting a vertex format on a graphics context does not set the literal `tr::vertex_format` object at a specific
-	/// location in memory, but rather the value it contains. If the value is moved to a different instance of `tr::vertex_format`, that
-	/// value will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the graphics
-	/// context will no longer have a set vertex format.
+	/// It's worth remembering that instances of `tr::vertex_format` are only containers for these underlying vertex format objects. This
+	/// means, for example, that setting a vertex format on a graphics context does not set the literal `tr::vertex_format` object at a
+	/// specific location in memory, but rather the value it contains. If the value is moved to a different instance of `tr::vertex_format`,
+	/// that value will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the
+	/// graphics context will no longer have a set vertex format.
 	///
 	/// Every instance of `tr::vertex_format` is associated with a graphics context and cannot outlive its parent context.
 	///
 	/// Moved-from instances of `tr::vertex_format` are left in a special 'invalid' state. Invalid `tr::vertex_format` instances may not be
-	/// interacted with besides moving a new value into them and checking for validity using `valid()`.
+	/// interacted with besides moving a new value into them and checking for validity using `valid()` or `operator bool()`.
 	///
 	/// `tr::vertex_format` instances may be labeled and are formattable. Example format output: `"My vertex format" (ID: 3, VAO: 5)`.
 	class vertex_format
@@ -40,7 +40,7 @@ namespace tr
 		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Creates a new vertex format.
+		/// @brief Constructs a vertex format.
 		/// @param context Graphics context to create the format on.
 		/// @param bindings Vertex bindings of the format.
 		/// @param label Label of the vertex format.
@@ -48,108 +48,105 @@ namespace tr
 		[[nodiscard]] vertex_format(graphics_context& context, std::span<const vertex_binding> bindings,
 									std::string_view label = {}) noexcept;
 
-		/// Vertex formats are not copyable.
+		/// @brief Vertex formats are not copyable.
 		vertex_format(const vertex_format&) = delete;
 
-		/// Moves a vertex format.
-		/// @details `rhs` is left in an invalid state after the move as per the class description.
-		/// @param rhs Vertex format to move.
-		[[nodiscard]] vertex_format(vertex_format&& rhs) noexcept = default;
-
-		/// @}
-		/// @name Assignment operators
-		/// @{
-
-		/// Vertex formats are not copyable.
+		/// @brief Vertex formats are not copyable.
 		vertex_format& operator=(const vertex_format&) = delete;
 
-		/// Moves a vertex format.
-		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @brief Constructs a vertex format by transferring ownership from another `tr::vertex_format`.
 		/// @param rhs Vertex format to move.
+		/// @par Invalidation
+		/// If the vertex format previously held by `rhs` is set on the associated graphics context, it stays set.
+		/// @post `rhs` is left in an invalid state after the move.
+		[[nodiscard]] vertex_format(vertex_format&& rhs) noexcept = default;
+
+		/// @brief Destroys the currently held vertex format and replaces it with one moved from another `tr::vertex_format`.
+		/// @param rhs Vertex format to move.
+		/// @par Invalidation
+		/// If the vertex format previously held by `*this` was set on the associated graphics context, it is unset.
+		///
+		/// If the vertex format previously held by `rhs` is set on the associated graphics context, it stays set.
+		/// @post `rhs` is left in an invalid state after the move.
 		/// @return Reference to `*this`.
 		vertex_format& operator=(vertex_format&& rhs) noexcept = default;
 
 		/// @}
-		/// @name Context
+		/// @name Modifiers
 		/// @{
 
-		/// Gets a reference to the graphics context the vertex format is on.
-		/// @return Reference to the graphics context the vertex format is on.
-		[[nodiscard]] graphics_context& context() const noexcept;
-
-		/// @}
-		/// @name State
-		/// @{
-
-		/// Gets whether the vertex format is in a valid state.
-		/// @return `true` if the vertex format is in a valid state, `false` if it is in an invalid state.
-		[[nodiscard]] bool valid() const noexcept;
-
-		/// @}
-		/// @name Label
-		/// @{
-
-		/// Sets the debug label of the vertex format.
+		/// @brief Sets the label of the vertex format.
 		/// @param label Label of the vertex format.
 		void set_label(std::string_view label) noexcept;
 
-		/// Gets the debug label of the vertex format.
+		/// @}
+		/// @name Observers
+		/// @{
+
+		/// @brief Checks whether the vertex format is in a valid state.
+		/// @return `true` if the vertex format is in a valid state, `false` if it is in an invalid state.
+		[[nodiscard]] explicit operator bool() const noexcept;
+
+		/// @brief Checks whether the vertex format is in a valid state.
+		/// @return `true` if the vertex format is in a valid state, `false` if it is in an invalid state.
+		[[nodiscard]] bool valid() const noexcept;
+
+		/// @brief Returns a reference to the graphics context the vertex format is on.
+		/// @pre The vertex format must be in a valid state.
+		/// @return Reference to the graphics context the vertex format is on.
+		[[nodiscard]] graphics_context& context() const noexcept;
+
+		/// @brief Returns the label of the vertex format.
+		/// @pre The vertex format must be in a valid state.
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
 		/// @return Label of the vertex format.
 		[[nodiscard]] std::string label() const;
 
-		/// @}
 		/// @cond gl_interop
-		/// @name OpenGL interoperability
-		/// @{
-
-		/// Unwraps the OpenGL vertex array object.
-		/// @note This does not release the vertex array object.
-		/// @return OpenGL vertex array object ID.
-		[[nodiscard]] unsigned int unwrap() const noexcept;
-
-		/// @}
+		/// @brief Returns a handle to the underlying OpenGL vertex array object.
+		/// @return Handle to the underlying OpenGL vertex array object.
+		[[nodiscard]] unsigned int handle() const noexcept;
 		/// @endcond
-		/// @cond implementation_details
-		/// @name Implementation details
-		/// @{
 
-		/// Gets the unique graphics object ID of the vertex format.
-		/// @return Unique graphics object ID of the vertex format.
+		/// @cond implementation_details
+		/// @brief Returns the ID uniquely identifying the vertex format.
+		/// @return ID uniquely identifying the vertex format.
 		[[nodiscard]] internal::graphics_object_id id() const noexcept;
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-		/// Gets information about the vertex format's bindings.
+		/// @brief Returns information about the vertex format's bindings.
 		/// @return Information about the vertex format's bindings.
 		[[nodiscard]] std::span<const vertex_binding> bindings() const noexcept;
 #endif
-
-		/// @}
 		/// @endcond
 
+		/// @}
+
 	  private:
-		/// VAO deleter class.
-		struct deleter
+		/// @brief OpenGL vertex array object deleter.
+		struct gl_vertex_array_object_deleter
 		{
-			/// Reference to the graphics context the VAO is on.
+			/// @brief Reference to the graphics context the vertex array object is on.
 			ref<graphics_context> context;
 
-			/// Handle to the unique graphics object ID of the vertex format.
-			internal::graphics_object_id_handle id{};
+			/// @brief ID uniquely identifying the vertex format.
+			unique_handle<internal::graphics_object_id, internal::graphics_object_id::invalid> id{internal::generate_graphics_object_id()};
 
 			//
 
-			/// Deletes the VAO.
-			/// @param id OpenGL VAO ID.
-			void operator()(unsigned int id) const noexcept;
+			/// @brief Destroys the vertex array object.
+			/// @param handle OpenGL vertex array object handle.
+			void operator()(unsigned int handle) const noexcept;
 		};
 
 		//
 
-		/// Handle to the OpenGL VAO.
-		unique_handle<unsigned int, 0, deleter> m_handle;
+		/// @brief Managed handle to an OpenGL vertex array object.
+		unique_handle<unsigned int, 0, gl_vertex_array_object_deleter> m_handle;
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-		/// Information about the vertex format's bindings.
+		/// @brief Information about the vertex format's bindings.
 		std::span<const vertex_binding> m_bindings;
 #endif
 	};
@@ -157,11 +154,11 @@ namespace tr
 
 //
 
-/// Vertex format formatter.
+/// @brief Vertex format formatter.
 template <>
 struct std::formatter<tr::vertex_format>
 {
-	/// Parses the format specification.
+	/// @brief Parses the format specification.
 	/// @tparam ParseContext Parsing context type.
 	/// @param context Parsing context.
 	/// @return Iterator to the end of the parsed specification.
@@ -174,7 +171,7 @@ struct std::formatter<tr::vertex_format>
 		return context.begin();
 	}
 
-	/// Formats a vertex format.
+	/// @brief Formats a vertex format.
 	/// @tparam FormatContext Formatting context type.
 	/// @param format Vertex format to format.
 	/// @param context Formatting context.
@@ -184,7 +181,7 @@ struct std::formatter<tr::vertex_format>
 	{
 		if (format.valid()) {
 			return std::format_to(context.out(), "\"{}\" (ID: {}, VAO: {})", format.label(), std::to_underlying(format.id()),
-								  format.unwrap());
+								  format.handle());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid vertex format at {}>", static_cast<const void*>(&format));

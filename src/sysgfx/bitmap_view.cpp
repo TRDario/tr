@@ -27,49 +27,6 @@ tr::bitmap_view::bitmap_view(const std::byte* raw_data_start, int pitch, glm::iv
 	}
 }
 
-void tr::bitmap_view::deleter::operator()(SDL_Surface* ptr) noexcept
-{
-	SDL_DestroySurface(ptr);
-}
-
-//
-
-tr::bitmap_view::operator tr::sub_bitmap() const noexcept
-{
-	return sub(rectangle<int>{size()});
-}
-
-tr::sub_bitmap tr::bitmap_view::sub(rectangle<int> region) const noexcept
-{
-	return sub_bitmap{*this, region};
-}
-
-//
-
-bool tr::bitmap_view::valid() const noexcept
-{
-	return static_cast<bool>(m_ptr);
-}
-
-glm::ivec2 tr::bitmap_view::size() const noexcept
-{
-	return glm::ivec2{m_ptr->w, m_ptr->h};
-}
-
-tr::pixel_format tr::bitmap_view::format() const noexcept
-{
-	TR_ASSERT(valid(), "Tried to get the format of a bitmap view in an invalid state.");
-
-	return static_cast<pixel_format>(m_ptr->format);
-}
-
-int tr::bitmap_view::pitch() const noexcept
-{
-	TR_ASSERT(valid(), "Tried to get the pitch of a bitmap view in an invalid state.");
-
-	return m_ptr->pitch;
-}
-
 //
 
 tr::bitmap_view::reference tr::bitmap_view::operator[](int x, int y) const noexcept
@@ -87,6 +44,11 @@ const std::byte* tr::bitmap_view::data() const noexcept
 	TR_ASSERT(valid(), "Tried to get the data of a bitmap view in an invalid state.");
 
 	return static_cast<const std::byte*>(m_ptr->pixels);
+}
+
+tr::bitmap_view::operator tr::sub_bitmap() const noexcept
+{
+	return sub(rectangle<int>{size()});
 }
 
 //
@@ -117,6 +79,47 @@ tr::bitmap_view::iterator tr::bitmap_view::cend() const noexcept
 
 //
 
+tr::bitmap_view::operator bool() const noexcept
+{
+	return static_cast<bool>(m_ptr);
+}
+
+bool tr::bitmap_view::valid() const noexcept
+{
+	return static_cast<bool>(m_ptr);
+}
+
+glm::ivec2 tr::bitmap_view::size() const noexcept
+{
+	return glm::ivec2{m_ptr->w, m_ptr->h};
+}
+
+tr::pixel_format tr::bitmap_view::format() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to get the format of a bitmap view in an invalid state.");
+
+	return static_cast<pixel_format>(m_ptr->format);
+}
+
+int tr::bitmap_view::pitch() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to get the pitch of a bitmap view in an invalid state.");
+
+	return m_ptr->pitch;
+}
+
+SDL_Surface* tr::bitmap_view::pointer() const noexcept
+{
+	return m_ptr.get();
+}
+
+//
+
+tr::sub_bitmap tr::bitmap_view::sub(rectangle<int> region) const noexcept
+{
+	return sub_bitmap{*this, region};
+}
+
 void tr::bitmap_view::save(const std::filesystem::path& path) const
 {
 	TR_ASSERT(valid(), "Tried to save a bitmap view in an invalid state.");
@@ -124,11 +127,4 @@ void tr::bitmap_view::save(const std::filesystem::path& path) const
 	if (!IMG_SavePNG(m_ptr.get(), TR_PATH_CSTR(path))) {
 		throw bitmap_save_error{path.string(), SDL_GetError()};
 	}
-}
-
-//
-
-SDL_Surface* tr::bitmap_view::unwrap() const noexcept
-{
-	return m_ptr.get();
 }

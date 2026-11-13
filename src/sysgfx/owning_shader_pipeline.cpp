@@ -80,7 +80,7 @@ std::string tr::owning_shader_pipeline::label() const
 
 unsigned int tr::owning_shader_pipeline::unwrap() const noexcept
 {
-	return m_shader_pipeline.unwrap();
+	return m_shader_pipeline.handle();
 }
 
 tr::internal::graphics_object_id tr::owning_shader_pipeline::id() const noexcept

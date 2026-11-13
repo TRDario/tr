@@ -8,28 +8,28 @@
 
 namespace tr
 {
-	/// Logging levels.
+	/// @brief Logging levels.
 	enum class log_level : u8
 	{
-		/// Debug trace information.
+		/// @brief Debug trace information.
 		trace,
 
-		/// Debug information.
+		/// @brief Debug information.
 		debug,
 
-		/// Non-error information.
+		/// @brief Non-error information.
 		info,
 
-		/// Non-error abnormality.
+		/// @brief Non-error abnormality.
 		warning,
 
-		/// Non-fatal error.
+		/// @brief Non-fatal error.
 		error,
 
-		/// Fatal error.
+		/// @brief Fatal error.
 		fatal,
 
-		/// When used
+		/// @brief Turns off all logging when used with `tr::logger().set_min_level()`.
 		off
 	};
 
@@ -41,7 +41,7 @@ namespace tr
 		return std::to_underlying(lhs) <=> std::to_underlying(rhs);
 	}
 
-	/// Gets the name of a logging level.
+	/// @brief Returns the name of a logging level.
 	/// @param level Logging level to get the name of.
 	/// @return View to the name of the logging level.
 	[[nodiscard]] constexpr std::string_view name(log_level level) noexcept
@@ -69,12 +69,12 @@ namespace tr
 
 //
 
-/// Logging level formatter.
+/// @brief Logging level formatter.
 template <>
 class std::formatter<tr::log_level>
 {
   public:
-	/// Parses the format specification.
+	/// @brief Parses the format specification.
 	/// @tparam ParseContext Parsing context type.
 	/// @param context Parsing context.
 	/// @return Iterator to the end of the parsed specification.
@@ -87,7 +87,7 @@ class std::formatter<tr::log_level>
 		return context.begin();
 	}
 
-	/// Formats a logging level.
+	/// @brief Formats a logging level.
 	/// @tparam FormatContext Formatting context type.
 	/// @param level Logging level to format.
 	/// @param context Formatting context.

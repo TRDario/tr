@@ -9,6 +9,16 @@
 
 namespace tr
 {
+	/// @brief Default handle deleter object.
+	/// @details Invoking a `tr::default_handle_deleter` is a no-op.
+	template <typename Handle>
+	struct default_handle_deleter
+	{
+		/// @brief Deletes the handle.
+		/// @details This function is a no-op.
+		constexpr void operator()(Handle) noexcept {}
+	};
+
 	/// @ingroup handle
 	/// @brief `std::unique_ptr`-like object owning and managing an object passed via an integral handle.
 	/// @details `tr::unique_handle` is designed to be used as the base layer on top of which a more specialized wrapper is built. It
@@ -16,8 +26,8 @@ namespace tr
 	/// @tparam Handle Handle representation type.
 	/// @tparam Empty Sentinel value set aside as the representation for an empty value.
 	/// @tparam Deleter Deleter object invoked when destroying a managed object. Must be nothrow constructible and invocable.
-	template <std::integral Handle, Handle Empty, typename Deleter>
-		requires std::is_nothrow_invocable_v<Deleter, Handle>
+	template <typename Handle, Handle Empty, typename Deleter = default_handle_deleter<Handle>>
+		requires std::is_nothrow_invocable_v<Deleter, Handle> && (std::integral<Handle> || std::is_enum_v<Handle>)
 	class unique_handle : private Deleter
 	{
 	  public:

@@ -30,32 +30,28 @@ tr::ping_pong_target::ping_pong_target(graphics_context& context, glm::ivec2 siz
 
 //
 
-tr::graphics_context& tr::ping_pong_target::context() const noexcept
+tr::mutable_texture_view tr::ping_pong_target::source() noexcept
 {
-	TR_ASSERT(valid(), "Tried to get context of a ping-pong target in an invalid state.");
+	TR_ASSERT(valid(), "Tried to get the source of a ping-pong target in an invalid state.");
+	TR_ASSERT(complete(), "Tried to get the source of an incomplete ping-pong target.");
 
-	return m_targets[0].context();
+	return m_targets[m_source_index];
 }
 
-//
-
-bool tr::ping_pong_target::valid() const noexcept
+tr::texture_view tr::ping_pong_target::source() const noexcept
 {
-	return m_targets[0].valid();
+	TR_ASSERT(valid(), "Tried to get the source of a ping-pong target in an invalid state.");
+	TR_ASSERT(complete(), "Tried to get the source of an incomplete ping-pong target.");
+
+	return m_targets[m_source_index];
 }
 
-bool tr::ping_pong_target::complete() const noexcept
+tr::render_target tr::ping_pong_target::destination() noexcept
 {
-	TR_ASSERT(valid(), "Tried to check completeness of a ping-pong target in an invalid state.");
+	TR_ASSERT(valid(), "Tried to get the destination of a ping-pong target in an invalid state.");
+	TR_ASSERT(complete(), "Tried to get the destination of an incomplete ping-pong target.");
 
-	return m_targets[0].complete();
-}
-
-glm::ivec2 tr::ping_pong_target::size() const noexcept
-{
-	TR_ASSERT(valid(), "Tried to get the size of a ping-pong target in an invalid state.");
-
-	return m_targets[0].size();
+	return m_targets[1 - m_source_index];
 }
 
 //
@@ -68,16 +64,6 @@ void tr::ping_pong_target::allocate(glm::ivec2 size, mipmaps mipmaps, pixel_form
 		target.allocate(size, mipmaps, format);
 	}
 }
-
-void tr::ping_pong_target::clear_destination(rgba<float> color) noexcept
-{
-	TR_ASSERT(valid(), "Tried to clear the destination of a ping-pong target in an invalid state.");
-	TR_ASSERT(complete(), "Tried to clear the destination of an incomplete ping-pong target.");
-
-	m_targets[1 - m_source_index].clear(color);
-}
-
-//
 
 void tr::ping_pong_target::set_filtering(min_filter min_filter, mag_filter mag_filter) noexcept
 {
@@ -106,30 +92,12 @@ void tr::ping_pong_target::set_border_color(rgba<float> color) noexcept
 	}
 }
 
-//
-
-tr::mutable_texture_view tr::ping_pong_target::source() noexcept
+void tr::ping_pong_target::clear_destination(rgba<float> color) noexcept
 {
-	TR_ASSERT(valid(), "Tried to get the source of a ping-pong target in an invalid state.");
-	TR_ASSERT(complete(), "Tried to get the source of an incomplete ping-pong target.");
+	TR_ASSERT(valid(), "Tried to clear the destination of a ping-pong target in an invalid state.");
+	TR_ASSERT(complete(), "Tried to clear the destination of an incomplete ping-pong target.");
 
-	return m_targets[m_source_index];
-}
-
-tr::texture_view tr::ping_pong_target::source() const noexcept
-{
-	TR_ASSERT(valid(), "Tried to get the source of a ping-pong target in an invalid state.");
-	TR_ASSERT(complete(), "Tried to get the source of an incomplete ping-pong target.");
-
-	return m_targets[m_source_index];
-}
-
-tr::render_target tr::ping_pong_target::destination() noexcept
-{
-	TR_ASSERT(valid(), "Tried to get the destination of a ping-pong target in an invalid state.");
-	TR_ASSERT(complete(), "Tried to get the destination of an incomplete ping-pong target.");
-
-	return m_targets[1 - m_source_index];
+	m_targets[1 - m_source_index].clear(color);
 }
 
 void tr::ping_pong_target::swap() noexcept
@@ -140,7 +108,51 @@ void tr::ping_pong_target::swap() noexcept
 	m_source_index = (m_source_index + 1) % 2;
 }
 
+void tr::ping_pong_target::set_label(std::string_view label)
+{
+	TR_ASSERT(valid(), "Tried to set label of a ping-pong target target in an invalid state.");
+
+	// <NAME> - Target 0
+	std::string buffer{std::format("{} - Target 0", label)};
+	m_targets[0].set_label(buffer);
+
+	// <NAME> - Target 1
+	buffer.back() = '1';
+	m_targets[1].set_label(buffer);
+}
+
 //
+
+tr::ping_pong_target::operator bool() const noexcept
+{
+	return static_cast<bool>(m_targets[0]);
+}
+
+bool tr::ping_pong_target::valid() const noexcept
+{
+	return m_targets[0].valid();
+}
+
+tr::graphics_context& tr::ping_pong_target::context() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to get context of a ping-pong target in an invalid state.");
+
+	return m_targets[0].context();
+}
+
+bool tr::ping_pong_target::complete() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to check completeness of a ping-pong target in an invalid state.");
+
+	return m_targets[0].complete();
+}
+
+glm::ivec2 tr::ping_pong_target::size() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to get the size of a ping-pong target in an invalid state.");
+
+	return m_targets[0].size();
+}
 
 std::string tr::ping_pong_target::label() const
 {
@@ -151,12 +163,4 @@ std::string tr::ping_pong_target::label() const
 		label.resize(label.size() - 11);
 	}
 	return label;
-}
-
-void tr::ping_pong_target::set_label(std::string_view label)
-{
-	TR_ASSERT(valid(), "Tried to set label of a ping-pong target target in an invalid state.");
-
-	m_targets[0].set_label(std::format("{} - Target 0", label));
-	m_targets[1].set_label(std::format("{} - Target 1", label));
 }

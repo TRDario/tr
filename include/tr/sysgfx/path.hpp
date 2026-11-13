@@ -8,14 +8,11 @@
 
 namespace tr
 {
-	/// @name Paths
-	/// @{
-
-	/// Gets a path to the executable directory.
+	/// @brief Returns a path to the executable directory.
 	/// @return Path to the executable directory.
 	[[nodiscard]] std::filesystem::path executable_directory();
 
-	/// Gets a path to a safe user directory where data can be stored.
+	/// @brief Returns a path to a safe user directory where data can be stored.
 	/// @details
 	/// On Windows this is in %appdata%, while on Linux this is in ~/.local/share.
 	///
@@ -23,6 +20,4 @@ namespace tr
 	/// @exception path_error If getting the path failed.
 	/// @return Path to the user directory.
 	[[nodiscard]] std::filesystem::path user_directory();
-
-	/// @}
 } // namespace tr

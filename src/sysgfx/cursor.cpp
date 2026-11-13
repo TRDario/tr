@@ -28,30 +28,33 @@ tr::cursor::cursor(sys_cursor icon)
 }
 
 tr::cursor::cursor(const bitmap& bitmap, glm::ivec2 focus)
-	: cursor{SDL_CreateColorCursor(bitmap.unwrap(), focus.x, focus.y)}
+	: cursor{SDL_CreateColorCursor(bitmap.pointer(), focus.x, focus.y)}
 {
 }
 
 tr::cursor::cursor(const bitmap_view& view, glm::ivec2 focus)
-	: cursor{SDL_CreateColorCursor(view.unwrap(), focus.x, focus.y)}
+	: cursor{SDL_CreateColorCursor(view.pointer(), focus.x, focus.y)}
 {
 }
 
-void tr::cursor::deleter::operator()(SDL_Cursor* ptr) noexcept
+void tr::cursor::sdl_cursor_deleter::operator()(SDL_Cursor* ptr) noexcept
 {
 	SDL_DestroyCursor(ptr);
 }
 
 //
 
+tr::cursor::operator bool() const noexcept
+{
+	return static_cast<bool>(m_ptr);
+}
+
 bool tr::cursor::valid() const noexcept
 {
 	return static_cast<bool>(m_ptr);
 }
 
-//
-
-SDL_Cursor* tr::cursor::unwrap() const noexcept
+SDL_Cursor* tr::cursor::pointer() const noexcept
 {
 	return m_ptr.get();
 }
@@ -76,7 +79,7 @@ void tr::set_cursor(const cursor& cursor)
 {
 	TR_ASSERT(cursor.valid(), "Tried to set a cursor in an invalid state.");
 
-	if (!SDL_SetCursor(cursor.unwrap())) {
+	if (!SDL_SetCursor(cursor.pointer())) {
 		throw cursor_error("Failed to set mouse cursor.");
 	}
 }

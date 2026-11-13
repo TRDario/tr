@@ -485,7 +485,7 @@ void tr::shader::set_sampler_uniform(int index, texture_view value)
 	auto unit_it{m_texture_units.find(index)};
 	if (unit_it == m_texture_units.end()) {
 		unit_it = m_texture_units.insert({index, internal::texture_unit{context()}}).first;
-		context().gl().set_program_uniform_1i(unwrap(), index, unit_it->second.id());
+		context().gl().set_program_uniform_1i(unwrap(), index, unit_it->second.handle());
 	}
 	unit_it->second.set(value);
 }
@@ -504,7 +504,7 @@ void tr::shader::set_image_uniform(int index, mutable_texture_view texture, acce
 	auto unit_it{m_image_units.find(index)};
 	if (unit_it == m_image_units.end()) {
 		unit_it = m_image_units.insert({index, internal::image_unit{context()}}).first;
-		context().gl().set_program_uniform_1i(unwrap(), index, unit_it->second.id());
+		context().gl().set_program_uniform_1i(unwrap(), index, unit_it->second.handle());
 	}
 	unit_it->second.set(texture, access);
 }
@@ -520,7 +520,7 @@ void tr::shader::set_storage_buffer(unsigned int index, unsigned int buffer_id, 
 
 void tr::shader::set_storage_buffer(unsigned int index, untyped_shader_buffer& buffer) noexcept
 {
-	set_storage_buffer(index, buffer.unwrap(), buffer.header_size() + buffer.array_size());
+	set_storage_buffer(index, buffer.handle(), buffer.header_size() + buffer.array_size());
 }
 
 void tr::shader::set_uniform_buffer(unsigned int index, unsigned int buffer_id) noexcept
@@ -532,7 +532,7 @@ void tr::shader::set_uniform_buffer(unsigned int index, unsigned int buffer_id) 
 
 void tr::shader::set_uniform_buffer(unsigned int index, const untyped_uniform_buffer& buffer) noexcept
 {
-	set_uniform_buffer(index, buffer.unwrap());
+	set_uniform_buffer(index, buffer.handle());
 }
 
 //

@@ -49,7 +49,7 @@ tr::render_target::render_target(const framebuffer& framebuffer, glm::ivec2 fram
 
 tr::render_target::render_target(const framebuffer& framebuffer, int framebuffer_height, rectangle<u16> viewport,
 								 rectangle<u16> scissor_box) noexcept
-	: render_target{framebuffer.context(), framebuffer.id(), framebuffer.unwrap(), framebuffer_height, viewport, scissor_box}
+	: render_target{framebuffer.context(), framebuffer.id(), framebuffer.handle(), framebuffer_height, viewport, scissor_box}
 {
 }
 

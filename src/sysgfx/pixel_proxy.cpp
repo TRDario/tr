@@ -12,16 +12,6 @@ tr::const_pixel_proxy::const_pixel_proxy(const std::byte* data, pixel_format for
 {
 }
 
-const std::byte* tr::const_pixel_proxy::data() const noexcept
-{
-	return m_data;
-}
-
-tr::pixel_format tr::const_pixel_proxy::format() const noexcept
-{
-	return m_format;
-}
-
 tr::const_pixel_proxy::operator tr::rgba<tr::u8>() const noexcept
 {
 	u32 value{0};
@@ -32,22 +22,22 @@ tr::const_pixel_proxy::operator tr::rgba<tr::u8>() const noexcept
 	return color;
 }
 
+const std::byte* tr::const_pixel_proxy::data() const noexcept
+{
+	return m_data;
+}
+
+tr::pixel_format tr::const_pixel_proxy::format() const noexcept
+{
+	return m_format;
+}
+
 //
 
 tr::pixel_proxy::pixel_proxy(std::byte* data, pixel_format format) noexcept
 	: m_data{data}
 	, m_format{format}
 {
-}
-
-std::byte* tr::pixel_proxy::data() const noexcept
-{
-	return m_data;
-}
-
-tr::pixel_format tr::pixel_proxy::format() const noexcept
-{
-	return m_format;
 }
 
 tr::pixel_proxy::operator tr::rgba<tr::u8>() const noexcept
@@ -66,4 +56,14 @@ tr::pixel_proxy& tr::pixel_proxy::operator=(rgba<u8> color) noexcept
 	const u32 formatted{SDL_MapRGBA(format_details, nullptr, color.r, color.g, color.b, color.a)};
 	std::memcpy(m_data, &formatted, pixel_bytes(m_format));
 	return *this;
+}
+
+std::byte* tr::pixel_proxy::data() const noexcept
+{
+	return m_data;
+}
+
+tr::pixel_format tr::pixel_proxy::format() const noexcept
+{
+	return m_format;
 }

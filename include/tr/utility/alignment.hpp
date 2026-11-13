@@ -18,12 +18,15 @@ namespace tr
 	enum class halign : u8
 	{
 		/// @brief Left horizontal alignment.
+		/// @hideinitializer
 		left = 0,
 
 		/// @brief Center horizontal alignment.
+		/// @hideinitializer
 		center = 1,
 
 		/// @brief Right horizontal alignment.
+		/// @hideinitializer
 		right = 2
 	};
 
@@ -32,12 +35,15 @@ namespace tr
 	enum class valign : u8
 	{
 		/// @brief Top vertical alignment.
+		/// @hideinitializer
 		top = 0,
 
 		/// @brief Center vertical alignment.
+		/// @hideinitializer
 		center = 3,
 
 		/// @brief Bottom vertical alignment.
+		/// @hideinitializer
 		bottom = 6
 	};
 
@@ -46,30 +52,39 @@ namespace tr
 	enum class align : u8
 	{
 		/// @brief Top-left alignment.
+		/// @hideinitializer
 		tl = std::to_underlying(valign::top) + std::to_underlying(halign::left),
 
 		/// @brief Top-center alignment.
+		/// @hideinitializer
 		tc = std::to_underlying(valign::top) + std::to_underlying(halign::center),
 
 		/// @brief Top-right alignment.
+		/// @hideinitializer
 		tr = std::to_underlying(valign::top) + std::to_underlying(halign::right),
 
 		/// @brief Center-left alignment.
+		/// @hideinitializer
 		cl = std::to_underlying(valign::center) + std::to_underlying(halign::left),
 
 		/// @brief Center alignment.
+		/// @hideinitializer
 		cc = std::to_underlying(valign::center) + std::to_underlying(halign::center),
 
 		/// @brief Center-right alignment.
+		/// @hideinitializer
 		cr = std::to_underlying(valign::center) + std::to_underlying(halign::right),
 
 		/// @brief Bottom-left alignment.
+		/// @hideinitializer
 		bl = std::to_underlying(valign::bottom) + std::to_underlying(halign::left),
 
 		/// @brief Bottom-center alignment.
+		/// @hideinitializer
 		bc = std::to_underlying(valign::bottom) + std::to_underlying(halign::center),
 
 		/// @brief Bottom-right alignment.
+		/// @hideinitializer
 		br = std::to_underlying(valign::bottom) + std::to_underlying(halign::right)
 	};
 

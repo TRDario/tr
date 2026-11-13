@@ -13,7 +13,7 @@ namespace tr
 
 namespace tr::internal
 {
-	/// Checks whether a callable is statelessly invocable.
+	/// @brief Checks whether a callable is statelessly invocable.
 	/// @tparam Callable Callable to check for stateless invocability.
 	/// @tparam FunctionPointer Function pointer the callable should be equivalent to.
 	template <typename Callable, typename FunctionPointer>
@@ -22,13 +22,12 @@ namespace tr::internal
 
 	//
 
-	/// Raw file dialog callback function pointer.
+	/// @brief Raw file dialog callback function pointer.
 	using raw_file_dialog_callback = void (*)(void* userdata, const char* const* paths, int filter_index);
 
-	/// @name File dialogs
-	/// @{
+	//
 
-	/// Shows a non-blocking "Open File" dialog.
+	/// @brief Shows a non-blocking "Open File" dialog.
 	/// @param callback Callback function pointer.
 	/// @param userdata Userdata passed to the callback.
 	/// @param filters List of applicable file filters.
@@ -37,7 +36,7 @@ namespace tr::internal
 	void show_open_file_dialog(raw_file_dialog_callback callback, void* userdata, std::span<const file_dialog_filter> filters,
 							   zstring_view default_path, bool allow_multiple) noexcept;
 
-	/// Shows a non-blocking "Save File" dialog.
+	/// @brief Shows a non-blocking "Save File" dialog.
 	/// @param callback Callback function pointer.
 	/// @param userdata Userdata passed to the callback.
 	/// @param filters List of applicable file filters.
@@ -45,13 +44,11 @@ namespace tr::internal
 	void show_save_file_dialog(raw_file_dialog_callback callback, void* userdata, std::span<const file_dialog_filter> filters,
 							   zstring_view default_path) noexcept;
 
-	/// Shows a non-blocking "Open Folder" dialog.
+	/// @brief Shows a non-blocking "Open Folder" dialog.
 	/// @param callback Callback function pointer.
 	/// @param userdata Userdata passed to the callback.
 	/// @param default_path Default path to start the dialog at.
 	/// @param allow_multiple Whether selecting multiple files is allowed.
 	void show_open_folder_dialog(raw_file_dialog_callback callback, void* userdata, zstring_view default_path,
 								 bool allow_multiple) noexcept;
-
-	/// @}
 } // namespace tr::internal

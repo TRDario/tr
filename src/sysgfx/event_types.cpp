@@ -18,12 +18,12 @@ tr::key_down_event::key_down_event(event_view event) noexcept
 	mods = internal::convert_sdl_keymods(sdl.mod);
 }
 
-tr::scan_chord tr::key_down_event::scan_chord() const noexcept
+tr::scan_chord tr::key_down_event::pressed_scan_chord() const noexcept
 {
 	return tr::scan_chord{mods, scan};
 }
 
-tr::key_chord tr::key_down_event::key_chord() const noexcept
+tr::key_chord tr::key_down_event::pressed_key_chord() const noexcept
 {
 	return tr::key_chord{mods, key};
 }
