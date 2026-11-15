@@ -211,7 +211,7 @@ struct std::formatter<tr::shader_buffer<Header, ArrayElement>>
 	template <typename FormatContext>
 	FormatContext::iterator format(const tr::shader_buffer<Header, ArrayElement>& buffer, FormatContext& context) const
 	{
-		if (buffer.valid()) {
+		if (buffer) {
 			return std::format_to(context.out(), "\"{}\" (ID: {}, SSBO: {})", buffer.label(), std::to_underlying(buffer.id()),
 								  buffer.unwrap());
 		}

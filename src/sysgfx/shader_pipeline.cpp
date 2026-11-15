@@ -33,7 +33,7 @@ tr::shader_pipeline::shader_pipeline(graphics_context& context, const vertex_sha
 void tr::shader_pipeline::gl_program_pipeline_object_deleter::operator()(unsigned int handle) const noexcept
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	context->registered_shader_pipelines().erase(id);
+	context->registered_shader_pipelines().erase(id.get());
 #endif
 	context->gl().delete_program_pipelines(1, &handle);
 }
@@ -43,8 +43,8 @@ void tr::shader_pipeline::gl_program_pipeline_object_deleter::operator()(unsigne
 void tr::shader_pipeline::set_shaders(const vertex_shader& vertex_shader, const fragment_shader& fragment_shader) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set shaders to a shader pipeline in an invalid state");
-	TR_ASSERT(vertex_shader.valid(), "Tried to set invalid vertex shader to shader pipeline {}.", *this);
-	TR_ASSERT(fragment_shader.valid(), "Tried to set invalid fragment shader to pipeline {}.", *this);
+	TR_ASSERT(vertex_shader, "Tried to set invalid vertex shader to shader pipeline {}.", *this);
+	TR_ASSERT(fragment_shader, "Tried to set invalid fragment shader to pipeline {}.", *this);
 	TR_ASSERT(&vertex_shader.context() == &context(),
 			  "Tried to set vertex shader {} to pipeline {} despite them not being on the same graphics context.", vertex_shader, *this);
 	TR_ASSERT(&fragment_shader.context() == &context(),
@@ -73,7 +73,7 @@ void tr::shader_pipeline::set_shaders(const vertex_shader& vertex_shader, const 
 	const internal::opengl& gl{context().gl()};
 	if (internal::graphics_object_id id{vertex_shader.id()}; m_vertex_shader_id != id) {
 		TR_LOG_TRACE("gfx", "Setting vertex shader {} on shader pipeline {}.", vertex_shader, *this);
-		gl.use_program_stages(m_handle.get(), GL_VERTEX_SHADER_BIT, vertex_shader.unwrap());
+		gl.use_program_stages(m_handle.get(), GL_VERTEX_SHADER_BIT, vertex_shader.handle());
 		m_vertex_shader_id = id;
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		m_vertex_shader_outputs = vertex_shader.outputs();
@@ -81,7 +81,7 @@ void tr::shader_pipeline::set_shaders(const vertex_shader& vertex_shader, const 
 	}
 	if (internal::graphics_object_id id{fragment_shader.id()}; m_fragment_shader_id != id) {
 		TR_LOG_TRACE("gfx", "Setting fragment shader {} on shader pipeline {}.", vertex_shader, *this);
-		gl.use_program_stages(m_handle.get(), GL_FRAGMENT_SHADER_BIT, fragment_shader.unwrap());
+		gl.use_program_stages(m_handle.get(), GL_FRAGMENT_SHADER_BIT, fragment_shader.handle());
 		m_fragment_shader_id = id;
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		m_fragment_shader_inputs = fragment_shader.inputs();
@@ -94,7 +94,7 @@ void tr::shader_pipeline::set_vertex_shader(const vertex_shader& vertex_shader) 
 	graphics_context& context{this->context()};
 
 	TR_ASSERT(valid(), "Tried to set a vertex shader to a shader pipeline in an invalid state");
-	TR_ASSERT(vertex_shader.valid(), "Tried to set invalid vertex shader to pipeline {}.", *this);
+	TR_ASSERT(vertex_shader, "Tried to set invalid vertex shader to pipeline {}.", *this);
 	TR_ASSERT(&vertex_shader.context() == &context,
 			  "Tried to set vertex shader {} to pipeline {} despite them not being on the same graphics context.", vertex_shader, *this);
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
@@ -121,7 +121,7 @@ void tr::shader_pipeline::set_vertex_shader(const vertex_shader& vertex_shader) 
 
 	if (const internal::graphics_object_id id{vertex_shader.id()}; m_vertex_shader_id != id) {
 		TR_LOG_TRACE("gfx", "Setting vertex shader {} on shader pipeline {}.", vertex_shader, *this);
-		context.gl().use_program_stages(m_handle.get(), GL_VERTEX_SHADER_BIT, vertex_shader.unwrap());
+		context.gl().use_program_stages(m_handle.get(), GL_VERTEX_SHADER_BIT, vertex_shader.handle());
 		m_vertex_shader_id = id;
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		m_vertex_shader_outputs = vertex_shader.outputs();
@@ -134,7 +134,7 @@ void tr::shader_pipeline::set_fragment_shader(const fragment_shader& fragment_sh
 	graphics_context& context{this->context()};
 
 	TR_ASSERT(valid(), "Tried to set a fragment shader to a shader pipeline in an invalid state");
-	TR_ASSERT(fragment_shader.valid(), "Tried to set invalid fragment shader to pipeline {}.", *this);
+	TR_ASSERT(fragment_shader, "Tried to set invalid fragment shader to pipeline {}.", *this);
 	TR_ASSERT(&fragment_shader.context() == &context,
 			  "Tried to set fragment shader {} to pipeline {} despite them not being on the same graphics context.", fragment_shader,
 			  *this);
@@ -162,7 +162,7 @@ void tr::shader_pipeline::set_fragment_shader(const fragment_shader& fragment_sh
 
 	if (const internal::graphics_object_id id{fragment_shader.id()}; m_fragment_shader_id != id) {
 		TR_LOG_TRACE("gfx", "Setting fragment shader {} on shader pipeline {}.", fragment_shader, *this);
-		context.gl().use_program_stages(m_handle.get(), GL_FRAGMENT_SHADER_BIT, fragment_shader.unwrap());
+		context.gl().use_program_stages(m_handle.get(), GL_FRAGMENT_SHADER_BIT, fragment_shader.handle());
 		m_fragment_shader_id = id;
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		m_fragment_shader_inputs = fragment_shader.inputs();

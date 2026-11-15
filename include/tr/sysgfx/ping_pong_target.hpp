@@ -216,7 +216,7 @@ struct std::formatter<tr::ping_pong_target>
 	template <typename FormatContext>
 	FormatContext::iterator format(const tr::ping_pong_target& target, FormatContext& context) const
 	{
-		if (target.valid()) {
+		if (target) {
 			return std::format_to(context.out(), "\"{}\"", target.label());
 		}
 		else {

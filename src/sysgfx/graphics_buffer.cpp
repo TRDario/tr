@@ -95,7 +95,7 @@ void tr::graphics_buffer::set_label(std::string_view label) noexcept
 
 void tr::graphics_buffer::replace_with(graphics_buffer&& buffer)
 {
-	TR_ASSERT(buffer.valid(), "Tried to replace a graphics buffer with an invalid graphics buffer.");
+	TR_ASSERT(buffer, "Tried to replace a graphics buffer with an invalid graphics buffer.");
 
 	if (valid()) {
 		const internal::opengl& gl{context().gl()};

@@ -77,7 +77,7 @@ void tr::hide_cursor()
 
 void tr::set_cursor(const cursor& cursor)
 {
-	TR_ASSERT(cursor.valid(), "Tried to set a cursor in an invalid state.");
+	TR_ASSERT(cursor, "Tried to set a cursor in an invalid state.");
 
 	if (!SDL_SetCursor(cursor.pointer())) {
 		throw cursor_error("Failed to set mouse cursor.");

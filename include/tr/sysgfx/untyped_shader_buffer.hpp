@@ -224,7 +224,7 @@ struct std::formatter<tr::untyped_shader_buffer>
 	template <typename FormatContext>
 	FormatContext::iterator format(const tr::untyped_shader_buffer& buffer, FormatContext& context) const
 	{
-		if (buffer.valid()) {
+		if (buffer) {
 			return std::format_to(context.out(), "\"{}\" (ID: {}, SSBO: {})", buffer.label(), std::to_underlying(buffer.id()),
 								  buffer.handle());
 		}

@@ -184,7 +184,7 @@ struct std::formatter<tr::shader_array<Element>>
 	template <typename FormatContext>
 	FormatContext::iterator format(const tr::shader_array<Element>& array, FormatContext& context) const
 	{
-		if (array.valid()) {
+		if (array) {
 			return std::format_to(context.out(), "\"{}\" (ID: {}, SSBO: {})", array.label(), std::to_underlying(array.id()),
 								  array.unwrap());
 		}

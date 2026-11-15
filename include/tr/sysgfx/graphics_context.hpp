@@ -222,7 +222,7 @@ namespace tr
 		template <typename Element>
 		void set_vertex_buffer(const static_vertex_buffer<Element>& buffer, int slot, int offset) noexcept
 		{
-			TR_ASSERT(buffer.valid(), "Tried to set a vertex buffer in an invalid state to a graphics context.");
+			TR_ASSERT(buffer, "Tried to set a vertex buffer in an invalid state to a graphics context.");
 			TR_ASSERT(&buffer.context() == this, "Tried to set vertex buffer {} to a context it is not associated with.", buffer);
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
@@ -254,7 +254,7 @@ namespace tr
 		template <typename Element>
 		void set_vertex_buffer(const dynamic_vertex_buffer<Element>& buffer, int slot, int offset) noexcept
 		{
-			TR_ASSERT(buffer.valid(), "Tried to set a vertex buffer in an invalid state to a graphics context.");
+			TR_ASSERT(buffer, "Tried to set a vertex buffer in an invalid state to a graphics context.");
 			TR_ASSERT(&buffer.context() == this, "Tried to set vertex buffer {} to a context it is not associated with.", buffer);
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS

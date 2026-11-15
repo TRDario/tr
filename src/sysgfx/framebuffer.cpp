@@ -24,7 +24,7 @@ tr::framebuffer::framebuffer(graphics_context& context, std::string_view label) 
 void tr::framebuffer::gl_framebuffer_object_deleter::operator()(unsigned int handle) const noexcept
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	context->registered_framebuffers().erase(id);
+	context->registered_framebuffers().erase(id.get());
 #endif
 	context->gl().delete_framebuffers(1, &handle);
 }

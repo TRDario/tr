@@ -146,7 +146,7 @@ struct std::formatter<tr::owning_shader_pipeline>
 	template <typename FormatContext>
 	FormatContext::iterator format(const tr::owning_shader_pipeline& pipeline, FormatContext& context) const
 	{
-		if (pipeline.valid()) {
+		if (pipeline) {
 			return std::format_to(context.out(), "\"{}\" (ID: {}, PPO: {})", pipeline.label(), std::to_underlying(pipeline.id()),
 								  pipeline.unwrap());
 		}

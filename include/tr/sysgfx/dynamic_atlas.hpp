@@ -406,7 +406,7 @@ struct std::formatter<tr::dynamic_atlas<Key, Value, Hash, Pred>>
 	template <typename FormatContext>
 	FormatContext::iterator format(const tr::dynamic_atlas<Key, Value, Hash, Pred>& atlas, FormatContext& context) const
 	{
-		if (atlas.valid()) {
+		if (atlas) {
 			return std::format_to(context.out(), "\"{}\" (Texture OpenGL ID: {})", atlas.label(), atlas.unwrap());
 		}
 		else {

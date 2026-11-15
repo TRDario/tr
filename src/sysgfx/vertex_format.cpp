@@ -62,7 +62,7 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 void tr::vertex_format::gl_vertex_array_object_deleter::operator()(unsigned int handle) const noexcept
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	context->registered_vertex_formats().erase(id);
+	context->registered_vertex_formats().erase(id.get());
 #endif
 	context->gl().delete_vertex_arrays(1, &handle);
 }

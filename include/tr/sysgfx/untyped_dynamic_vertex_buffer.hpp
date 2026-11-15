@@ -197,7 +197,7 @@ struct std::formatter<tr::untyped_dynamic_vertex_buffer>
 	template <typename FormatContext>
 	FormatContext::iterator format(const tr::untyped_dynamic_vertex_buffer& buffer, FormatContext& context) const
 	{
-		if (buffer.valid()) {
+		if (buffer) {
 			return std::format_to(context.out(), "\"{}\" (ID: {}, VBO: {})", buffer.label(), std::to_underlying(buffer.id()),
 								  buffer.handle());
 		}

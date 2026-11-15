@@ -189,7 +189,7 @@ struct std::formatter<tr::dynamic_index_buffer>
 	template <typename FormatContext>
 	FormatContext::iterator format(const tr::dynamic_index_buffer& buffer, FormatContext& context) const
 	{
-		if (buffer.valid()) {
+		if (buffer) {
 			return std::format_to(context.out(), "\"{}\" (ID: {}, IBO: {})", buffer.label(), std::to_underlying(buffer.id()),
 								  buffer.handle());
 		}

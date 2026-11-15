@@ -193,7 +193,7 @@ void tr::graphics_context::set_render_target(const render_target& target) noexce
 
 void tr::graphics_context::set_shader_pipeline(const shader_pipeline& pipeline) noexcept
 {
-	TR_ASSERT(pipeline.valid(), "Tried to set a shader pipeline in an invalid state to a context.");
+	TR_ASSERT(pipeline, "Tried to set a shader pipeline in an invalid state to a context.");
 	TR_ASSERT(&pipeline.context() == this, "Tried to set shader pipeline {} to a context it is not associated with.", pipeline);
 	TR_CHECKED_GRAPHICS_ASSERT(registered_shaders().contains(pipeline.vertex_shader_id()),
 							   "Tried to set shader pipeline {} with invalid set vertex shader.", pipeline);
@@ -213,13 +213,13 @@ void tr::graphics_context::set_shader_pipeline(const shader_pipeline& pipeline) 
 
 void tr::graphics_context::dispatch_compute_shader(const compute_shader& shader, glm::uvec3 groups) noexcept
 {
-	TR_ASSERT(shader.valid(), "Tried to dispatch a compute shader in an invalid state to a context.");
+	TR_ASSERT(shader, "Tried to dispatch a compute shader in an invalid state to a context.");
 	TR_ASSERT(&shader.context() == this, "Tried to dispatch shader {} om a context it is not associated with.", shader);
 
 	const internal::opengl& gl{this->gl()};
 	if (internal::graphics_object_id id{shader.id()}; m_bound_shader != id) {
 		TR_LOG_TRACE("gfx", "Setting shader program {} on context.", shader);
-		gl.use_program(shader.unwrap());
+		gl.use_program(shader.handle());
 		m_bound_shader = id;
 	}
 	gl.dispatch_compute_shader(groups.x, groups.y, groups.z);
@@ -246,7 +246,7 @@ void tr::graphics_context::set_blend_mode(const tr::blend_mode& blend_mode) noex
 
 void tr::graphics_context::set_vertex_format(const vertex_format& format) noexcept
 {
-	TR_ASSERT(format.valid(), "Tried to set vertex format in an invalid state to a graphics context.");
+	TR_ASSERT(format, "Tried to set vertex format in an invalid state to a graphics context.");
 	TR_ASSERT(&format.context() == this, "Tried to set vertex format {} to a context it is not associated with.", format);
 
 	if (internal::graphics_object_id id{format.id()}; m_bound_vertex_format != id) {
@@ -285,7 +285,7 @@ void tr::graphics_context::check_typed_vertex_buffer(const std::string& label, i
 
 void tr::graphics_context::set_vertex_buffer(const untyped_static_vertex_buffer& buffer, int slot, ssize offset, int stride) noexcept
 {
-	TR_ASSERT(buffer.valid(), "Tried to set a vertex buffer in an invalid state to a graphics context.");
+	TR_ASSERT(buffer, "Tried to set a vertex buffer in an invalid state to a graphics context.");
 	TR_ASSERT(&buffer.context() == this, "Tried to set vertex buffer {} to a context it is not associated with.", buffer);
 
 	if (m_bound_vertex_buffers.size() <= static_cast<usize>(slot)) {
@@ -308,7 +308,7 @@ void tr::graphics_context::set_vertex_buffer(const untyped_static_vertex_buffer&
 
 void tr::graphics_context::set_vertex_buffer(const untyped_dynamic_vertex_buffer& buffer, int slot, ssize offset, int stride) noexcept
 {
-	TR_ASSERT(buffer.valid(), "Tried to set a vertex buffer in an invalid state to a graphics context.");
+	TR_ASSERT(buffer, "Tried to set a vertex buffer in an invalid state to a graphics context.");
 	TR_ASSERT(&buffer.context() == this, "Tried to set vertex buffer {} to a context it is not associated with.", buffer);
 
 	if (m_bound_vertex_buffers.size() <= static_cast<usize>(slot)) {
@@ -331,7 +331,7 @@ void tr::graphics_context::set_vertex_buffer(const untyped_dynamic_vertex_buffer
 
 void tr::graphics_context::set_index_buffer(const static_index_buffer& buffer) noexcept
 {
-	TR_ASSERT(buffer.valid(), "Tried to set invalid index buffer to a graphics context.");
+	TR_ASSERT(buffer, "Tried to set invalid index buffer to a graphics context.");
 	TR_ASSERT(&buffer.context() == this, "Tried to set index buffer {} to a context it is not associated with.", buffer);
 
 	if (internal::graphics_object_id id{buffer.id()}; m_bound_index_buffer != id) {
@@ -343,7 +343,7 @@ void tr::graphics_context::set_index_buffer(const static_index_buffer& buffer) n
 
 void tr::graphics_context::set_index_buffer(const dynamic_index_buffer& buffer) noexcept
 {
-	TR_ASSERT(buffer.valid(), "Tried to set invalid index buffer to a graphics context.");
+	TR_ASSERT(buffer, "Tried to set invalid index buffer to a graphics context.");
 	TR_ASSERT(&buffer.context() == this, "Tried to set index buffer {} to a context it is not associated with.", buffer);
 
 	if (internal::graphics_object_id id{buffer.id()}; m_bound_index_buffer != id) {

@@ -383,7 +383,7 @@ struct std::formatter<tr::texture>
 	template <typename FormatContext>
 	FormatContext::iterator format(const tr::texture& texture, FormatContext& context) const
 	{
-		if (texture.valid()) {
+		if (texture) {
 			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", texture.label(), texture.handle());
 		}
 		else {

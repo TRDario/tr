@@ -136,7 +136,7 @@ struct std::formatter<tr::static_vertex_buffer<Element>>
 	template <typename FormatContext>
 	FormatContext::iterator format(const tr::static_vertex_buffer<Element>& buffer, FormatContext& context) const
 	{
-		if (buffer.valid()) {
+		if (buffer) {
 			return std::format_to(context.out(), "\"{}\" (ID: {}, VBO: {})", buffer.label(), std::to_underlying(buffer.id()),
 								  buffer.unwrap());
 		}

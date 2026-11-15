@@ -179,7 +179,7 @@ struct std::formatter<tr::vertex_format>
 	template <typename FormatContext>
 	FormatContext::iterator format(const tr::vertex_format& format, FormatContext& context) const
 	{
-		if (format.valid()) {
+		if (format) {
 			return std::format_to(context.out(), "\"{}\" (ID: {}, VAO: {})", format.label(), std::to_underlying(format.id()),
 								  format.handle());
 		}

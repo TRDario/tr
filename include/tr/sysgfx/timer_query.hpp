@@ -172,7 +172,7 @@ struct std::formatter<tr::timer_query>
 	template <typename FormatContext>
 	FormatContext::iterator format(const tr::timer_query& query, FormatContext& context) const
 	{
-		if (query.valid()) {
+		if (query) {
 			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", query.label(), query.handle());
 		}
 		else {

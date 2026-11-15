@@ -213,7 +213,7 @@ struct std::formatter<tr::framebuffer>
 	template <typename FormatContext>
 	FormatContext::iterator format(const tr::framebuffer& framebuffer, FormatContext& context) const
 	{
-		if (framebuffer.valid()) {
+		if (framebuffer) {
 			return std::format_to(context.out(), "\"{}\" (ID: {}, FBO: {})", framebuffer.label(), std::to_underlying(framebuffer.id()),
 								  framebuffer.handle());
 		}

@@ -149,7 +149,7 @@ struct std::formatter<tr::untyped_uniform_buffer>
 	template <typename FormatContext>
 	FormatContext::iterator format(const tr::untyped_uniform_buffer& buffer, FormatContext& context) const
 	{
-		if (buffer.valid()) {
+		if (buffer) {
 			return std::format_to(context.out(), "\"{}\" (ID: {}, UBO: {})", buffer.label(), std::to_underlying(buffer.id()),
 								  buffer.handle());
 		}
