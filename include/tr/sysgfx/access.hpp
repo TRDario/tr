@@ -8,7 +8,7 @@
 
 namespace tr
 {
-	/// @brief Access types.
+	/// @brief Access type.
 	enum class access : u32
 	{
 		/// @brief Read-only access.

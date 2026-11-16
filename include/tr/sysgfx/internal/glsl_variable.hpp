@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides `tr::internal::glsl_variable.hpp`.
+/// @brief Provides `tr::internal::glsl_variable`.
 
 #pragma once
 #include <tr/sysgfx/internal/glsl_type.hpp>
@@ -8,28 +8,28 @@
 
 namespace tr::internal
 {
-	/// GLSL variable information.
+	/// @brief GLSL variable information.
 	struct glsl_variable
 	{
-		// Name of the variable.
+		/// @brief Name of the variable.
 		std::string name;
 
-		// Type of the variable.
+		/// @brief Type of the variable.
 		glsl_type type;
 
-		// Array size of the variable, or 1 if not an array.
+		/// @brief Array size of the variable, or 1 if not an array.
 		int array_size;
 	};
 } // namespace tr::internal
 
 //
 
-/// GLSL variable formatter.
+/// @brief GLSL variable formatter.
 template <>
 class std::formatter<tr::internal::glsl_variable>
 {
   public:
-	/// Parses the format specification.
+	/// @brief Parses the format specification.
 	/// @tparam ParseContext Parsing context type.
 	/// @param context Parsing context.
 	/// @return Iterator to the end of the parsed specification.
@@ -42,7 +42,7 @@ class std::formatter<tr::internal::glsl_variable>
 		return context.begin();
 	}
 
-	/// Formats a GLSL variable.
+	/// @brief Formats a GLSL variable.
 	/// @tparam FormatContext Formatting context type.
 	/// @param variable GLSL variable to format.
 	/// @param context Formatting context.

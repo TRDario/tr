@@ -13,7 +13,8 @@ namespace tr
 
 namespace tr::internal
 {
-	/// Copied from SDL with modifications.
+	/// @brief Hardcoded list of scancode names.
+	/// @details This array was copied from SDL with modifications.
 	constexpr std::array<zstring_view, 291> scancode_names{{
 		{},
 		{},
@@ -308,7 +309,9 @@ namespace tr::internal
 		"EndCall",
 	}};
 
-	/// `to_keycode` fallback for Unicode characters.
+	//
+
+	/// @brief `tr::to_keycode()` fallback for Unicode characters.
 	/// @param str Keycode string.
 	/// @return Keycode associated with the string, or `keycode::unknown`.
 	[[nodiscard]] keycode to_keycode(zstring_view str) noexcept;

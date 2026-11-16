@@ -49,7 +49,7 @@ namespace tr::internal::localization
 		[[nodiscard]] handle_eof_result handle_eof() noexcept;
 
 	  private:
-		/// @brief Lexer states.
+		/// @brief Lexer state.
 		enum class state
 		{
 			/// @brief The lexer is ready to match any token.

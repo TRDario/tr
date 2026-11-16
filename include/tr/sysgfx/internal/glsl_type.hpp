@@ -8,210 +8,210 @@
 
 namespace tr::internal
 {
-	/// GLSL variable types.
+	/// @brief GLSL variable type.
 	enum class glsl_type
 	{
-		/// Undefined variable type.
+		/// @brief Undefined variable type.
 		undefined,
 
-		/// Boolean variable.
+		/// @brief Boolean variable.
 		bool_ = 0x8B56,
 
-		/// 2D boolean vector variable.
+		/// @brief 2D boolean vector variable.
 		bvec2,
 
-		/// 3D boolean vector variable.
+		/// @brief 3D boolean vector variable.
 		bvec3,
 
-		/// 4D boolean vector variable.
+		/// @brief 4D boolean vector variable.
 		bvec4,
 
-		/// Integer variable variable.
+		/// @brief Integer variable variable.
 		int_ = 0x1404,
 
-		/// 2D integer vector variable.
+		/// @brief 2D integer vector variable.
 		ivec2 = 0x8B53,
 
-		/// 3D integer vector variable.
+		/// @brief 3D integer vector variable.
 		ivec3,
 
-		/// 4D integer vector variable.
+		/// @brief 4D integer vector variable.
 		ivec4,
 
-		/// Unsigned integer variable.
+		/// @brief Unsigned integer variable.
 		uint = 0x1405,
 
-		/// 2D unsigned integer vector variable.
+		/// @brief 2D unsigned integer vector variable.
 		uvec2 = 0x8DC6,
 
-		/// 3D unsigned integer vector variable.
+		/// @brief 3D unsigned integer vector variable.
 		uvec3,
 
-		/// 4D unsigned integer vector variable.
+		/// @brief 4D unsigned integer vector variable.
 		uvec4,
 
-		/// Floating-point variable.
+		/// @brief Floating-point variable.
 		float_ = 0x1406,
 
-		/// 2D floating-point vector variable.
+		/// @brief 2D floating-point vector variable.
 		vec2 = 0x8B50,
 
-		/// 3D floating-point vector variable.
+		/// @brief 3D floating-point vector variable.
 		vec3,
 
-		/// 4D floating-point vector variable.
+		/// @brief 4D floating-point vector variable.
 		vec4,
 
-		/// 2x2 matrix variable.
+		/// @brief 2x2 matrix variable.
 		mat2 = 0x8B5A,
 
-		/// 3x3 matrix variable.
+		/// @brief 3x3 matrix variable.
 		mat3,
 
-		/// 4x4 matrix variable.
+		/// @brief 4x4 matrix variable.
 		mat4,
 
-		/// 2x3 matrix variable.
+		/// @brief 2x3 matrix variable.
 		mat2x3 = 0x8B65,
 
-		/// 2x4 matrix variable.
+		/// @brief 2x4 matrix variable.
 		mat2x4,
 
-		/// 3x2 matrix variable.
+		/// @brief 3x2 matrix variable.
 		mat3x2,
 
-		/// 3x4 matrix variable.
+		/// @brief 3x4 matrix variable.
 		mat3x4,
 
-		/// 4x2 matrix variable.
+		/// @brief 4x2 matrix variable.
 		mat4x2,
 
-		/// 4x3 matrix variable.
+		/// @brief 4x3 matrix variable.
 		mat4x3,
 
-		/// Sampler variable.
+		/// @brief Sampler variable.
 		sampler2D = 0x8B5E,
 
-		/// Image variable.
+		/// @brief Image variable.
 		image2D = 0x904D,
 	};
 
 	//
 
-	/// Maps a C++ type to a glsl_type enum value.
+	/// @brief Maps a C++ type to a glsl_type enum value.
 	/// @tparam Target C++ type to get the matching glsl_type value of.
 	template <typename Target>
 	inline constexpr glsl_type as_glsl_type{glsl_type::undefined};
 
-	/// Specialization of `tr::as_glsl_type` for `bool`.
+	/// @brief Specialization of `tr::as_glsl_type` for `bool`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<bool>{glsl_type::bool_};
 
-	/// Specialization of `tr::as_glsl_type` for `bvec2`.
+	/// @brief Specialization of `tr::as_glsl_type` for `bvec2`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::bvec2>{glsl_type::bvec2};
 
-	/// Specialization of `tr::as_glsl_type` for `bvec3`.
+	/// @brief Specialization of `tr::as_glsl_type` for `bvec3`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::bvec3>{glsl_type::bvec3};
 
-	/// Specialization of `tr::as_glsl_type` for `bvec4`.
+	/// @brief Specialization of `tr::as_glsl_type` for `bvec4`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::bvec4>{glsl_type::bvec4};
 
-	/// Specialization of `tr::as_glsl_type` for `int`.
+	/// @brief Specialization of `tr::as_glsl_type` for `int`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<int>{glsl_type::int_};
 
-	/// Specialization of `tr::as_glsl_type` for `ivec2`.
+	/// @brief Specialization of `tr::as_glsl_type` for `ivec2`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::ivec2>{glsl_type::ivec2};
 
-	/// Specialization of `tr::as_glsl_type` for `ivec3`.
+	/// @brief Specialization of `tr::as_glsl_type` for `ivec3`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::ivec3>{glsl_type::ivec3};
 
-	/// Specialization of `tr::as_glsl_type` for `ivec4`.
+	/// @brief Specialization of `tr::as_glsl_type` for `ivec4`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::ivec4>{glsl_type::ivec4};
 
-	/// Specialization of `tr::as_glsl_type` for `uint`.
+	/// @brief Specialization of `tr::as_glsl_type` for `uint`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<unsigned int>{glsl_type::uint};
 
-	/// Specialization of `tr::as_glsl_type` for `uvec2`.
+	/// @brief Specialization of `tr::as_glsl_type` for `uvec2`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::uvec2>{glsl_type::uvec2};
 
-	/// Specialization of `tr::as_glsl_type` for `uvec3`.
+	/// @brief Specialization of `tr::as_glsl_type` for `uvec3`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::uvec3>{glsl_type::uvec3};
 
-	/// Specialization of `tr::as_glsl_type` for `uvec4`.
+	/// @brief Specialization of `tr::as_glsl_type` for `uvec4`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::uvec4>{glsl_type::uvec4};
 
-	/// Specialization of `tr::as_glsl_type` for `float`.
+	/// @brief Specialization of `tr::as_glsl_type` for `float`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<float>{glsl_type::float_};
 
-	/// Specialization of `tr::as_glsl_type` for `vec2`.
+	/// @brief Specialization of `tr::as_glsl_type` for `vec2`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::vec2>{glsl_type::vec2};
 
-	/// Specialization of `tr::as_glsl_type` for `vec3`.
+	/// @brief Specialization of `tr::as_glsl_type` for `vec3`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::vec3>{glsl_type::vec3};
 
-	/// Specialization of `tr::as_glsl_type` for `vec4`.
+	/// @brief Specialization of `tr::as_glsl_type` for `vec4`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::vec4>{glsl_type::vec4};
 
-	/// Specialization of `tr::as_glsl_type` for `mat2`.
+	/// @brief Specialization of `tr::as_glsl_type` for `mat2`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::mat2>{glsl_type::mat2};
 
-	/// Specialization of `tr::as_glsl_type` for `mat3`.
+	/// @brief Specialization of `tr::as_glsl_type` for `mat3`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::mat3>{glsl_type::mat3};
 
-	/// Specialization of `tr::as_glsl_type` for `mat4`.
+	/// @brief Specialization of `tr::as_glsl_type` for `mat4`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::mat4>{glsl_type::mat4};
 
-	/// Specialization of `tr::as_glsl_type` for `mat2x3`.
+	/// @brief Specialization of `tr::as_glsl_type` for `mat2x3`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::mat2x3>{glsl_type::mat2x3};
 
-	/// Specialization of `tr::as_glsl_type` for `mat2x4`.
+	/// @brief Specialization of `tr::as_glsl_type` for `mat2x4`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::mat2x4>{glsl_type::mat2x4};
 
-	/// Specialization of `tr::as_glsl_type` for `mat3x2`.
+	/// @brief Specialization of `tr::as_glsl_type` for `mat3x2`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::mat3x2>{glsl_type::mat3x2};
 
-	/// Specialization of `tr::as_glsl_type` for `mat3x4`.
+	/// @brief Specialization of `tr::as_glsl_type` for `mat3x4`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::mat3x4>{glsl_type::mat3x4};
 
-	/// Specialization of `tr::as_glsl_type` for `mat4x2`.
+	/// @brief Specialization of `tr::as_glsl_type` for `mat4x2`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::mat4x2>{glsl_type::mat4x2};
 
-	/// Specialization of `tr::as_glsl_type` for `mat4x3`.
+	/// @brief Specialization of `tr::as_glsl_type` for `mat4x3`.
 	template <>
 	inline constexpr glsl_type as_glsl_type<glm::mat4x3>{glsl_type::mat4x3};
 } // namespace tr::internal
 
 //
 
-/// GLSL type formatter.
+/// @brief GLSL type formatter.
 template <>
 class std::formatter<tr::internal::glsl_type>
 {
   public:
-	/// Parses the format specification.
+	/// @brief Parses the format specification.
 	/// @tparam ParseContext Parsing context type.
 	/// @param context Parsing context.
 	/// @return Iterator to the end of the parsed specification.
@@ -224,7 +224,7 @@ class std::formatter<tr::internal::glsl_type>
 		return context.begin();
 	}
 
-	/// Formats a GLSL type.
+	/// @brief Formats a GLSL type.
 	/// @tparam FormatContext Formatting context type.
 	/// @param type GLSL type to format.
 	/// @param context Formatting context.

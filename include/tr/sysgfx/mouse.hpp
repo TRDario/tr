@@ -9,7 +9,8 @@
 
 namespace tr
 {
-	/// @brief Mouse buttons (may be ORed together).
+	/// @brief Mouse button identifier.
+	/// @details Multiple mouse button identifiers may be ORed together.
 	enum class mouse_button : u8
 	{
 		/// @brief No mouse buttons.
@@ -40,7 +41,7 @@ namespace tr
 
 	//
 
-	/// @brief Mouse modes.
+	/// @brief Mouse control mode.
 	enum class mouse_mode : bool
 	{
 		/// @brief Absolute mouse controls: normal operation.

@@ -36,7 +36,7 @@ namespace tr
 	class framebuffer
 	{
 	  public:
-		/// @brief Framebuffer attachment points.
+		/// @brief Framebuffer attachment point identifier.
 		enum class attachment
 		{
 			/// @brief First color attachment.

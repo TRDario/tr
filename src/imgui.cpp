@@ -19,7 +19,7 @@ void tr::ImGui::Init(graphics_context& context)
 
 void tr::ImGui::ProcessEvent(event_view event)
 {
-	ImGui_ImplSDL3_ProcessEvent(&event.unwrap());
+	ImGui_ImplSDL3_ProcessEvent(&event.sdl_event());
 }
 
 void tr::ImGui::Shutdown()

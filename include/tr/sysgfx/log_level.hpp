@@ -8,7 +8,7 @@
 
 namespace tr
 {
-	/// @brief Logging levels.
+	/// @brief Logging level or threshold.
 	enum class log_level : u8
 	{
 		/// @brief Debug trace information.
@@ -33,7 +33,7 @@ namespace tr
 		off
 	};
 
-	/// Compares two logging levels.
+	/// @brief Compares two logging levels.
 	/// @param lhs, rhs Logging levels to compare.
 	/// @return Ordering of the logging levels.
 	[[nodiscard]] constexpr std::strong_ordering operator<=>(log_level lhs, log_level rhs) noexcept

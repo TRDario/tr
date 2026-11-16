@@ -30,6 +30,8 @@ tr::logger::~logger() noexcept
 	}
 }
 
+//
+
 tr::logger& tr::logger::instance()
 {
 	static logger logger{};
@@ -56,14 +58,6 @@ void tr::logger::register_sink(std::shared_ptr<log_sink> sink)
 	m_sinks.push_back(std::move(sink));
 }
 
-void tr::logger::clear_sinks() noexcept
-{
-	const std::lock_guard sink_lock{m_sink_mutex};
-	m_sinks.clear();
-}
-
-//
-
 void tr::logger::flush()
 {
 	const usize sent_messages{m_sent_messages.load(std::memory_order_acquire)};
@@ -75,6 +69,12 @@ void tr::logger::flush()
 	for (log_sink& sink : deref(m_sinks)) {
 		sink.flush();
 	}
+}
+
+void tr::logger::clear_sinks() noexcept
+{
+	const std::lock_guard sink_lock{m_sink_mutex};
+	m_sinks.clear();
 }
 
 //
@@ -95,8 +95,6 @@ void tr::logger::dispatch_to_sinks(const log_message& message) noexcept
 	}
 	m_processed_messages.fetch_add(1, std::memory_order_release);
 }
-
-//
 
 void tr::logger::dispatcher_thread(std::stop_token stoken) noexcept
 {

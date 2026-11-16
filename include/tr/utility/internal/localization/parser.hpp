@@ -114,7 +114,7 @@ namespace tr::internal::localization
 		[[nodiscard]] handle_eof_result handle_eof() noexcept;
 
 	  private:
-		/// @brief Parser states.
+		/// @brief Parser state.
 		enum class state
 		{
 			/// @brief Expecting an expression symbol, or a closing brace if `!m_open_namespaces.empty()`.

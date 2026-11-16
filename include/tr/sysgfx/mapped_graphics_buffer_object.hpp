@@ -9,7 +9,7 @@
 
 namespace tr
 {
-	/// Map of a graphics buffer object.
+	/// @brief Object managing a map of an object stored in a graphics buffer.
 	/// @details
 	/// `tr::mapped_graphics_buffer_object` represents the CPU mapping of a graphics buffer object and models access to it as such. The
 	/// object is automatically unmapped when the map is destroyed.
@@ -18,7 +18,8 @@ namespace tr
 	/// cannot outlive either.
 	///
 	/// Moved-from instances of `tr::mapped_graphics_buffer_object` are left in a special 'invalid' state. Invalid
-	/// `tr::mapped_graphics_buffer_object` instances may not be interacted with besides moving a new value into them.
+	/// `tr::mapped_graphics_buffer_object` instances may not be interacted with besides moving a new value into them and checking for
+	/// validity using `valid()` or `operator bool()`.
 	/// @tparam Object Type of the mapped object.
 	template <typename Object>
 	class mapped_graphics_buffer_object
@@ -28,82 +29,121 @@ namespace tr
 		/// @{
 
 		/// @cond implementation_details
-
-		/// Wraps an untyped buffer map.
-		/// @param map Untyped buffer map.
-		[[nodiscard]] explicit mapped_graphics_buffer_object(mapped_untyped_graphics_buffer_span&& map) noexcept
-			: m_raw_map{std::move(map)}
+		/// @brief Constructs a graphics buffer object map.
+		/// @param span Base graphics buffer span map.
+		[[nodiscard]] explicit mapped_graphics_buffer_object(mapped_untyped_graphics_buffer_span&& span) noexcept
+			: m_span{std::move(span)}
 		{
 		}
-
 		/// @endcond
 
-		/// Graphics buffer object maps are not copyable.
+		/// @brief Graphics buffer object maps are not copyable.
 		mapped_graphics_buffer_object(const mapped_graphics_buffer_object&) = delete;
 
-		/// Moves a graphics buffer object map.
-		/// @details `rhs` is left in an invalid state after the move as per the class description.
-		/// @param rhs Graphics buffer object map to move.
-		[[nodiscard]] mapped_graphics_buffer_object(mapped_graphics_buffer_object&& rhs) = default;
-
-		/// @}
-		/// @name Assignment operators
-		/// @{
-
-		/// Graphics buffer object maps are not copyable.
+		/// @brief Graphics buffer object maps are not copyable.
 		mapped_graphics_buffer_object& operator=(const mapped_graphics_buffer_object&) = delete;
 
-		/// Moves a graphics buffer object map.
-		/// @details `rhs` is left in an invalid state after the move as per the class description.
-		/// @param rhs Graphics buffer object map to move.
+		/// @brief Constructs a graphics buffer object map by transferring ownership from another `tr::mapped_graphics_buffer_object`.
+		/// @param rhs Graphics buffer object map to move from.
+		/// @par Invalidation
+		/// All references to the object previously associated with `rhs` remain valid, but are now associated with the equivalent object in
+		/// `*this`.
+		/// @post `rhs` is left in an invalid state after the move.
+		[[nodiscard]] mapped_graphics_buffer_object(mapped_graphics_buffer_object&& rhs) = default;
+
+		/// @brief Destroys the currently held graphics buffer object map and replaces it with one moved from another
+		/// `tr::mapped_graphics_buffer_object`.
+		/// @param rhs Graphics buffer object map to move from.
+		/// @par Invalidation
+		/// All references to the object previously associated with `*this` are invalidated.
+		///
+		/// All references to the object previously associated with `rhs` remain valid, but are now associated with the equivalent object in
+		/// `*this`.
+		/// @post `rhs` is left in an invalid state after the move.
 		/// @return Reference to `*this`.
 		mapped_graphics_buffer_object& operator=(mapped_graphics_buffer_object&& rhs) = default;
 
 		/// @}
-		/// @name Access
+		/// @name Element access
 		/// @{
 
-		/// Gets a reference to the object.
-		/// @return Reference to the contained object.
+		/// @brief Returns a reference to the mapped object.
+		/// @pre The graphics buffer object map must be in a valid state.
+		/// @return Reference to the mapped object.
 		[[nodiscard]] operator Object&() const noexcept
 		{
 			return get();
 		}
 
-		/// Gets a reference to the object.
-		/// @return Reference to the contained object.
+		/// @brief Returns a reference to the mapped object.
+		/// @pre The graphics buffer object map must be in a valid state.
+		/// @return Reference to the mapped object.
 		[[nodiscard]] Object& get() const noexcept
 		{
-			return as_mut_object<Object>(m_raw_map.span());
+			TR_ASSERT(valid(), "Tried to get a mapped graphics buffer object in an invalid state.");
+
+			return as_mut_object<Object>(m_span);
 		}
 
-		/// Gets a reference to the object.
-		/// @return Reference to the contained object.
+		/// @brief Returns a reference to the mapped object.
+		/// @pre The graphics buffer object map must be in a valid state.
+		/// @return Reference to the mapped object.
 		[[nodiscard]] Object& operator*() const noexcept
 		{
 			return get();
 		}
 
-		/// Pointer access to the mapped object.
-		/// @return Pointer to the contained object.
+		/// @brief Returns a pointer to the mapped object.
+		/// @pre The graphics buffer object map must be in a valid state.
+		/// @return Pointer to the mapped object.
 		[[nodiscard]] Object* operator->() const noexcept
 		{
 			return std::addressof(get());
 		}
 
-		/// Assigns the object.
+		/// @brief Assigns the mapped object.
 		/// @tparam ObjectAssignable Type assignable to `Object`.
-		/// @param rhs Value to assign to the contained object.
-		/// @return Reference to the contained object.
+		/// @param rhs Value to assign to the mapped object.
+		/// @pre The graphics buffer object map must be in a valid state.
+		/// @return Reference to the mapped object.
 		template <std::assignable_from<Object> ObjectAssignable>
 		[[nodiscard]] Object& operator=(ObjectAssignable&& rhs) const noexcept(std::is_nothrow_assignable_v<Object, ObjectAssignable>)
 		{
+			TR_ASSERT(valid(), "Tried to assign a mapped graphics buffer object in an invalid state.");
+
 			return get() = std::forward<ObjectAssignable>(rhs);
 		}
 
 		/// @}
+		/// @name Observers
+		/// @{
+
+		/// @brief Checks whether the graphics buffer object map is in a valid state.
+		/// @return `true` if the graphics buffer object map is in a valid state, `false` if it is in an invalid state.
+		[[nodiscard]] explicit operator bool() const noexcept
+		{
+			return !m_span.empty();
+		}
+
+		/// @brief Checks whether the graphics buffer object map is in a valid state.
+		/// @return `true` if the graphics buffer object map is in a valid state, `false` if it is in an invalid state.
+		[[nodiscard]] bool valid() const noexcept
+		{
+			return !m_span.empty();
+		}
+
+		/// @brief Returns a reference to the graphics context the graphics buffer object map is on.
+		/// @pre The graphics buffer object map must be in a valid state.
+		/// @return Reference to the graphics context the graphics buffer object map is on.
+		[[nodiscard]] graphics_context& context() const noexcept
+		{
+			return m_span.context();
+		}
+
+		/// @}
+
 	  private:
-		/// Wrapped untyped buffer map.
-		mapped_untyped_graphics_buffer_span m_raw_map;
+		/// @brief Base graphics buffer span map.
+		mapped_untyped_graphics_buffer_span m_span;
 	};
 } // namespace tr

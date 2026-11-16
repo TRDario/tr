@@ -15,7 +15,7 @@ namespace tr
 
 namespace tr
 {
-	/// @brief System mouse cursor icons.
+	/// @brief System mouse cursor icon identifier.
 	enum class sys_cursor
 	{
 		/// @brief Default arrow cursor.

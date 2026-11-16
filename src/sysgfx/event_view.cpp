@@ -13,14 +13,12 @@ tr::event_view::event_view(const SDL_Event& event) noexcept
 
 //
 
-tr::u32 tr::event_view::type() const noexcept
-{
-	return unwrap().type;
-}
-
-//
-
-const SDL_Event& tr::event_view::unwrap() const noexcept
+const SDL_Event& tr::event_view::sdl_event() const noexcept
 {
 	return m_ref;
+}
+
+tr::u32 tr::event_view::type_id() const noexcept
+{
+	return sdl_event().type;
 }

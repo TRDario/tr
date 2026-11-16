@@ -86,7 +86,7 @@ class std::formatter<tr::log_message>
 	}
 
   private:
-	/// @brief Message formats.
+	/// @brief Message format.
 	enum class message_format : bool
 	{
 		/// @brief Do not include the source of the message in the final string.

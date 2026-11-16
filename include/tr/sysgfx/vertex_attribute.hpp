@@ -9,57 +9,59 @@
 
 namespace tr
 {
-	/// Variable type that can be passed as a vertex attribute.
+	/// @brief Vertex attribute datatype.
 	enum class vertex_attribute_type : u16
 	{
-		/// Unknown vertex attribute.
+		/// @brief Unknown vertex attribute.
 		unknown,
 
-		/// Signed 8-bit integer type.
+		/// @brief Signed 8-bit integer type.
+		/// @hideinitializer
 		i8 = 0x1400,
 
-		/// Unsigned 8-bit integer type.
+		/// @brief Unsigned 8-bit integer type.
 		u8,
 
-		/// Signed 16-bit integer type.
+		/// @brief Signed 16-bit integer type.
 		i16,
 
-		/// Unsigned 16-bit integer type.
+		/// @brief Unsigned 16-bit integer type.
 		u16,
 
-		/// Signed 32-bit integer type.
+		/// @brief Signed 32-bit integer type.
 		i32,
 
-		/// Unsigned 32-bit integer type.
+		/// @brief Unsigned 32-bit integer type.
 		u32,
 
-		/// 32-bit floating-point type.
+		/// @brief 32-bit floating-point type.
+		/// @hideinitializer
 		f32 = 0x1406,
 	};
 
 	//
 
-	/// Information about a vertex attribute.
+	/// @brief Information about a vertex attribute.
 	struct vertex_attribute
 	{
-		/// Base type of the attribute.
+		/// @brief Datatype of the attribute.
 		vertex_attribute_type type{vertex_attribute_type::unknown};
 
-		/// Number of elements in the attribute.
+		/// @brief Number of elements in the attribute.
 		u8 elements{0};
 
-		/// Whether the attribute is normalized (if integral).
+		/// @brief Whether the attribute is normalized (if integral).
 		bool normalized{false};
 	};
 
-	/// Tag to signify an integral vertex attribute should be normalized.
+	/// @brief Tag to signify an integral vertex attribute should be normalized.
 	/// @tparam Target Type to signify is normalized.
 	template <typename Target>
 	struct normalized
 	{
 	};
 
-	/// Maps a C++ type to a vertex attribute.
+	/// @brief Returns a vertex attribute matching `Target`.
 	/// @note Mappings for 32-bit or smaller integers (wrapped in normalized or not) and floats, vectors of such, and colors are predefined.
 	/// @tparam Target Type to get the vertex attribute for.
 	/// @hideinitializer
@@ -68,7 +70,7 @@ namespace tr
 		TR_UNSPECIALIZED_VARIABLE_TEMPLATE(T, vertex_attribute, "Type is not convertible to vertex_attribute!"),
 	};
 
-	/// Maps a C++ type or a list of C++ types to a list of vertex attributes.
+	/// @brief Returns a vertex attribute list matching `Targets`.
 	/// @note If the list is composed entirely of types convertible to vertex attributes, they will be grouped into a list.
 	/// @note If the type has as_vertex_attribute_list as a public static array of vertex attributes, that list will be used.
 	/// @note Otherwise, the type must be manually specialized.
@@ -83,12 +85,12 @@ namespace tr
 
 //
 
-/// Vertex attribute formatter.
+/// @brief Vertex attribute formatter.
 template <>
 class std::formatter<tr::vertex_attribute>
 {
   public:
-	/// Parses the format specification.
+	/// @brief Parses the format specification.
 	/// @tparam ParseContext Parsing context type.
 	/// @param context Parsing context.
 	/// @return Iterator to the end of the parsed specification.
@@ -101,7 +103,7 @@ class std::formatter<tr::vertex_attribute>
 		return context.begin();
 	}
 
-	/// Formats a vertex attribute.
+	/// @brief Formats a vertex attribute.
 	/// @tparam FormatContext Formatting context type.
 	/// @param attribute Vertex attribute to format.
 	/// @param context Formatting context.

@@ -7,7 +7,7 @@
 
 namespace tr
 {
-	/// @brief Blending functions.
+	/// @brief Blending function.
 	enum class blend_fn
 	{
 		/// @brief The source and destination colors are added together.
@@ -26,7 +26,7 @@ namespace tr
 		reverse_subtract
 	};
 
-	/// @brief Blending parameter multipliers.
+	/// @brief Blending parameter multiplier.
 	enum class blend_multiplier
 	{
 		/// @brief The parameter is multiplied by 0.

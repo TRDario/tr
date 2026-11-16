@@ -42,11 +42,11 @@ void tr::encrypt_to(std::vector<std::byte>& out, std::span<const std::byte> raw)
 	const std::byte key{static_cast<std::byte>(generate_random_seed())};
 
 	out.resize(LZ4_compressBound(static_cast<int>(raw.size())) + header_size);
-	span_binary_sink header{std::views::take(out, header_size)};
+	span_binary_sink header{std::span{out}.first<header_size>()};
 	write_binary_magic(header, "tr");
 	write_binary(header, key, static_cast<u8>(static_cast<u8>(key) - 3), static_cast<u32>(raw.size()));
 
-	const std::span<char> compressed{reinterpret_span<char>(std::span{out}).subspan(header_size)};
+	const std::span<char, header_size> compressed{reinterpret_span<char>(std::span{out}).first<header_size>()};
 	const int used_size{LZ4_compress_default(reinterpret_cast<const char*>(raw.data()), compressed.data(), static_cast<int>(raw.size()),
 											 static_cast<int>(compressed.size()))};
 	out.resize(used_size + header_size);
@@ -70,8 +70,8 @@ void tr::decrypt_to(std::vector<std::byte>& out, std::vector<std::byte> encrypte
 		throw decryption_error{"Invalid or missing encrypted data header."};
 	}
 
-	span_binary_source header{std::views::take(encrypted, header_size)};
-	const std::span<const char> compressed{reinterpret_span<const char>(std::span{encrypted}).subspan(header_size)};
+	span_binary_source header{std::span{encrypted}.first<header_size>()};
+	const std::span<const char, header_size> compressed{reinterpret_span<const char>(std::span{encrypted}).first<header_size>()};
 	if (!check_binary_magic(header, "tr")) {
 		throw decryption_error{"Invalid encrypted data header."};
 	}

@@ -11,7 +11,7 @@ union SDL_Event;
 
 namespace tr
 {
-	/// Valid event view visitor type.
+	/// @brief Concept checking for an event view visitor.
 	/// @details Event visitors must be callable with all event types, and all overloads must return the same type.
 	template <typename Target>
 	concept event_view_visitor =
@@ -31,7 +31,7 @@ namespace tr
 				 std::invoke_result_t<Target, mouse_down_event>, std::invoke_result_t<Target, mouse_up_event>,
 				 std::invoke_result_t<Target, mouse_wheel_event>, std::invoke_result_t<Target, unknown_event>>;
 
-	/// Valid event view visitor type that doesn't throw.
+	/// @brief Concept checking for a non-throwing event view visitor.
 	template <typename Target>
 	concept nothrow_event_view_visitor = event_view_visitor<Target> && noexcept(std::declval<Target>(std::declval<quit_event>())) &&
 										 noexcept(std::declval<Target>(std::declval<window_show_event>())) &&
@@ -52,9 +52,8 @@ namespace tr
 
 	//
 
-	/// View to a generic event.
-	/// @details
-	/// `tr::event_view` represents a view to a generic system event. It is designed to be cheap to pass around and copy.
+	/// @brief Non-owning view to a generic event.
+	/// @details `tr::event_view` represents a view to a generic system event. It is designed to be cheap to pass around and copy.
 	class event_view
 	{
 	  public:
@@ -62,93 +61,89 @@ namespace tr
 		/// @{
 
 		/// @cond sdl_interop
-
-		/// Wraps an SDL event.
-		/// @param event Reference to an event to wrap.
+		/// @brief Constructs an event view.
+		/// @param event Reference to a system event.
 		[[nodiscard]] event_view(const SDL_Event& event) noexcept;
-
 		/// @endcond
 
-		/// Event views are trivially copyable.
+		/// @brief Event views are trivially copyable.
+		/// @param rhs Event view to copy from.
 		[[nodiscard]] event_view(const event_view& rhs) noexcept = default;
 
-		/// @}
-		/// @name Assignment operators
-		/// @{
-
-		/// Event views are trivially copyable.
+		/// @brief Event views are trivially copyable.
+		/// @param rhs Event view to copy from.
 		[[nodiscard]] event_view& operator=(const event_view& rhs) noexcept = default;
 
 		/// @}
-		/// @name Alternatives
+		/// @name Observers
 		/// @{
 
-		/// Checks whether the event holds an alternative of a specific type.
+		/// @brief Checks whether a specific alternative is held in the event view.
 		/// @tparam Alternative Event type.
-		/// @return Whether the event holds an event of type `Alternative`.
+		/// @return `true` if the event view is holding `Alternative`, `false` otherwise.
 		template <event_type Alternative>
 		[[nodiscard]] bool is() const noexcept
 		{
 			if constexpr (std::same_as<Alternative, quit_event>) {
-				return type() == 0x100;
+				return type_id() == 0x100;
 			}
 			else if constexpr (std::same_as<Alternative, window_show_event>) {
-				return type() == 0x202;
+				return type_id() == 0x202;
 			}
 			else if constexpr (std::same_as<Alternative, window_hide_event>) {
-				return type() == 0x203;
+				return type_id() == 0x203;
 			}
 			else if constexpr (std::same_as<Alternative, backbuffer_resize_event>) {
-				return type() == 0x207;
+				return type_id() == 0x207;
 			}
 			else if constexpr (std::same_as<Alternative, window_mouse_enter_event>) {
-				return type() == 0x20C;
+				return type_id() == 0x20C;
 			}
 			else if constexpr (std::same_as<Alternative, window_mouse_leave_event>) {
-				return type() == 0x20D;
+				return type_id() == 0x20D;
 			}
 			else if constexpr (std::same_as<Alternative, window_gain_focus_event>) {
-				return type() == 0x20E;
+				return type_id() == 0x20E;
 			}
 			else if constexpr (std::same_as<Alternative, window_lose_focus_event>) {
-				return type() == 0x20F;
+				return type_id() == 0x20F;
 			}
 			else if constexpr (std::same_as<Alternative, key_down_event>) {
-				return type() == 0x300;
+				return type_id() == 0x300;
 			}
 			else if constexpr (std::same_as<Alternative, key_up_event>) {
-				return type() == 0x301;
+				return type_id() == 0x301;
 			}
 			else if constexpr (std::same_as<Alternative, text_input_event>) {
-				return type() == 0x303;
+				return type_id() == 0x303;
 			}
 			else if constexpr (std::same_as<Alternative, mouse_motion_event>) {
-				return type() == 0x400;
+				return type_id() == 0x400;
 			}
 			else if constexpr (std::same_as<Alternative, mouse_down_event>) {
-				return type() == 0x401;
+				return type_id() == 0x401;
 			}
 			else if constexpr (std::same_as<Alternative, mouse_up_event>) {
-				return type() == 0x402;
+				return type_id() == 0x402;
 			}
 			else if constexpr (std::same_as<Alternative, mouse_wheel_event>) {
-				return type() == 0x403;
+				return type_id() == 0x403;
 			}
 		}
 
-		/// Gets an alternative of the event if it holds it.
+		/// @brief Attempts to return a specific alternative stored in the event view.
 		/// @tparam Alternative Event type.
-		/// @return Alternative held by the event if it exists, `std::nullopt` otherwise.
+		/// @return Alternative stored in the event view, or an empty optional if it is not held.
 		template <event_type Alternative>
 		[[nodiscard]] std::optional<Alternative> get_if() const noexcept
 		{
 			return is<Alternative>() ? std::optional{get<Alternative>()} : std::nullopt;
 		}
 
-		/// Gets an alternative of the event.
+		/// @brief Returns an alternative of the event view.
 		/// @tparam Event Event type.
-		/// @pre The event must hold an event of type `Alternative`.
-		/// @return Alternative held by the event.
+		/// @pre The event view must hold an event of type `Alternative`.
+		/// @return Alternative held by the event view.
 		template <event_type Alternative>
 		[[nodiscard]] Alternative get() const noexcept
 		{
@@ -201,18 +196,24 @@ namespace tr
 			}
 		}
 
+		/// @cond sdl_interop
+		/// @brief Returns a reference to the underlying SDL event.
+		/// @return Reference to the underlying SDL event.
+		[[nodiscard]] const SDL_Event& sdl_event() const noexcept;
+		/// @endcond
+
 		/// @}
-		/// @name Visiting
+		/// @name Visitation
 		/// @{
 
-		/// Visits the event.
-		/// @tparam Visitor Event visitor type.
-		/// @param visitor Event visitor.
-		/// @return Result returned by the visitor.
+		/// @brief Applies a visitor on the event view.
+		/// @tparam Visitor Type of the applied visitor.
+		/// @param visitor Visitor to apply.
+		/// @return Result of the visit, if any.
 		template <event_view_visitor Visitor>
 		[[nodiscard]] auto visit(Visitor&& visitor) const noexcept(nothrow_event_view_visitor<Visitor>)
 		{
-			switch (type()) {
+			switch (type_id()) {
 			case 0x100:
 				return visitor(quit_event{});
 			case 0x202:
@@ -249,25 +250,18 @@ namespace tr
 		}
 
 		/// @}
-		/// @cond sdl_interop
-		/// @name SDL interoperability
-		/// @{
-
-		/// Unwraps the SDL event.
-		/// @return Reference to the unwrapped SDL event.
-		[[nodiscard]] const SDL_Event& unwrap() const noexcept;
-
-		/// @}
-		/// @endcond
 
 	  private:
-		/// Reference to an SDL event.
+		/// @brief Reference to an SDL event.
 		tr::ref<const SDL_Event> m_ref;
 
-		//
+		/// @name Observers
+		/// @{
 
-		/// Gets the event type ID.
+		/// @brief Returns the SDL event type ID.
 		/// @return SDL event type ID.
-		[[nodiscard]] u32 type() const noexcept;
+		[[nodiscard]] u32 type_id() const noexcept;
+
+		/// @}
 	};
 } // namespace tr

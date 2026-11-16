@@ -688,7 +688,7 @@ class std::formatter<tr::angle<Rep>, CharT>
 	}
 
   private:
-	/// @brief Units the formatted angle can be displayed in.
+	/// @brief Unit the formatted angle is displayed in.
 	enum class unit
 	{
 		/// @brief Display the angle in radians.
