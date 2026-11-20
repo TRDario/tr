@@ -135,7 +135,7 @@ bool tr::ping_pong_target::valid() const noexcept
 
 tr::graphics_context& tr::ping_pong_target::context() const noexcept
 {
-	TR_ASSERT(valid(), "Tried to get context of a ping-pong target in an invalid state.");
+	TR_ASSERT(valid(), "Tried to get the context of a ping-pong target in an invalid state.");
 
 	return m_targets[0].context();
 }

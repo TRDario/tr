@@ -35,7 +35,7 @@ void tr::framebuffer::attach(attachment attachment, texture_view texture) noexce
 {
 	TR_ASSERT(valid(), "Tried to attach to a framebuffer in an invalid state.");
 
-	context().gl().set_framebuffer_texture(m_handle.get(), std::to_underlying(attachment), texture.unwrap(), 0);
+	context().gl().set_framebuffer_texture(m_handle.get(), std::to_underlying(attachment), texture.handle(), 0);
 }
 
 void tr::framebuffer::detach(attachment attachment) noexcept
@@ -66,7 +66,7 @@ bool tr::framebuffer::valid() const noexcept
 
 tr::graphics_context& tr::framebuffer::context() const noexcept
 {
-	TR_ASSERT(valid(), "Tried to get context of a framebuffer in an invalid state.");
+	TR_ASSERT(valid(), "Tried to get the context of a framebuffer in an invalid state.");
 
 	return m_handle.get_deleter().context;
 }

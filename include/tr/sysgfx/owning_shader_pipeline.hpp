@@ -9,149 +9,139 @@
 
 namespace tr
 {
-	/// Container for a shader program pipeline that owns its shaders.
+	/// @brief Owning container for a shader program pipeline that owns its shaders.
 	/// @details
-	/// Most things brought up in the description of `tr::shader_pipeline` apply to this class as well, though instances of
-	/// `tr::owning_shader_pipeline` are always complete.
+	/// A shader pipeline is an object that references vertex and fragment shader program stages that are to be used during the rendering
+	/// process when the pipeline is set on the graphics context. These referenced shaders must be compatible: the outputs of the vertex
+	/// shader must match the inputs of the fragment shader.
+	///
+	/// It's worth remembering that instances of `tr::owning_shader_pipeline` are only containers for these underlying shader pipeline
+	/// objects. This means, for example, that setting a shader pipeline on a graphics context does not set the literal
+	/// `tr::owning_shader_pipeline` object at a specific location in memory, but rather the value it contains. If the value is moved to a
+	/// different instance of `tr::owning_shader_pipeline`, that value will still be set on the context. If the instance is overriden with a
+	/// new value, the old value is destroyed and the graphics context will no longer have a set shader pipeline.
+	///
+	/// Every instance of `tr::owning_shader_pipeline` is associated with a graphics context and cannot outlive its parent context.
+	///
+	/// Moved-from instances of `tr::owning_shader_pipeline` are left in a special 'invalid' state, distinct from the incomplete state.
+	/// Invalid `tr::owning_shader_pipeline` instances may not be interacted with besides moving a new value into them and checking for
+	/// validity using `valid()`.
+	///
+	/// `tr::owning_shader_pipeline` instances may be labeled and are formattable. Example format output: `"My pipeline" (ID: 3, PPO: 3)`.
 	class owning_shader_pipeline
 	{
 	  public:
 		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Creates an owning shader pipeline.
+		/// @brief Constructs an owning shader pipeline.
 		/// @param context Graphics context to create the pipeline on.
 		/// @param vertex_shader Vertex shader to move into the pipeline.
 		/// @param fragment_shader Fragment shader to move into the pipeline.
 		/// @param label Label of the pipeline.
-		/// @pre `%vertex_shader` and `%fragment_shader` must be valid shaders and be on `%context`.
+		/// @pre `%vertex_shader` and `%fragment_shader` must both be valid and on `%context`, as well as compatible with eachother.
 		[[nodiscard]] owning_shader_pipeline(graphics_context& context, vertex_shader&& vertex_shader, fragment_shader&& fragment_shader,
 											 std::string_view label = {}) noexcept;
 
-		/// @}
-		/// @name Conversion operators
-		/// @{
+		/// @brief Owning shader pipelines are not copyable.
+		owning_shader_pipeline(const owning_shader_pipeline&) = delete;
 
-		/// Gets the base pipeline object.
-		/// @return Reference to the base pipeline object.
-		[[nodiscard]] operator const shader_pipeline&() const noexcept;
+		/// @brief Owning shader pipelines are not copyable.
+		owning_shader_pipeline& operator=(const owning_shader_pipeline&) = delete;
 
-		/// @}
-		/// @name Context
-		/// @{
+		/// @brief Constructs a owning shader pipeline by transferring ownership from another `tr::owning_shader_pipeline`.
+		/// @param rhs Owning shader pipeline to move from.
+		/// @par Invalidation
+		/// If the shader pipeline previously held by `rhs` was set on the graphics context, it stays set.
+		/// @post `rhs` is left in an invalid state after the move.
+		[[nodiscard]] owning_shader_pipeline(owning_shader_pipeline&& rhs) noexcept = default;
 
-		/// Gets a reference to the graphics context the pipeline is on.
-		/// @return Reference to the graphics context the pipeline is on.
-		[[nodiscard]] graphics_context& context() const noexcept;
-
-		/// @}
-		/// @name Shaders
-		/// @{
-
-		/// Gets the vertex shader.
-		/// @return Reference to the vertex shader of the pipeline.
-		[[nodiscard]] vertex_shader& vertex_shader() noexcept;
-
-		/// Gets the vertex shader.
-		/// @return Reference to the vertex shader of the pipeline.
-		[[nodiscard]] const tr::vertex_shader& vertex_shader() const noexcept;
-
-		/// Gets the fragment shader.
-		/// @return Reference to the fragment shader of the pipeline.
-		[[nodiscard]] fragment_shader& fragment_shader() noexcept;
-
-		/// Gets the fragment shader.
-		/// @return Reference to the fragment shader of the pipeline.
-		[[nodiscard]] const tr::fragment_shader& fragment_shader() const noexcept;
+		/// @brief Destroys the currently held owning shader pipeline and transfers ownership from another `tr::owning_shader_pipeline`.
+		/// @param rhs Owning shader pipeline to move from.
+		/// @par Invalidation
+		/// If the shader pipeline previously held by `*this` was set on a graphics context, it is unset.
+		///
+		/// If the shader pipeline previously held by `rhs` was set on the graphics context, it stays set.
+		/// @post `rhs` is left in an invalid state after the move.
+		/// @return Reference to `*this`.
+		owning_shader_pipeline& operator=(owning_shader_pipeline&& rhs) noexcept = default;
 
 		/// @}
-		/// @name State
+		/// @name Modifiers
 		/// @{
 
-		/// Gets whether the pipeline is in a valid state.
+		/// @brief Sets the label of the pipeline.
+		/// @param label Label of the pipeline.
+		/// @pre The shader pipeline must be in a valid state.
+		void set_label(std::string_view label) noexcept;
+
+		/// @}
+		/// @name Observers
+		/// @{
+
+		/// @brief Checks whether the pipeline is in a valid state.
+		/// @return `true` if the pipeline is in a valid state, `false` if it is in an invalid state.
+		[[nodiscard]] explicit operator bool() const noexcept;
+
+		/// @brief Checks whether the pipeline is in a valid state.
 		/// @return `true` if the pipeline is in a valid state, `false` if it is in an invalid state.
 		[[nodiscard]] bool valid() const noexcept;
 
-		/// @}
-		/// @name Label
-		/// @{
+		/// @brief Returns a reference to the graphics context the pipeline is on.
+		/// @pre The shader pipeline must be in a valid state.
+		/// @return Reference to the graphics context the pipeline is on.
+		[[nodiscard]] graphics_context& context() const noexcept;
 
-		/// Sets the debug label of the pipeline.
-		/// @param label Debug label of the pipeline.
-		void set_label(std::string_view label) noexcept;
+		/// @brief Returns a reference to the base shader pipeline object.
+		/// @pre The shader pipeline must be in a valid state.
+		/// @return Reference to the base shader pipeline object.
+		[[nodiscard]] operator const shader_pipeline&() const noexcept;
 
-		/// Gets the debug label of the pipeline.
-		/// @return Debug label of the pipeline.
+		/// @brief Returns a reference to the vertex shader of the pipeline.
+		/// @pre The shader pipeline must be in a valid state.
+		/// @return Reference to the vertex shader of the pipeline.
+		[[nodiscard]] tr::vertex_shader& vertex_shader() noexcept;
+
+		/// @brief Returns a reference to the vertex shader of the pipeline.
+		/// @pre The shader pipeline must be in a valid state.
+		/// @return Reference to the vertex shader of the pipeline.
+		[[nodiscard]] const tr::vertex_shader& vertex_shader() const noexcept;
+
+		/// @brief Returns a reference to the fragment shader of the pipeline.
+		/// @pre The shader pipeline must be in a valid state.
+		/// @return Reference to the fragment shader of the pipeline.
+		[[nodiscard]] tr::fragment_shader& fragment_shader() noexcept;
+
+		/// @brief Returns a reference to the fragment shader of the pipeline.
+		/// @pre The shader pipeline must be in a valid state.
+		/// @return Reference to the fragment shader of the pipeline.
+		[[nodiscard]] const tr::fragment_shader& fragment_shader() const noexcept;
+
+		/// @brief Returns the label of the pipeline.
+		/// @pre The shader pipeline must be in a valid state.
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
+		/// @return Label of the pipeline.
 		[[nodiscard]] std::string label() const;
 
 		/// @}
-		/// @cond gl_interop
-		/// @name OpenGL interoperability
-		/// @{
-
-		/// Unwraps the OpenGL shader pipeline.
-		/// @note This does not release the shader pipeline.
-		/// @return OpenGL shader pipeline ID.
-		[[nodiscard]] unsigned int unwrap() const noexcept;
-
-		/// @}
-		/// @endcond
-		/// @cond implementation_details
-		/// @name Implementation details
-		/// @{
-
-		/// Gets the unique graphics object ID of the shader pipeline.
-		/// @return Unique graphics object ID of the shader pipeline.
-		[[nodiscard]] internal::graphics_object_id id() const noexcept;
-
-		/// @}
-		/// @endcond
 
 	  private:
-		/// Held vertex shader.
+		/// @brief Owned vertex shader.
 		tr::vertex_shader m_vertex_shader;
 
-		/// Held fragment shader.
+		/// @brief Owned fragment shader.
 		tr::fragment_shader m_fragment_shader;
 
-		/// Base shader pipeline.
+		/// @brief Base shader pipeline.
 		shader_pipeline m_shader_pipeline;
 	};
 } // namespace tr
 
 //
 
-/// Owning shader pipeline formatter.
+/// @brief Owning shader pipeline formatter.
 template <>
-struct std::formatter<tr::owning_shader_pipeline>
+struct std::formatter<tr::owning_shader_pipeline> : std::formatter<tr::shader_pipeline>
 {
-	/// Parses the format specification.
-	/// @tparam ParseContext Parsing context type.
-	/// @param context Parsing context.
-	/// @return Iterator to the end of the parsed specification.
-	template <typename ParseContext>
-	constexpr ParseContext::iterator parse(ParseContext& context)
-	{
-		if (context.begin() != context.end() && *context.begin() != '}') {
-			throw std::format_error{"Invalid owning shader pipeline format specification."};
-		}
-		return context.begin();
-	}
-
-	/// Formats a shader pipeline.
-	/// @tparam FormatContext Formatting context type.
-	/// @param pipeline Shader pipeline to format.
-	/// @param context Formatting context.
-	/// @return Iterator to the end of the output range.
-	template <typename FormatContext>
-	FormatContext::iterator format(const tr::owning_shader_pipeline& pipeline, FormatContext& context) const
-	{
-		if (pipeline) {
-			return std::format_to(context.out(), "\"{}\" (ID: {}, PPO: {})", pipeline.label(), std::to_underlying(pipeline.id()),
-								  pipeline.unwrap());
-		}
-		else {
-			return std::format_to(context.out(), "<invalid owning shader pipeline at {}>", static_cast<const void*>(&pipeline));
-		}
-	}
 };

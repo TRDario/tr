@@ -200,7 +200,7 @@ void tr::texture::copy_region(glm::ivec2 tl, texture_view src, rectangle<int> re
 	TR_ASSERT(valid(), "Tried to copy to a region of a texture in an invalid state.");
 	TR_ASSERT(!src.empty(), "Tried to copy a region from an empty texture view.");
 
-	context().gl().copy_image_sub_data(src.unwrap(), GL_TEXTURE_2D, 0, region.tl.x, region.tl.y, 0, m_handle.get(), GL_TEXTURE_2D, 0, tl.x,
+	context().gl().copy_image_sub_data(src.handle(), GL_TEXTURE_2D, 0, region.tl.x, region.tl.y, 0, m_handle.get(), GL_TEXTURE_2D, 0, tl.x,
 									   tl.y, 0, region.size.x, region.size.y, 1);
 }
 
@@ -241,7 +241,7 @@ bool tr::texture::valid() const noexcept
 
 tr::graphics_context& tr::texture::context() const noexcept
 {
-	TR_ASSERT(valid(), "Tried to get context of a texture in an invalid state.");
+	TR_ASSERT(valid(), "Tried to get the context of a texture in an invalid state.");
 
 	return m_handle.get_deleter().context;
 }

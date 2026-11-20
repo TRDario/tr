@@ -27,7 +27,7 @@ namespace tr
 		/// @brief Value channel.
 		float v;
 
-		/// @name Comparison operators
+		/// @name Comparison
 		/// @{
 
 		/// @brief Checks two colors for memberwise equality.

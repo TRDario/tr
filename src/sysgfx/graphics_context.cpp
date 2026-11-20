@@ -29,7 +29,7 @@ namespace tr::internal
 //
 
 tr::graphics_context::graphics_context(window_view window)
-	: m_window{window.unwrap()}
+	: m_window{window.pointer()}
 	, m_ptr{SDL_GL_CreateContext(m_window)}
 	, m_viewport{window.size()}
 	, m_scissor_box{window.size()}

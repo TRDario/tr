@@ -12,6 +12,7 @@ namespace tr
 {
 	class bitmap;
 	class bitmap_view;
+	enum class display_mode : bool;
 	enum class mouse_mode : bool;
 	enum class vsync : i8;
 	class window_view;
@@ -150,14 +151,24 @@ namespace tr
 		/// @name Fullscreen
 		/// @{
 
-		/// Gets whether the window is fullscreen or not.
-		/// @return Whether the window is fullscreen or not.
-		[[nodiscard]] bool fullscreen() const noexcept;
+		/// @brief Returns the display mode of the window.
+		/// @par Thread safety
+		/// This function should only be called on the main thread.
+		/// @return Display mode of the window.
+		[[nodiscard]] tr::display_mode display_mode() const noexcept;
 
-		/// Sets whether the window is fullscreen or not.
-		/// @param fullscreen Whether to enable fullscreen or not.
-		/// @exception window_error If setting the fullscreen mode of the window failed.
-		void set_fullscreen(bool fullscreen);
+		/// @brief Sets the window's display mode.
+		/// @details
+		/// This request may be asynchronous and the new display mode may not have necessarily been applied by the return of this function.
+		///
+		/// Note that, as this is just a request, this can be denied by the windowing system.
+		/// @param display_mode New display mode of the window.
+		/// @par Thread safety
+		/// This function should only be called on the main thread.
+		/// @exception window_error If setting the display mode of the window failed.
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
+		void set_display_mode(tr::display_mode display_mode);
 
 		/// @}
 		/// @name Visibility

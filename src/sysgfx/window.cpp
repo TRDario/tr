@@ -123,14 +123,14 @@ void tr::window::set_size(glm::ivec2 size)
 
 //
 
-bool tr::window::fullscreen() const noexcept
+tr::display_mode tr::window::display_mode() const noexcept
 {
-	return view().fullscreen();
+	return view().display_mode();
 }
 
-void tr::window::set_fullscreen(bool fullscreen)
+void tr::window::set_display_mode(tr::display_mode display_mode)
 {
-	view().set_fullscreen(fullscreen);
+	view().set_display_mode(display_mode);
 }
 
 //

@@ -284,7 +284,7 @@ namespace tr
 		/// @return Reference to the graphics context the atlas is on.
 		[[nodiscard]] graphics_context& context() const noexcept
 		{
-			TR_ASSERT(valid(), "Tried to get context of a dynamic atlas in an invalid state.");
+			TR_ASSERT(valid(), "Tried to get the context of a dynamic atlas in an invalid state.");
 
 			return m_texture.context();
 		}

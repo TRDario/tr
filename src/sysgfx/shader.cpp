@@ -545,7 +545,7 @@ bool tr::shader::valid() const noexcept
 
 tr::graphics_context& tr::shader::context() const noexcept
 {
-	TR_ASSERT(valid(), "Tried to get context of a shader in an invalid state.");
+	TR_ASSERT(valid(), "Tried to get the context of a shader in an invalid state.");
 
 	return m_handle.get_deleter().context;
 }

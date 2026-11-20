@@ -90,7 +90,7 @@ bool tr::vertex_format::valid() const noexcept
 
 tr::graphics_context& tr::vertex_format::context() const noexcept
 {
-	TR_ASSERT(valid(), "Tried to get context of a vertex format in an invalid state.");
+	TR_ASSERT(valid(), "Tried to get the context of a vertex format in an invalid state.");
 
 	return m_handle.get_deleter().context;
 }

@@ -15,75 +15,64 @@ tr::owning_shader_pipeline::owning_shader_pipeline(graphics_context& context, tr
 
 //
 
-tr::owning_shader_pipeline::operator const tr::shader_pipeline&() const noexcept
+void tr::owning_shader_pipeline::set_label(std::string_view label) noexcept
 {
-	return m_shader_pipeline;
+	m_shader_pipeline.set_label(label);
 }
 
 //
 
-tr::graphics_context& tr::owning_shader_pipeline::context() const noexcept
+tr::owning_shader_pipeline::operator bool() const noexcept
 {
-	return m_shader_pipeline.context();
+	return static_cast<bool>(m_shader_pipeline);
 }
-
-//
-
-tr::vertex_shader& tr::owning_shader_pipeline::vertex_shader() noexcept
-{
-	TR_ASSERT(valid(), "Tried to get vertex shader of an owning shader pipeline in an invalid state.");
-
-	return m_vertex_shader;
-}
-
-const tr::vertex_shader& tr::owning_shader_pipeline::vertex_shader() const noexcept
-{
-	TR_ASSERT(valid(), "Tried to get vertex shader of an owning shader pipeline in an invalid state.");
-
-	return m_vertex_shader;
-}
-
-tr::fragment_shader& tr::owning_shader_pipeline::fragment_shader() noexcept
-{
-	TR_ASSERT(valid(), "Tried to get fragment shader of an owning shader pipeline in an invalid state.");
-
-	return m_fragment_shader;
-}
-
-const tr::fragment_shader& tr::owning_shader_pipeline::fragment_shader() const noexcept
-{
-	TR_ASSERT(valid(), "Tried to get fragment shader of an owning shader pipeline in an invalid state.");
-
-	return m_fragment_shader;
-}
-
-//
 
 bool tr::owning_shader_pipeline::valid() const noexcept
 {
 	return m_shader_pipeline.valid();
 }
 
-//
-
-void tr::owning_shader_pipeline::set_label(std::string_view label) noexcept
+tr::graphics_context& tr::owning_shader_pipeline::context() const noexcept
 {
-	m_shader_pipeline.set_label(label);
+	return m_shader_pipeline.context();
+}
+
+tr::owning_shader_pipeline::operator const tr::shader_pipeline&() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to get the shader pipeline of an owning shader pipeline in an invalid state.");
+
+	return m_shader_pipeline;
+}
+
+tr::vertex_shader& tr::owning_shader_pipeline::vertex_shader() noexcept
+{
+	TR_ASSERT(valid(), "Tried to get the vertex shader of an owning shader pipeline in an invalid state.");
+
+	return m_vertex_shader;
+}
+
+const tr::vertex_shader& tr::owning_shader_pipeline::vertex_shader() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to get the vertex shader of an owning shader pipeline in an invalid state.");
+
+	return m_vertex_shader;
+}
+
+tr::fragment_shader& tr::owning_shader_pipeline::fragment_shader() noexcept
+{
+	TR_ASSERT(valid(), "Tried to get the fragment shader of an owning shader pipeline in an invalid state.");
+
+	return m_fragment_shader;
+}
+
+const tr::fragment_shader& tr::owning_shader_pipeline::fragment_shader() const noexcept
+{
+	TR_ASSERT(valid(), "Tried to get the fragment shader of an owning shader pipeline in an invalid state.");
+
+	return m_fragment_shader;
 }
 
 std::string tr::owning_shader_pipeline::label() const
 {
 	return m_shader_pipeline.label();
-}
-
-//
-
-unsigned int tr::owning_shader_pipeline::unwrap() const noexcept
-{
-	return m_shader_pipeline.handle();
-}
-
-tr::internal::graphics_object_id tr::owning_shader_pipeline::id() const noexcept
-{
-	return m_shader_pipeline.id();
 }

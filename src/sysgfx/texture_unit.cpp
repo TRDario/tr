@@ -21,7 +21,7 @@ void tr::internal::texture_unit::graphics_context_texture_unit_freer::operator()
 
 void tr::internal::texture_unit::set(texture_view texture) noexcept
 {
-	const unsigned int texture_id{texture.unwrap()};
+	const unsigned int texture_id{texture.handle()};
 	m_handle.get_deleter().context->gl().bind_textures(static_cast<unsigned int>(m_handle.get()), 1, &texture_id);
 }
 

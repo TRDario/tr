@@ -191,7 +191,7 @@ bool tr::shader_pipeline::valid() const noexcept
 
 tr::graphics_context& tr::shader_pipeline::context() const noexcept
 {
-	TR_ASSERT(valid(), "Tried to get context of a shader pipeline in an invalid state.");
+	TR_ASSERT(valid(), "Tried to get the context of a shader pipeline in an invalid state.");
 
 	return m_handle.get_deleter().context;
 }

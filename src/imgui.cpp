@@ -13,7 +13,7 @@
 
 void tr::ImGui::Init(graphics_context& context)
 {
-	ImGui_ImplSDL3_InitForOpenGL(context.window().unwrap(), context.unwrap());
+	ImGui_ImplSDL3_InitForOpenGL(context.window().pointer(), context.unwrap());
 	ImGui_ImplOpenGL3_Init("#version 150");
 }
 
@@ -32,7 +32,7 @@ void tr::ImGui::Shutdown()
 
 ImTextureID tr::ImGui::GetTextureID(texture_view texture) noexcept
 {
-	return texture.unwrap();
+	return texture.handle();
 }
 
 void tr::ImGui::NewFrame()

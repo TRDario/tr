@@ -24,7 +24,7 @@ void tr::internal::image_unit::graphics_context_image_unit_freer::operator()(uns
 void tr::internal::image_unit::set(mutable_texture_view texture, access access) noexcept
 {
 	const unsigned int gl_access{std::to_underlying(access) + GL_READ_ONLY};
-	m_handle.get_deleter().context->gl().bind_image_texture(m_handle.get(), texture.unwrap(), 0, false, 0, gl_access,
+	m_handle.get_deleter().context->gl().bind_image_texture(m_handle.get(), texture.handle(), 0, false, 0, gl_access,
 															internal::opengl_image_format(texture.format()));
 }
 

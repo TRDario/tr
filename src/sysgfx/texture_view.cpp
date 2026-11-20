@@ -5,21 +5,24 @@
 
 //
 
-tr::texture_view::texture_view(unsigned int id) noexcept
-	: m_id{id}
+tr::texture_view::texture_view(unsigned int handle) noexcept
+	: m_handle{handle}
 {
 }
 
 //
+
+tr::texture_view::operator bool() const noexcept
+{
+	return m_handle != 0;
+}
 
 bool tr::texture_view::empty() const noexcept
 {
-	return m_id == 0;
+	return m_handle == 0;
 }
 
-//
-
-unsigned int tr::texture_view::unwrap() const noexcept
+unsigned int tr::texture_view::handle() const noexcept
 {
-	return m_id;
+	return m_handle;
 }
